@@ -15,7 +15,6 @@ digitToWord n
    | n == 7 = "seven"
    | n == 8 = "eight"
    | n == 9 = "nine"
-   | otherwise = "not a number"
 
 digits :: Int -> [Int]
 digits = map digitToInt . show
