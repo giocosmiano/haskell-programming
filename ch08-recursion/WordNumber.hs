@@ -17,17 +17,14 @@ digitToWord n
    | n == 9 = "nine"
    | otherwise = "not a number"
 
-digitsToWords :: Int -> [String]
-digitsToWords = map digitToWord . map digitToInt . show
-
-wordNumber' :: Int -> String
-wordNumber' = intercalate "-" . digitsToWords
-
 digits :: Int -> [Int]
 digits = map digitToInt . show
 
 wordNumber :: Int -> String
 wordNumber = intercalate "-" . map digitToWord . digits
+
+wordNumber' :: Int -> String
+wordNumber' = intercalate "-" . map digitToWord . map digitToInt . show
 
 -- e.g.
 -- wordNumber 1234567
