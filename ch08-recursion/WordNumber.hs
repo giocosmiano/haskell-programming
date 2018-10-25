@@ -15,6 +15,7 @@ digitToWord n
    | n == 7 = "seven"
    | n == 8 = "eight"
    | n == 9 = "nine"
+   | otherwise = wordNumber' n
 
 digits :: Int -> [Int]
 digits = map digitToInt . show
@@ -26,5 +27,5 @@ wordNumber' :: Int -> String
 wordNumber' = intercalate "-" . map digitToWord . map digitToInt . show
 
 -- e.g.
--- wordNumber 1234567
--- wordNumber' 1234567
+-- wordNumber 1234567 -> "one-two-three-four-five-six-seven"
+-- wordNumber' 1234567 -> "one-two-three-four-five-six-seven"
