@@ -60,7 +60,7 @@ myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
 myMaximumBy _ [] = error "empty list"
 myMaximumBy f (x:xs)
   | null xs       == True = x
-  | f x (head xs) == GT   = myMaximumBy f (x: tail xs)
+  | f x (head xs) == GT   = myMaximumBy f $ x : tail xs
   | otherwise             = myMaximumBy f xs
 
 -- same as Data.List (minimum) e.g.
@@ -70,7 +70,7 @@ myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
 myMinimumBy _ [] = error "empty list"
 myMinimumBy f (x:xs)
   | null xs       == True = x
-  | f x (head xs) == LT   = myMinimumBy f (x: tail xs)
+  | f x (head xs) == LT   = myMinimumBy f $ x : tail xs
   | otherwise             = myMinimumBy f xs
 
 -- same as Data.List (maximum) using myMaximumBy e.g.
