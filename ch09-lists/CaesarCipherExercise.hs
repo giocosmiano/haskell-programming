@@ -1,4 +1,4 @@
-module CaesarCipher where
+module CaesarCipherExercise where
 
 import Data.Char (chr, ord, isUpper, isLower)
 
@@ -21,7 +21,7 @@ shift n x
    where decimal = charToDec x
          newDec  = mod (decimal + n) 26
 
--- Ciphering only the 26-letters of the alphabet,
+-- Caesar ciphering only the 26-letters of the alphabet,
 -- with +Int as right-shift and -Int as left-shift
 caesar :: Int -> String -> String
 caesar n [] = []
