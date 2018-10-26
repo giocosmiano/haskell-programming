@@ -38,7 +38,7 @@ myReverse (x:xs) = myReverse xs ++ [x]
 -- squish [[1,2,3],[4,5,6],[7,8,9]] -> [1,2,3,4,5,6,7,8,9]
 squish :: [[a]] -> [a]
 squish [] = []
-squish (x:xs) = [a | a <- x] ++ squish xs
+squish (x:xs) = x ++ squish xs
 
 -- e.g.
 -- squishMap (\x -> [1, x, 3]) [2] -> [1,2,3]
@@ -47,7 +47,7 @@ squishMap :: (a -> [b]) -> [a] -> [b]
 squishMap _ [] = []
 squishMap f (x:xs) = f x ++ squishMap f xs
 
--- same as Data.List (concat) but reusing squishMap e.g.
+-- same as Data.List (concat) but using squishMap e.g.
 -- squishAgain [[1,2,3],[4,5,6],[7,8,9]] -> [1,2,3,4,5,6,7,8,9]
 squishAgain :: [[a]] -> [a]
 squishAgain [] = []
