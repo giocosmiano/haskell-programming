@@ -84,3 +84,12 @@ myMaximum = myMaximumBy compare
 -- myMinimum [2,3,4,5,1,5,4,3,2] -> 1
 myMinimum :: (Ord a) => [a] -> a
 myMinimum = myMinimumBy compare
+
+-- same as Data.List (sort) e.g.
+-- quickSort [5,4,3,2,1,5,4,3,2,1] -> [1,1,2,2,3,3,4,4,5,5]
+quickSort :: (Ord a) => [a] -> [a]
+quickSort [] = []
+quickSort (x:xs) =
+  let smallerOrEqual = [a | a <- xs, a <= x]
+      larger         = [a | a <- xs, a >  x]
+  in  quickSort smallerOrEqual ++ [x] ++ quickSort larger
