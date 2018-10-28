@@ -1,7 +1,5 @@
 module FewMoreExercises where
 
---myFunc = foldr f z
-
 -- same as Data.List (and)
 myAnd :: [Bool] -> Bool
 myAnd = foldr (&&) True
