@@ -94,10 +94,10 @@ sort' (x:xs) =
       larger         = filter (>  x) xs
   in  sort' smallerOrEqual ++ [x] ++ sort' larger
 
--- quickSort [5,4,3,2,1,5,4,3,2,1] -> [1,1,2,2,3,3,4,4,5,5]
-quickSort :: (Ord a) => [a] -> [a]
-quickSort [] = []
-quickSort (x:xs) =
+-- sort'' [5,4,3,2,1,5,4,3,2,1] -> [1,1,2,2,3,3,4,4,5,5]
+sort'' :: (Ord a) => [a] -> [a]
+sort'' [] = []
+sort'' (x:xs) =
   let smallerOrEqual = [a | a <- xs, a <= x]
       larger         = [a | a <- xs, a >  x]
-  in  quickSort smallerOrEqual ++ [x] ++ quickSort larger
+  in  sort'' smallerOrEqual ++ [x] ++ sort'' larger
