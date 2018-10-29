@@ -15,7 +15,7 @@ digitToWord n
    | n == 7 = "seven"
    | n == 8 = "eight"
    | n == 9 = "nine"
-   | otherwise = wordNumber' n
+   | otherwise = wordNumber' n -- recursively building word number
 
 digits :: Int -> [Int]
 digits = map digitToInt . show
