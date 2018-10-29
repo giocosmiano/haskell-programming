@@ -41,10 +41,9 @@ postOrder :: BinaryTree a -> [a]
 postOrder Leaf = []
 postOrder (Node left a right) = postOrder left ++ postOrder right ++ [a]
 
+-- e.g. foldTree (+) 0 testTree
 foldTree :: (a -> b -> b) -> b -> BinaryTree a -> b
-foldTree = undefined
---foldTree f acc Leaf = acc
---foldTree f acc (Node left a right) = foldr (f a) acc
+foldTree f z = foldr f z . preOrder
 
 testTree :: BinaryTree Integer
 testTree = Node (Node Leaf 1 Leaf) 2 (Node Leaf 3 Leaf)
@@ -63,3 +62,8 @@ testPostOrder :: IO ()
 testPostOrder = if postOrder testTree == [1, 3, 2]
                 then putStrLn "PostOrder fine!"
                 else putStrLn "Bad news bears."
+
+testFoldTree :: IO ()
+testFoldTree = if foldTree (+) 0 testTree == 6
+               then putStrLn "FoldTree fine!"
+               else putStrLn "Bad news bears."
