@@ -41,7 +41,7 @@ postOrder :: BinaryTree a -> [a]
 postOrder Leaf = []
 postOrder (Node left a right) = postOrder left ++ postOrder right ++ [a]
 
--- e.g. foldTree (+) 0 testTree
+-- e.g. foldTree (+) 0 testTree -> 6
 foldTree :: (a -> b -> b) -> b -> BinaryTree a -> b
 foldTree f z = foldr f z . preOrder
 
