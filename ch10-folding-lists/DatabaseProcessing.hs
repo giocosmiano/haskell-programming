@@ -43,8 +43,8 @@ isDbNumber _            = False
 
 getDbDate :: DatabaseItem -> UTCTime
 getDbDate (DbDate x) = x
-getDbDate _          = error "Not a DbDate"
+getDbDate _          = error "Not DbDate"
 
 getDbNumber :: DatabaseItem -> Integer
 getDbNumber (DbNumber x) = x
-getDbNumber _            =  error "Not a DbNumber"
+getDbNumber _            =  error "Not DbNumber"
