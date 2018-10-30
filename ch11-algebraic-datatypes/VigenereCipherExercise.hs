@@ -45,16 +45,19 @@ replaceKeyChar idx key str
 cipher :: String -> String -> String
 cipher  _ [] = []
 cipher []  _ = []
-cipher ks xs =
-   let keyStr    = mapKey ks xs
-       pairStr   = zip keyStr xs
+cipher key str =
+   let keyStr    = mapKey key str
+       pairStr   = zip keyStr str
        cipherStr = map (\(k, s) -> shift k s) pairStr
    in  cipherStr
 
--- e.g. key        = "ALLY"
+-- e.g.
+-- cipher "ALLY" "MEET AT DAWN" -> "MPPR AE OYWY"
+--    , key        = "ALLY"
 --    , plainText  = "MEET AT DAWN"
 --   -> cipherText = "MPPR AE OYWY"
 
--- e.g. key        = "ALLY"
+-- cipher "ALLY" "Meet At Dawn" -> "Mppr Ae Oywy"
+--    , key        = "ALLY"
 --    , plainText  = "Meet At Dawn"
 --   -> cipherText = "Mppr Ae Oywy"
