@@ -95,4 +95,4 @@ either' _ g (Right x) = g x
 -- eitherMaybe'' (+1) (Right 1) -> Just 2
 eitherMaybe'' :: (b -> c) -> Either a b -> Maybe c
 eitherMaybe'' _ (Left e)  = Nothing
-eitherMaybe'' f (Right x) = Just (either' id f (Right x))
+eitherMaybe'' f (Right x) = Just $ either' id f (Right x)
