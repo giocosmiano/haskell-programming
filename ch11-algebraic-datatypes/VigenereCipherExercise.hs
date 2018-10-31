@@ -41,8 +41,7 @@ replaceKeyChar key@(x:xs) (y:ys)
 -- mapKey :: key -> plainText -> resultKey
 mapKey :: String -> String -> String
 mapKey key str   =
-   let alphaStr  = filter (\x -> isLower x || isUpper x) str
-       nbrCopies = quot (length str) (length key)
+   let nbrCopies = quot (length str) (length key)
        dupedKeys = concat $ replicate (nbrCopies + 1) key
    in  replaceKeyChar dupedKeys str
 
@@ -55,8 +54,7 @@ cipher []  _ = []
 cipher key str =
    let keyStr    = mapKey key str
        pairStr   = zip keyStr str
-       cipherStr = map (\(k, s) -> shift k s) pairStr
-   in  cipherStr
+   in  map (\(k, s) -> shift k s) pairStr
 
 -- e.g.
 -- cipher "ALLY" "MEET AT DAWN" -> "MPPR AE OYWY"
