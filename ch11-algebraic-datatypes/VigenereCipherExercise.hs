@@ -25,19 +25,26 @@ shift key str
 -- e.g. key       = "ALLY"
 --    , plainText = "MEET AT DAWN"
 --   -> resultKey = "ALLY AL LYAL"
+-- replaceKeyChar :: key -> plainText -> resultKey
+replaceKeyChar :: String -> String -> String
+replaceKeyChar [] _ = []
+replaceKeyChar _ [] = []
+replaceKeyChar key@(x:xs) (y:ys)
+   | isLower y || isUpper y = x : replaceKeyChar xs  ys
+   | otherwise              = y : replaceKeyChar key ys
+
+-- e.g.
+--    , key       = "ALLY"
+--    , plainText = "MEET AT DAWN"
+--   -> resultKey = "ALLY AL LYAL"
+-- mapKey "ALLY" "MEET AT DAWN" -> "ALLY AL LYAL"
 -- mapKey :: key -> plainText -> resultKey
 mapKey :: String -> String -> String
-mapKey key str =
-   let pairStr = zip [1..] str
-   in  map (\(i, s) -> if (isLower s || isUpper s) then replaceKeyChar i key str else s) pairStr
-
-replaceKeyChar :: Int -> String -> String -> Char
-replaceKeyChar idx key str
-   | newIdx == 0 = key !! (lenKey - 1)
-   | otherwise   = key !! (newIdx - 1)
-   where lenKey  = length key
-         curLen  = length $ filter (\x -> isLower x || isUpper x) $ take idx str
-         newIdx  = mod curLen lenKey
+mapKey key str   =
+   let alphaStr  = filter (\x -> isLower x || isUpper x) str
+       nbrCopies = quot (length str) (length key)
+       dupedKeys = concat $ replicate (nbrCopies + 1) key
+   in  replaceKeyChar dupedKeys str
 
 -- Vigenere ciphering only the 26-letters of the alphabet
 -- see https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
