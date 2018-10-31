@@ -22,8 +22,8 @@ isSubseqOf key@(x:xs) (y:ys)
 capitalizeWord :: String -> String
 capitalizeWord [] = []
 capitalizeWord (x:xs)
-   | isAlpha x == True = toUpper x : xs
-   | otherwise         = x : capitalizeWord xs
+   | isAlpha x = toUpper x : xs
+   | otherwise = x : capitalizeWord xs
 
 -- e.g. capitalizeWords "hello world" -> [("hello","Hello"),("world","World")]
 capitalizeWords :: String -> [(String, String)]
