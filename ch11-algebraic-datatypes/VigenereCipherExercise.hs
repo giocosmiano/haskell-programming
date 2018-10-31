@@ -15,12 +15,11 @@ charToDec x = ord x - getDecOfA x
 
 shift :: Char -> Char -> Char
 shift key str
-   | isUpper str = chr $ newDec + getDecOfA str
-   | isLower str = chr $ newDec + getDecOfA str
-   | otherwise   = str
-   where decKey  = charToDec key
-         decStr  = charToDec str
-         newDec  = mod (decKey + decStr) 26
+   | isLower str || isUpper str = chr $ newDec + getDecOfA str
+   | otherwise  = str
+   where decKey = charToDec key
+         decStr = charToDec str
+         newDec = mod (decKey + decStr) 26
 
 -- e.g. key       = "ALLY"
 --    , plainText = "MEET AT DAWN"
