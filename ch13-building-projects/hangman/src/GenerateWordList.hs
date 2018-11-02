@@ -1,5 +1,6 @@
 module GenerateWordList where
 
+import Data.List (filter, isSuffixOf)
 import System.Random (randomRIO)
 
 type WordList = [String]
@@ -17,7 +18,7 @@ allWords = do
 gameWords :: IO WordList
 gameWords = do
    aw <- allWords
-   return (filter gameLength aw)
+   return (filter gameLength $ filter (not . isSuffixOf "'s") aw) -- removing words that ends with "'s"
       where gameLength w =
              let l  = length (w :: String)
              in  l >= minWordLength && l < maxWordLength
