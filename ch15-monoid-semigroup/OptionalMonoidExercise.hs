@@ -1,7 +1,5 @@
 module OptionalMonoidExercise where
 
-import Data.Monoid
-
 data Optional a = Nada
                 | Only a
                 deriving (Eq, Show)
