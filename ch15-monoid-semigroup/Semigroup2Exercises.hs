@@ -6,6 +6,7 @@ data Validation a b = Failure a
                     | Success b
                     deriving (Eq, Show)
 
+-- take note that type parameter `a` is the *ONLY* semigroup, and `b` is NOT
 instance Semigroup a => Semigroup (Validation a b) where
   Success x <> _         = Success x
   _         <> Success x = Success x
