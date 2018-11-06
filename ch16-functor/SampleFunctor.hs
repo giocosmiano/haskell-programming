@@ -23,6 +23,10 @@ Prelude> :type fmap @(Either _)
 fmap @(Either _) :: (a -> b) -> Either t a -> Either t b
 -}
 
+-- Functor Laws
+-- Identity => fmap id == id
+-- Composition => fmap (f . g) == fmap f . fmap g
+
 {-
  - Functor fmap for Pair (a, b)
  -}
