@@ -52,6 +52,10 @@ genString = do
   a <- arbitrary
   return a
 
+-- OR
+genString' :: Gen String
+genString' = arbitrary
+
 -- e.g.
 -- Prelude > sample (genTuple :: Gen (Int, String))
 genTuple :: (Arbitrary a, Arbitrary b) => Gen (a, b)
