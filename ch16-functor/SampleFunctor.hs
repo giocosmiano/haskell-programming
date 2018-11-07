@@ -1,5 +1,6 @@
 module SampleFunctor where
 
+{-
 type E e = Either e
 type C e = Constant e
 type I = Identity
@@ -10,8 +11,9 @@ fmap :: (a -> b) -> f a -> f b
      :: (a -> b) -> Maybe a -> Maybe b
      :: (a -> b) -> E e a -> E e b
      :: (a -> b) -> (e, a) -> (e, b) -- will fmap the `snd` in tuple
-     :: (a -> b) -> I a -> I b
-     :: (a -> b) -> C e a -> C e b
+     :: (a -> b) -> I a -> I b       -- Data.Functor.Identity
+     :: (a -> b) -> C e a -> C e b   -- Data.Functor.Const
+-}
 
 {-
 Prelude> :set -XTypeApplications
