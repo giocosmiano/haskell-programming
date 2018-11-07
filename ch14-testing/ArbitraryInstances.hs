@@ -53,6 +53,9 @@ genString = do
   return a
 
 -- OR
+-- e.g.
+-- Prelude > sample (arbitrary :: Gen String)
+-- Prelude > sample genString'
 genString' :: Gen String
 genString' = arbitrary
 
