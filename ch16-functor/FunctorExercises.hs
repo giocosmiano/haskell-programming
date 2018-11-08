@@ -72,3 +72,28 @@ data More b a = L a b a
 instance Functor (More x) where
   fmap f (L a b a') = L (f a) b (f a')
   fmap f (R b a b') = R b (f a) b'
+
+-----------------------------------------------------------------------------------
+
+data Quant a b = Finance
+               | Desk a
+               | Bloor b
+               deriving (Eq, Show)
+
+-- e.g.
+-- fmap (+1) Finance   -> Finance
+-- fmap (+1) $ Desk 3  -> Desk 3
+-- fmap (+1) $ Bloor 3 -> Bloor 4
+instance Functor (Quant x) where
+  fmap _  Finance  = Finance
+  fmap _ (Desk x)  = Desk x
+  fmap f (Bloor x) = Bloor $ f x
+
+-----------------------------------------------------------------------------------
+
+data K a b = K a deriving (Eq, Show)
+
+-- e.g.
+-- fmap (+2) $ K 5 -> K 5
+instance Functor (K x) where
+  fmap _ (K x) = K x
