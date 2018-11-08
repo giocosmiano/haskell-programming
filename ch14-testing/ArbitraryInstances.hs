@@ -1,7 +1,20 @@
+{-# LANGUAGE DeriveGeneric #-}
+
 module Main where
 
+import GHC.Generics
 import Test.QuickCheck
 import Test.QuickCheck.Gen (oneof)
+
+{-
+*** NOTE ***
+QuickCheck which facilitates the random generation of input and definition of properties to be verified.
+Common properties that are checked using property testing are things like identity, associativity, isomorphism, and idempotence
+
+Arbitrary enables generation of random values of your datatype for QuickCheck tests.
+
+CoArbitrary is a counterpart to Arbitrary that enables the generation of functions fitting a particular type.
+-}
 
 --  QuickCheck relies on a typeclass called Arbitrary and a newtype called Gen for generating its random data.
 --  arbitrary is a value of type Gen
@@ -17,8 +30,27 @@ import Test.QuickCheck.Gen (oneof)
 -- Prelude > :t sample'
 -- sample' :: Gen a -> IO [a]
 
+-- Prelude > :t coarbitrary
+-- coarbitrary :: CoArbitrary a => a -> Gen b -> Gen b
+
 -----------------------------------------------------------------------------------
--- some generator samples
+-- Coarbitrary generator samples
+-----------------------------------------------------------------------------------
+
+data Bool' = True'
+           | False'
+           deriving (Generic)
+
+instance CoArbitrary Bool'
+
+trueGen :: Gen Int
+trueGen = coarbitrary True' arbitrary
+
+falseGen :: Gen Int
+falseGen = coarbitrary False' arbitrary
+
+-----------------------------------------------------------------------------------
+-- some Arbitrary generator samples
 -----------------------------------------------------------------------------------
 
 -- choose :: System.Random.Random a
