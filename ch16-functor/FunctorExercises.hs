@@ -188,8 +188,8 @@ data GoatLord a = NoGoat
 -- fmap (+1) $ OneGoat 3                                -> OneGoat 4
 -- fmap (+1) $ MoreGoats (OneGoat 3) NoGoat (OneGoat 5) -> MoreGoats (OneGoat 4) NoGoat (OneGoat 6)
 instance Functor GoatLord where
-  fmap _ NoGoat               = NoGoat
-  fmap f (OneGoat a)          = OneGoat $ f a
+  fmap _ NoGoat            = NoGoat
+  fmap f (OneGoat a)       = OneGoat $ f a
   fmap f (MoreGoats x y z) = MoreGoats (fmap f x) (fmap f y) (fmap f z)
 
 -----------------------------------------------------------------------------------
@@ -217,7 +217,7 @@ data TalkToMe a = Halt
 -- e.g.
 -- fmap (+1) Halt                  -> Halt
 -- fmap (+1) $ Print "hello" 3     -> Print "hello" 4
--- fmap (+1) $ Read strToInt "123" ->
+-- fmap (+1) $ Read strToInt "123" -> ???
 instance Functor TalkToMe where
   fmap _ Halt        = Halt
   fmap f (Print x a) = Print x $ f a
