@@ -234,6 +234,28 @@ instance Semigroup a => Semigroup (Validation a b) where
 -- Success 1
 -- Success 2
 main = do
+  putStrLn "quickCheck IdentityAssoc"
+  quickCheck (semigroupAssoc :: IdentityAssoc)
+
+  putStrLn "\nquickCheck TwoAssoc"
+  quickCheck (semigroupAssoc :: TwoAssoc)
+
+  putStrLn "\nquickCheck ThreeAssoc"
+  quickCheck (semigroupAssoc :: ThreeAssoc)
+
+  putStrLn "\nquickCheck FourAssoc"
+  quickCheck (semigroupAssoc :: FourAssoc)
+
+  putStrLn "\nquickCheck BoolConjAssoc"
+  quickCheck (semigroupAssoc :: BoolConjAssoc)
+
+  putStrLn "\nquickCheck BoolDisjAssoc"
+  quickCheck (semigroupAssoc :: BoolDisjAssoc)
+
+  putStrLn "\nquickCheck OrAssoc"
+  quickCheck (semigroupAssoc :: OrAssoc)
+
+  putStrLn ""
   let failure :: String -> Validation String Int
       failure = Failure'
       success :: Int -> Validation String Int
