@@ -24,7 +24,6 @@ instance Semigroup a => Semigroup (Identity a) where
 
 -- e.g.
 -- Prelude> quickCheck (semigroupAssoc :: IdentityAssoc)
--- +++ OK, passed 100 tests.
 instance Arbitrary a => Arbitrary (Identity a) where
   arbitrary = do
     a <- arbitrary
@@ -45,7 +44,6 @@ instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
 
 -- e.g.
 -- Prelude> quickCheck (semigroupAssoc :: TwoAssoc)
--- +++ OK, passed 100 tests.
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
   arbitrary = do
     a <- arbitrary
@@ -66,7 +64,6 @@ instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (Three a b c) wher
 
 -- e.g.
 -- Prelude> quickCheck (semigroupAssoc :: ThreeAssoc)
--- +++ OK, passed 100 tests.
 instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where
   arbitrary = do
     a <- arbitrary
@@ -88,7 +85,6 @@ instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d) => Semigroup (Four
 
 -- e.g.
 -- Prelude> quickCheck (semigroupAssoc :: FourAssoc)
--- +++ OK, passed 100 tests.
 instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four a b c d) where
   arbitrary = do
     a <- arbitrary
@@ -115,7 +111,6 @@ instance Semigroup BoolConj where
 
 -- e.g.
 -- Prelude> quickCheck (semigroupAssoc :: BoolConjAssoc)
--- +++ OK, passed 100 tests.
 instance Arbitrary BoolConj where
   arbitrary = do
     b <- arbitrary
@@ -139,7 +134,6 @@ instance Semigroup BoolDisj where
 
 -- e.g.
 -- Prelude> quickCheck (semigroupAssoc :: BoolDisjAssoc)
--- +++ OK, passed 100 tests.
 instance Arbitrary BoolDisj where
   arbitrary = do
     b <- arbitrary
@@ -167,7 +161,6 @@ instance (Num a, Num b) => Semigroup (Or a b) where
 
 -- e.g.
 -- Prelude> quickCheck (semigroupAssoc :: OrAssoc)
--- +++ OK, passed 100 tests.
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
   arbitrary = do
     a <- arbitrary
