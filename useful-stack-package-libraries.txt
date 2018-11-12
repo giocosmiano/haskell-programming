@@ -1,0 +1,37 @@
+-----------------------------------------------------------------------------------
+-- Haskell packages
+-- https://www.stackage.org/
+--
+-- Restart ghci after installing a package/library
+-- Prelude> stack ghci
+
+-----------------------------------------------------------------------------------
+-- Library for reusable QuickCheck properties, particularly for standard type classes, laws and morphisms 
+-- https://github.com/conal/checkers
+-- Prelude> stack build checkers
+
+-----------------------------------------------------------------------------------
+-- Library that makes HTTP client programming in Haskell easy
+-- http://www.serpentine.com/wreq/
+-- Prelude> stack build wreq
+
+-----------------------------------------------------------------------------------
+-- Universal document converter
+-- https://pandoc.org/
+-- Prelude> stack install pandoc
+
+-----------------------------------------------------------------------------------
+-- Haskell pretty printer
+-- https://github.com/commercialhaskell/hindent
+-- Prelude> stack install hindent
+
+-----------------------------------------------------------------------------------
+-- Cabal: Common Architecture for Building Applications and Libraries
+-- https://www.haskell.org/cabal/
+-- Prelude> stack install cabal
+
+-----------------------------------------------------------------------------------
+-- PureScript - A strongly-typed functional programming language that compiles to JavaScript
+-- https://github.com/purescript/purescript
+-- http://www.purescript.org/
+-- npm install -g purescript
