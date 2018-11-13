@@ -1,6 +1,3 @@
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE FlexibleInstances #-}
-
 module ApplicativePersonSamples where
 
 validateLength :: Int -> String -> Maybe String
