@@ -176,13 +176,13 @@ newtype Flip f a b = Flip (f b a)
 instance Functor (Flip K a) where
   fmap f (Flip (K a)) = Flip $ K (f a)
 
---instance (Arbitrary a, Arbitrary b) => Arbitrary (Flip K a b) where
---  arbitrary = do
---    a <- arbitrary
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Flip K a b) where
+  arbitrary = do
+    a <- arbitrary
 --    b <- arbitrary
---    return (Flip (K b) a b)
---
---instance (Eq a, Eq b) => EqProp (Flip K a b) where (=-=) = eq
+    return (Flip (K a))
+
+instance (Eq a, Eq b) => EqProp (Flip K a b) where (=-=) = eq
 
 -----------------------------------------------------------------------------------
 
@@ -378,6 +378,9 @@ main = do
 
   putStrLn "\nquickBatch K"
   quickBatch $ functor (undefined :: K (String, Int, Double, Char) (Int, Double, Char))
+
+  putStrLn "\nquickBatch Flip"
+  quickBatch $ functor (undefined :: Flip K String (Int, Double, Char))
 
   putStrLn "\nquickBatch EvilGoateeConst"
   quickBatch $ functor (undefined :: EvilGoateeConst (String, Int, Double, Char) (Int, Double, Char))
