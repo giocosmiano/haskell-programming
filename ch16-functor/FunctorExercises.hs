@@ -179,7 +179,6 @@ instance Functor (Flip K a) where
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Flip K a b) where
   arbitrary = do
     a <- arbitrary
---    b <- arbitrary
     return (Flip (K a))
 
 instance (Eq a, Eq b) => EqProp (Flip K a b) where (=-=) = eq
