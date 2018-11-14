@@ -40,10 +40,10 @@ instance Functor List where
 -- let v = Nil
 -- f <*> v -> Cons 5 (Cons 4 (Cons 6 (Cons 6 (Cons 4 (Cons 8 Nil)))))
 instance Applicative List where
-  pure x                      = Cons x Nil
-  Nil         <*> (Cons x xs) = Nil
-  (Cons f fs) <*> Nil         = Nil
-  (Cons f fs) <*> xs          = (fmap f xs) `append` (fs <*> xs)
+  pure x              = Cons x Nil
+  Nil         <*> _   = Nil
+  _           <*> Nil = Nil
+  (Cons f fs) <*> xs  = (fmap f xs) `append` (fs <*> xs)
 
 append :: List a -> List a -> List a
 append Nil ys = ys
