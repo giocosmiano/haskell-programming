@@ -75,18 +75,14 @@ flatMap f xs = concat' $ fmap f xs
 
 -----------------------------------------------------------------------------------
 
-
 instance Arbitrary a => Arbitrary (List a) where
   arbitrary = do
     a <- arbitrary
     return (Cons a Nil)
 
-instance Eq a => EqProp (List a) where
-  (=-=) = eq
+instance Eq a => EqProp (List a) where (=-=) = eq
 
--- type SSI = (List Char, List Int, Int)
--- :{
---    let trigger :: [SSI]
---        trigger = [(Cons 'X' Nil, Cons 5 Nil, 3)]
--- :}
--- quickBatch (applicative trigger)
+-----------------------------------------------------------------------------------
+
+main :: IO ()
+main = quickBatch $ applicative (undefined :: List (Int, Double, Char))
