@@ -70,7 +70,7 @@ instance Applicative ZipList' where
   (ZipList' xs)  <*> (ZipList' ys)  = ZipList' (zipWith' id xs ys)
 
 
-repeat' :: a -> (List a)
+repeat' :: a -> List a
 repeat' x = xs
   where xs = Cons x xs
 
@@ -79,21 +79,19 @@ zipWith' _ Nil _                   = Nil
 zipWith' _ _ Nil                   = Nil
 zipWith' f (Cons x xs) (Cons y ys) = Cons (f x y) (zipWith' f xs ys)
 
-{-
 instance Eq a => EqProp (ZipList' a) where
   xs =-= ys = xs' `eq` ys'
     where xs' = let (ZipList' l) = xs
                 in  take' 3000 l
           ys' = let (ZipList' l) = ys
                 in  take' 3000 l
--}
 
 instance Arbitrary a => Arbitrary (ZipList' a) where
   arbitrary = do
     a <- arbitrary
     return (ZipList' $ Cons a Nil)
 
-instance (Eq a) => EqProp (ZipList' a) where (=-=) = eq
+--instance (Eq a) => EqProp (ZipList' a) where (=-=) = eq
 
 -----------------------------------------------------------------------------------
 
