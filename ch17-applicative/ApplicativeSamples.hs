@@ -3,6 +3,10 @@
 
 module ApplicativeSamples where
 
+import Test.QuickCheck
+import Test.QuickCheck.Checkers
+import Test.QuickCheck.Classes
+
 {-
 class Functor f => Applicative f where
   pure  :: a -> f a
@@ -82,6 +86,13 @@ instance Applicative Identity where
 -- const <$>          [1, 2, 3] <*>          [9, 9, 9] -> [1,1,1,2,2,2,3,3,3]
 -- const <$> Identity [1, 2, 3] <*> Identity [9, 9, 9] -> Identity [1,2,3]
 
+instance (Arbitrary a) => Arbitrary (Identity a) where
+  arbitrary = do
+    a  <- arbitrary
+    return (Identity a)
+
+instance (Eq a) => EqProp (Identity a) where (=-=) = eq
+
 -----------------------------------------------------------------------------------
 -- Applicative Constant *** Recall that Applicatives are monoidal functors
 -----------------------------------------------------------------------------------
@@ -106,3 +117,19 @@ instance (Monoid a) => Applicative (Constant a) where
 -- e.g.
 -- Constant "hello" <*> Constant " world" -> Constant {getConstant = "hello world"}
 -- pure 1 :: Constant String Int          -> Constant {getConstant = ""}
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Constant a b) where
+  arbitrary = do
+    a  <- arbitrary
+    return (Constant a)
+
+instance (Eq a, Eq b) => EqProp (Constant a b) where (=-=) = eq
+
+-----------------------------------------------------------------------------------
+
+main = do
+  putStrLn "\nTesting applicative Identity"
+  quickBatch $ applicative (undefined :: Identity (Int, Double, Char))
+
+  putStrLn "\nTesting applicative Constant"
+  quickBatch $ applicative (undefined :: Constant [String] (Int, Double, Char))
