@@ -71,10 +71,10 @@ instance Applicative ZipList' where
 
 
 repeat' :: a -> List a
-repeat' x = xs
+repeat' x  = xs
   where xs = Cons x xs
 
-zipWith' :: (a -> b -> c) -> (List a) -> (List b) -> (List c)
+zipWith' :: (a -> b -> c) -> List a -> List b -> List c
 zipWith' _ Nil _                   = Nil
 zipWith' _ _ Nil                   = Nil
 zipWith' f (Cons x xs) (Cons y ys) = Cons (f x y) (zipWith' f xs ys)
