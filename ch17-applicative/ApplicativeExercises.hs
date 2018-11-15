@@ -114,17 +114,17 @@ instance (Eq a, Eq b) => EqProp (Four' a b) where (=-=) = eq
 -----------------------------------------------------------------------------------
 
 main = do
-  putStrLn "\nquickBatch Two"
+  putStrLn "\nTesting applicative Two"
   quickBatch $ applicative (undefined :: Two String (Int, Double, Char))
 
-  putStrLn "\nquickBatch Three"
+  putStrLn "\nTesting applicative Three"
   quickBatch $ applicative (undefined :: Three String (Maybe String) (Int, Double, Char))
 
-  putStrLn "\nquickBatch Three'"
+  putStrLn "\nTesting applicative Three'"
   quickBatch $ applicative (undefined :: Three' String (Int, Double, Char))
 
-  putStrLn "\nquickBatch Four"
+  putStrLn "\nTesting applicative Four"
   quickBatch $ applicative (undefined :: Four String (Maybe String) [String] (Int, Double, Char))
 
-  putStrLn "\nquickBatch Four'"
+  putStrLn "\nTesting applicative Four'"
   quickBatch $ applicative (undefined :: Four String (Maybe String) [String] (Int, Double, Char))
