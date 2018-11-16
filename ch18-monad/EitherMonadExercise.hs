@@ -141,11 +141,11 @@ instance (Eq a, Eq b) => EqProp (Sum a b) where (=-=) = eq
 -----------------------------------------------------------------------------------
 
 main = do
-  putStrLn "\nTesting Functor Sum"
+  putStrLn "\nTesting Functor : Sum"
   quickBatch $ functor (undefined :: Sum [String] (Int, Double, Char))
 
-  putStrLn "\nTesting Applicative Sum"
+  putStrLn "\nTesting Applicative : Sum"
   quickBatch $ applicative (undefined :: Sum [String] (Int, Double, Char))
 
-  putStrLn "\nTesting Monad Sum"
+  putStrLn "\nTesting Monad : Sum"
   quickBatch $ monad (undefined :: Sum [String] (Int, Double, Char))
