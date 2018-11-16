@@ -28,7 +28,7 @@ fmap f xs = xs >>= return . f
 -- [1,2,3] >>= return . (+1) -> [2,3,4]
 
 -----------------------------------------------------------------------------------
->>= and `bind`
+>>= vs `bind`
 -----------------------------------------------------------------------------------
 
 import Control.Monad (join)
@@ -37,13 +37,13 @@ join :: Monad m => m (m a) -> m a
 bind :: Monad m => (a -> m b) -> m a -> m b
 bind f ma = join $ fmap f ma
 
--- e.g. using bind
+-- using bind
 -- bind (\x -> [x,1]) [4,5,6]        -> [4,1,5,1,6,1]
 --
--- OR using >>=
+-- using >>=
 -- [4,5,6] >>= (\x -> [x,1])         -> [4,1,5,1,6,1]
 --
--- OR using join/fmap
+-- using join/fmap
 -- join $ fmap (\x -> [x,1]) [4,5,6] -> [4,1,5,1,6,1]
 
 -----------------------------------------------------------------------------------
@@ -85,12 +85,15 @@ sequencing functions
 (*>) :: Applicative f => f a -> f b -> f b
 (>>) :: Monad m       => m a -> m b -> m b
 
-import Control.Monad ((*>))
+import Control.Applicative ((*>))
+import Control.Monad       ((>>), join)
 
 -- e.g.
 -- putStrLn "Hello, " *> putStrLn "World!"
 -- putStrLn "Hello, " >> putStrLn "World!"
 
+-- e.g.
+-- join $ putStrLn <$> getLine
 -}
 
 -----------------------------------------------------------------------------------
