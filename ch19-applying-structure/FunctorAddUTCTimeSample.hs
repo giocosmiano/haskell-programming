@@ -24,3 +24,11 @@ offsetCurrentTime offset =
 --
 -- 3. fmap’s type got specialized.
 -- fmap :: (UTCTime -> UTCTime) -> IO UTCTime -> IO UTCTime
+--
+-- Some reference materials to read
+--
+-- 1. A Haskell Time Library Tutorial
+--    https://two-wrongs.com/haskell-time-library-tutorial.html
+--
+-- 2. 24 Days of Hackage: time
+--    https://ocharles.org.uk/posts/2013-12-15-24-days-of-hackage-time.html
