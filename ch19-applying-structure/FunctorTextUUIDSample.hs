@@ -22,6 +22,8 @@ import qualified Data.UUID.V4 as UUIDv4
 textUuid :: IO Text
 textUuid = fmap (T.pack . UUID.toString) UUIDv4.nextRandom
 
+-- Another example of Lifting over IO
+--
 -- e.g.
 -- textUuid -> "b0c0716b-4a44-4b23-889d-30fdd6c9ac46"
 --
