@@ -127,4 +127,4 @@ main = do
   quickBatch $ applicative (undefined :: Four String (Maybe String) [String] (Int, Double, Char))
 
   putStrLn "\nTesting applicative Four'"
-  quickBatch $ applicative (undefined :: Four String (Maybe String) [String] (Int, Double, Char))
+  quickBatch $ applicative (undefined :: Four' [String] (Int, Double, Char))
