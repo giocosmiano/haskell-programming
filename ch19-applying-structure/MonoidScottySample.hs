@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module MonoidScotty where
+module MonoidScottySample where
 
 import Web.Scotty
 import Data.Monoid (mconcat)
@@ -11,6 +11,7 @@ import Data.Monoid (mconcat)
 -- Prelude> stack install scotty
 --
 -- e.g.
+-- Prelude> main
 -- http://localhost:3000
 -- http://localhost:3000/test -> Scotty, test me up!
 -----------------------------------------------------------------------------------
