@@ -21,10 +21,7 @@ instance (Monoid a) => Applicative (Two a) where
   (Two x f) <*> (Two x' y) = Two (x <> x') $ f y
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
-  arbitrary = do
-    a <- arbitrary
-    b <- arbitrary
-    return (Two a b)
+  arbitrary = Two <$> arbitrary <*> arbitrary
 
 instance (Eq a, Eq b) => EqProp (Two a b) where (=-=) = eq
 
@@ -41,11 +38,7 @@ instance (Monoid a, Monoid b) => Applicative (Three a b) where
   (Three x y f) <*> (Three x' y' z) = Three (x <> x') (y <> y') $ f z
 
 instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where
-  arbitrary = do
-    a <- arbitrary
-    b <- arbitrary
-    c <- arbitrary
-    return (Three a b c)
+  arbitrary = liftA3 Three arbitrary arbitrary arbitrary
 
 instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where (=-=) = eq
 
