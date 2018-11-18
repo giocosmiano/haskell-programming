@@ -18,14 +18,9 @@ import Web.Scotty
 -- https://redis.io/
 -- Prelude> stack install redis
 --
--- e.g.
--- Prelude> main
--- http://localhost:3000
--- http://localhost:3000/test -> Scotty, test me up!
-
 -- https://redis.io/topics/quickstart
 -- https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04
-
+--
 -- sudo systemctl restart redis.service
 -- sudo systemctl status redis
 -- sudo systemctl disable redis
@@ -35,7 +30,16 @@ import Web.Scotty
 -- /etc/init.d/redis-server start
 -- /etc/init.d/redis-server stop
 -- /etc/init.d/redis-server restart
+--
+-- e.g.
 -- redis-cli
+-- set blah "this is an in-memory test for http://localhost:3000/blah and it worked"
+-- get blah
+--
+-- e.g.
+-- Prelude> main
+-- http://localhost:3000
+-- http://localhost:3000/blah -> should see the `blah` key-value setting above from redis
 
 -----------------------------------------------------------------------------------
 
