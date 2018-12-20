@@ -9,6 +9,24 @@ import Test.QuickCheck.Classes
 
 -----------------------------------------------------------------------------------
 
+{-
+
+j :: Monad m => m (m a) -> m a
+j = join
+
+l1 :: Monad m => (a -> b) -> m a -> m b
+l1 = liftM
+
+l2 :: Monad m => (a -> b -> c) -> m a -> m b -> m c
+l2 = liftM2
+
+a :: Monad m => m a -> m (a -> b) -> m b
+a = flip ap
+
+-}
+
+-----------------------------------------------------------------------------------
+
 newtype Identity a = Identity a
                    deriving (Eq, Ord, Show)
 
@@ -196,6 +214,17 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Four' a b) where
 instance (Eq a, Eq b) => EqProp (Four' a b) where (=-=) = eq
 
 -----------------------------------------------------------------------------------
+
+-- search --> haskell applicative function checkers
+-- https://stackoverflow.com/questions/36009335/how-do-i-test-this-applicative-instance-with-checkers-no-instance-for-coarbitr
+
+-- https://begriffs.com/posts/2017-01-14-design-use-quickcheck.html
+
+-- https://hackage.haskell.org/package/checkers
+-- https://hackage.haskell.org/package/checkers-0.4.11/docs/Test-QuickCheck-Classes.html
+
+-- https://github.com/conal/checkers
+-- https://github.com/conal/checkers/blob/master/src/Test/QuickCheck/Classes.hs
 
 main = do
   putStrLn "\nTesting Applicative : Identity"
