@@ -106,6 +106,17 @@ instance (Eq a, Eq b) => EqProp (Four' a b) where (=-=) = eq
 
 -----------------------------------------------------------------------------------
 
+-- search --> haskell applicative function checkers
+-- https://stackoverflow.com/questions/36009335/how-do-i-test-this-applicative-instance-with-checkers-no-instance-for-coarbitr
+
+-- https://begriffs.com/posts/2017-01-14-design-use-quickcheck.html
+
+-- https://hackage.haskell.org/package/checkers
+-- https://hackage.haskell.org/package/checkers-0.4.11/docs/Test-QuickCheck-Classes.html
+
+-- https://github.com/conal/checkers
+-- https://github.com/conal/checkers/blob/master/src/Test/QuickCheck/Classes.hs
+
 main = do
   putStrLn "\nTesting applicative Two"
   quickBatch $ applicative (undefined :: Two String (Int, Double, Char))
