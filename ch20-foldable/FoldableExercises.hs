@@ -118,9 +118,6 @@ instance Foldable (Four' a) where
   foldr f z (Four' a b b' b'') = f b $ f b' $ f b'' z
   foldMap f (Four' a b b' b'') = f b <> f b' <> f b''
 
---  foldr f z (Three' a b b') = f b $ foldr f z (Three a b b')
---  foldMap f (Three' a b b') = f b <> f b'
-
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Four' a b) where
   arbitrary = do
     a  <- arbitrary
