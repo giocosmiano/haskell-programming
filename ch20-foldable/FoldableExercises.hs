@@ -128,6 +128,17 @@ instance (Eq a, Eq b) => EqProp (Four' a b) where (=-=) = eq
 
 -----------------------------------------------------------------------------------
 
+-- Write a filter function for Foldable types using foldMap
+
+-- e.g.
+-- filterF (<3) [5,4,3,2,1,2,3,4,5] :: [Int]                     -> [2,1,2]
+-- filterF (=="Gio") ["hello", "Gio", "gio", "world"]            -> "Gio"
+-- filterF even $ fmap fromIntegral [5,4,3,2,1,2,3,4,5] :: [Int] -> [4,2,2,4]
+filterF :: ( Applicative f, Foldable t, Monoid (f a)) => (a -> Bool) -> t a -> f a
+filterF f = foldMap (\x -> if f x then pure x else mempty)
+
+-----------------------------------------------------------------------------------
+
 -- *** NOTE *** foldable seems to be in the code but hasn't been exposed yet???
 -- seems to be in the repo -> https://github.com/conal/checkers/blob/master/src/Test/QuickCheck/Classes.hs
 -- but not exposed yet?? -> https://hackage.haskell.org/package/checkers-0.4.11/docs/Test-QuickCheck-Classes.html
