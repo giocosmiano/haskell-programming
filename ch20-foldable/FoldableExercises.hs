@@ -71,7 +71,7 @@ data Three' a b = Three' a b b
 -- foldr (*) 1 (Three' "abc" (3:: Product Integer) (5:: Product Integer)) -> Product {getProduct = 15}
 -- foldMap Product (Three' "abc" 3 5)                                     -> Product {getProduct = 15}
 instance Foldable (Three' a) where
-  foldr f z (Three' a b b') = f b (foldr f z (Three a b b'))
+  foldr f z (Three' a b b') = f b $ f b' z
   foldMap f (Three' a b b') = f b <> f b'
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where
@@ -106,21 +106,26 @@ instance (Eq a, Eq b, Eq c, Eq d) => EqProp (Four a b c d) where (=-=) = eq
 
 -----------------------------------------------------------------------------------
 
-data Four' a b = Four' a a a b
+data Four' a b = Four' a b b b
                deriving (Eq, Show)
 
+-- foldr vs foldl, see https://wiki.haskell.org/Fold
+
 -- e.g.
--- foldr (*) 2 (Four' "abc" "xyz" [] (5:: Sum Integer))   -> Sum {getSum = 10}
--- foldMap (*2) (Four' "abc" "xyz" [] (5 :: Sum Integer)) -> Sum {getSum = 10}
+-- foldr (*) 1 (Four' "abc" (3:: Product Integer) (5:: Product Integer) (7:: Product Integer)) -> Product {getProduct = 105}
+-- foldMap Product (Four' "abc" 3 5 7)                                                         -> Product {getProduct = 105}
 instance Foldable (Four' a) where
-  foldr f z (Four' a a' a'' b) = f b z
-  foldMap f (Four' a a' a'' b) = f b
+  foldr f z (Four' a b b' b'') = f b $ f b' $ f b'' z
+  foldMap f (Four' a b b' b'') = f b <> f b' <> f b''
+
+--  foldr f z (Three' a b b') = f b $ foldr f z (Three a b b')
+--  foldMap f (Three' a b b') = f b <> f b'
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Four' a b) where
   arbitrary = do
     a  <- arbitrary
     b  <- arbitrary
-    return (Four' a a a b)
+    return (Four' a b b b)
 
 instance (Eq a, Eq b) => EqProp (Four' a b) where (=-=) = eq
 
