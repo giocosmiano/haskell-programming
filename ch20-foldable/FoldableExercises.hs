@@ -65,6 +65,8 @@ instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where (=-=) = eq
 data Three' a b = Three' a b b
                 deriving (Eq, Show)
 
+-- foldr vs foldl, see https://wiki.haskell.org/Fold
+
 -- e.g.
 -- foldr (*) 1 (Three' "abc" (3:: Product Integer) (5:: Product Integer)) -> Product {getProduct = 15}
 -- foldMap Product (Three' "abc" 3 5)                                     -> Product {getProduct = 15}
