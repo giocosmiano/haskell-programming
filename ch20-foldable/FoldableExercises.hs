@@ -32,7 +32,8 @@ data Two a b = Two a b
              deriving (Eq, Show)
 
 -- e.g.
--- foldr (*) 2 (Two "abc" 5) -> 10
+-- foldr (*) 2 (Two "abc" (5:: Sum Integer))   -> Sum {getSum = 10}
+-- foldMap (*2) (Two "abc" (5 :: Sum Integer)) -> Sum {getSum = 10}
 instance Foldable (Two a) where
   foldr f z (Two a b) = f b z
   foldMap f (Two a b) = f b
@@ -48,7 +49,8 @@ data Three a b c = Three a b c
                  deriving (Eq, Show)
 
 -- e.g.
--- foldr (*) 2 (Three "abc" [1,2,3] 5) -> 10
+-- foldr (*) 2 (Three "abc" [1,2,3] (5:: Sum Integer))   -> Sum {getSum = 10}
+-- foldMap (*2) (Three "abc" [1,2,3] (5 :: Sum Integer)) -> Sum {getSum = 10}
 instance Foldable (Three a b) where
   foldr f z (Three a b c) = f c z
   foldMap f (Three a b c) = f c
@@ -64,10 +66,11 @@ data Three' a b = Three' a b b
                 deriving (Eq, Show)
 
 -- e.g.
--- foldr (*) 2 (Three' "abc" 3 5) -> 10
+-- foldr (*) 1 (Three' "abc" (3:: Product Integer) (5:: Product Integer)) -> Product {getProduct = 15}
+-- foldMap Product (Three' "abc" 3 5)                                     -> Product {getProduct = 15}
 instance Foldable (Three' a) where
-  foldr f z (Three' a b b') = f b' z
-  foldMap f (Three' a b b') = f b'
+  foldr f z (Three' a b b') = f b (foldr f z (Three a b b'))
+  foldMap f (Three' a b b') = f b <> f b'
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where
   arbitrary = do
@@ -83,7 +86,8 @@ data Four a b c d = Four a b c d
                   deriving (Eq, Show)
 
 -- e.g.
--- foldr (*) 2 (Four "abc" [1,2,3] (Just "xyz") 5) -> 10
+-- foldr (*) 2 (Four "abc" [1,2,3] (3:: Product Integer) (5:: Sum Integer))   -> Sum {getSum = 10}
+-- foldMap (*2) (Four "abc" [1,2,3] (3:: Product Integer) (5 :: Sum Integer)) -> Sum {getSum = 10}
 instance Foldable (Four a b c) where
   foldr f z (Four a b c d) = f d z
   foldMap f (Four a b c d) = f d
@@ -104,7 +108,8 @@ data Four' a b = Four' a a a b
                deriving (Eq, Show)
 
 -- e.g.
--- foldr (*) 2 (Four' "abc" "xyz" [] 5) -> 10
+-- foldr (*) 2 (Four' "abc" "xyz" [] (5:: Sum Integer))   -> Sum {getSum = 10}
+-- foldMap (*2) (Four' "abc" "xyz" [] (5 :: Sum Integer)) -> Sum {getSum = 10}
 instance Foldable (Four' a) where
   foldr f z (Four' a a' a'' b) = f b z
   foldMap f (Four' a a' a'' b) = f b
