@@ -37,15 +37,12 @@ instance Foldable Tree where
   foldMap f (Leaf x) = f x
   foldMap f (Node l x r) = (foldMap f l) `mappend` (f x) `mappend` (foldMap f r)
 
---  foldr _ z Empty = z
---  foldr f z (Leaf x) = f x z
---  foldr f z (Node l x r) = f x $ ((foldr f z l) (foldr f z r))
---  foldr f z (Node l x r) = (foldr f z l) $ (f x) $ foldr f z r
---  foldr f z (Node l x r) =
---    let left   = foldr f z l
---        middle = f x
---        right  = foldr f z r
---    in  left $ middle $ right
+  foldr _ z Empty = z
+  foldr f z (Leaf x) = f x z
+  foldr f z (Node l x r) =
+    let left  = foldr f z l
+        right = foldr f left r
+    in  f x $ right
 
 --  foldr _ z Nil = z
 --  foldr f z (Cons x xs) = f x $ foldr f z xs
