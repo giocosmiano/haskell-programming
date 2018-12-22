@@ -48,6 +48,31 @@ instance (Eq a) => EqProp (Identity a) where (=-=) = eq
 
 -----------------------------------------------------------------------------------
 
+newtype Constant a b = Constant { getConstant :: a }
+                     deriving (Eq, Ord, Show)
+
+instance Functor (Constant a) where
+  fmap _ (Constant a) = Constant a
+
+instance Monoid a => Applicative (Constant a) where
+  pure a = Constant mempty
+  Constant x <*> Constant x' = Constant $ x `mappend` x'
+
+{-
+There's no Monad instance of Constant
+see http://hackage.haskell.org/package/transformers-0.5.5.0/docs/Data-Functor-Constant.html
+instance Monoid a => Monad (Constant a) where
+  return = pure
+  Constant a >>= f = Constant a
+-}
+
+instance (Arbitrary a) => Arbitrary (Constant a b) where
+  arbitrary = Constant <$> arbitrary
+
+instance (Eq a) => EqProp (Constant a b) where (=-=) = eq
+
+-----------------------------------------------------------------------------------
+
 data List a = Nil
             | Cons a (List a)
             deriving (Eq, Show)
@@ -227,44 +252,51 @@ instance (Eq a, Eq b) => EqProp (Four' a b) where (=-=) = eq
 -- https://github.com/conal/checkers/blob/master/src/Test/QuickCheck/Classes.hs
 
 main = do
-  putStrLn "\nTesting Applicative : Identity"
-  quickBatch $ applicative (undefined :: Identity (Int, Double, Char))
 
-  putStrLn "\nTesting Monad : Identity"
+  putStrLn "\nTesting Applicative, Monad : Identity"
+  quickBatch $ applicative (undefined :: Identity (Int, Double, Char))
   quickBatch $ monad (undefined :: Identity (Int, Double, Char))
 
-  putStrLn "\nTesting Applicative : List"
-  quickBatch $ applicative (undefined :: List (Int, Double, Char))
+-----------------------------------------------------------------------------------
+--There's no Monad instance of Constant
+--see http://hackage.haskell.org/package/transformers-0.5.5.0/docs/Data-Functor-Constant.html
 
-  putStrLn "\nTesting Monad : List"
+  putStrLn "\nTesting Applicative, Monad : Constant"
+  quickBatch $ applicative (undefined :: Constant [String] (Int, Double, Char))
+--  quickBatch $ monad (undefined :: Constant [String] (Int, Double, Char))
+
+-----------------------------------------------------------------------------------
+
+  putStrLn "\nTesting Applicative, Monad : List"
+  quickBatch $ applicative (undefined :: List (Int, Double, Char))
   quickBatch $ monad (undefined :: List (Int, Double, Char))
 
-  putStrLn "\nTesting Applicative Two"
-  quickBatch $ applicative (undefined :: Two [String] (Int, Double, Char))
+-----------------------------------------------------------------------------------
 
-  putStrLn "\nTesting Monad : Two"
+  putStrLn "\nTesting Applicative, Monad : Two"
+  quickBatch $ applicative (undefined :: Two [String] (Int, Double, Char))
   quickBatch $ monad (undefined :: Two [String] (Int, Double, Char))
 
-  putStrLn "\nTesting Applicative Three"
-  quickBatch $ applicative (undefined :: Three String (Maybe String) (Int, Double, Char))
+-----------------------------------------------------------------------------------
 
-  putStrLn "\nTesting Monad Three"
+  putStrLn "\nTesting Applicative, Monad : Three"
+  quickBatch $ applicative (undefined :: Three String (Maybe String) (Int, Double, Char))
   quickBatch $ monad (undefined :: Three String (Maybe String) (Int, Double, Char))
 
-  putStrLn "\nTesting Applicative Three'"
-  quickBatch $ applicative (undefined :: Three' String (Int, Double, Char))
+-----------------------------------------------------------------------------------
 
-  putStrLn "\nTesting Monad Three'"
+  putStrLn "\nTesting Applicative, Monad : Three'"
+  quickBatch $ applicative (undefined :: Three' String (Int, Double, Char))
   quickBatch $ monad (undefined :: Three' String (Int, Double, Char))
 
-  putStrLn "\nTesting Applicative Four"
-  quickBatch $ applicative (undefined :: Four String (Maybe String) [String] (Int, Double, Char))
+-----------------------------------------------------------------------------------
 
-  putStrLn "\nTesting Monad Four"
+  putStrLn "\nTesting Applicative, Monad : Four"
+  quickBatch $ applicative (undefined :: Four String (Maybe String) [String] (Int, Double, Char))
   quickBatch $ monad (undefined :: Four String (Maybe String) [String] (Int, Double, Char))
 
-  putStrLn "\nTesting Applicative Four'"
-  quickBatch $ applicative (undefined :: Four' [String] (Int, Double, Char))
+-----------------------------------------------------------------------------------
 
-  putStrLn "\nTesting Monad Four'"
+  putStrLn "\nTesting Applicative, Monad : Four'"
+  quickBatch $ applicative (undefined :: Four' [String] (Int, Double, Char))
   quickBatch $ monad (undefined :: Four' [String] (Int, Double, Char))
