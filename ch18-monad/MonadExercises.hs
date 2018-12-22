@@ -143,7 +143,7 @@ instance Functor (Three' a) where
 
 instance (Monoid a) => Applicative (Three' a) where
   pure x = Three' mempty x x
-  (Three' x f f') <*> (Three' x' y y') = Three' (x <> x') (f y) $ f y'
+  (Three' x f f') <*> (Three' x' y y') = Three' (x <> x') (f y) $ f' y'
 
 instance (Monoid a) => Monad (Three' a) where
   return = pure
