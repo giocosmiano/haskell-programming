@@ -16,16 +16,20 @@ instance Functor Tree where
   fmap f (Leaf x) = Leaf $ f x
   fmap f (Node l x r) = Node (fmap f l) (f x) (fmap f r)
 
-{-
+-- Needs to fix the failed `interchange` test of Applicative Tree
 instance Applicative Tree where
-  pure            = Leaf
-  Empty <*> _     = Empty
-  _     <*> Empty = Empty
-  (Node f x r) <*> (Node l x r)  = (fmap f xs) `append` (fs <*> xs)
+  pure = Leaf
+  (Leaf f) <*> (Leaf x) = Leaf $ f x
+  (Leaf f) <*> (Node l x r) = Node (fmap f l) (f x) (fmap f r)
+--  (Node _ f _) <*> (Node l x r) = Node (fmap f l) (f x) (fmap f r)
+  _ <*> _ = Empty
 
+-- Needs to implement the `monad` of Applicative Tree
+{-
 instance Monad Tree where
   return = pure
-  (Cons x xs) >>= f = f x `append` flatMap f xs
+  (Leaf x) >>= f = f x
+  (Node l x r) >>= f = Node (l >>= f) x (r >>= f)
 -}
 
 instance Foldable Tree where
@@ -78,7 +82,8 @@ instance Eq a => EqProp (Tree a) where (=-=) = eq
 main = do
 
   putStrLn "\nTesting Applicative, Monad, Traversable : Tree"
---  quickBatch $ applicative (undefined :: Tree (Int, Double, Char))
+  quickBatch $ functor (undefined :: Tree (Int, Double, Char))
+  quickBatch $ applicative (undefined :: Tree (Int, Double, Char))
 --  quickBatch $ monad (undefined :: Tree (Int, Double, Char))
   quickBatch $ traversable (undefined :: Tree (Int, Double, [Int]))
 
