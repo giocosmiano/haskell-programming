@@ -16,20 +16,43 @@ instance Functor Tree where
   fmap f (Leaf x) = Leaf $ f x
   fmap f (Node l x r) = Node (fmap f l) (f x) (fmap f r)
 
--- Needs to fix the failed `interchange` test of Applicative Tree
+-- TODO: How to implement the `applicative` Tree???
+{-
 instance Applicative Tree where
-  pure = Leaf
-  (Leaf f) <*> (Leaf x) = Leaf $ f x
-  (Leaf f) <*> (Node l x r) = Node (fmap f l) (f x) (fmap f r)
---  (Node _ f _) <*> (Node l x r) = Node (fmap f l) (f x) (fmap f r)
-  _ <*> _ = Empty
+  pure x              = Node Empty x Empty
+  (Node l f r) <*> xs = append (l <*> xs) (fmap f xs) (r <*> xs)
+  _ <*> _             = Empty
 
--- Needs to implement the `monad` of Applicative Tree
+createNode :: a -> Tree a
+createNode x = Node Empty x Empty
+
+insertNode :: (Ord a) => Tree a -> Tree a -> Tree a
+insertNode x Empty = createNode x
+insertNode x (Node left a right)
+  | x == a = Node left a right
+  | x < a  = Node (insertNode x left) a right
+  | x > a  = Node left a (insertNode x right)
+
+append :: Tree a -> Tree a -> Tree a -> Tree a
+append Empty y Empty                         = y
+
+append (Leaf x) (Leaf y) Empty               = Node (Leaf x) y Empty
+append Empty (Leaf y) (Leaf x)               = Node Empty y (Leaf x)
+append (Leaf x) (Leaf y) (Leaf z)            = Node (Leaf x) y (Leaf z)
+
+append (Node l x r) (Leaf y) Empty           = Node (append l (Leaf x) r) y Empty
+append (Node l x r) (Leaf y) (Leaf z)        = Node (append l (Leaf x) r) y (Leaf z)
+append Empty        (Leaf y) (Node l x r)    = Node Empty y (append l (Leaf x) r)
+append (Leaf z)     (Leaf y) (Node l x r)    = Node (Leaf z) y (append l (Leaf x) r)
+append (Node l x r) (Leaf y) (Node l' x' r') = Node (append l (Leaf x) r) y (append l' (Leaf x') r')
+-}
+
+-- TODO: How to implement the `monad` Tree???
 {-
 instance Monad Tree where
   return = pure
   (Leaf x) >>= f = f x
-  (Node l x r) >>= f = Node (l >>= f) x (r >>= f)
+  (Node l x r) >>= f = Node (l >>= f) (f x) (r >>= f)
 -}
 
 instance Foldable Tree where
@@ -44,9 +67,6 @@ instance Foldable Tree where
         right = foldr f left r
     in  f x $ right
 
---  foldr _ z Nil = z
---  foldr f z (Cons x xs) = f x $ foldr f z xs
-
 instance Traversable Tree where
   traverse _ Empty = pure Empty
   traverse f (Leaf x) = Leaf <$> f x
@@ -57,7 +77,8 @@ instance Arbitrary a => Arbitrary (Tree a) where
     a <- arbitrary
     oneof [return $ Empty,
            return $ Leaf a,
-           return $ Node (Leaf a) a (Leaf a)]
+           return $ Node (Leaf a) a (Leaf a),
+           return $ Node (Node (Leaf a) a (Leaf a)) a (Node (Leaf a) a (Leaf a))]
 
 instance Eq a => EqProp (Tree a) where (=-=) = eq
 
@@ -80,7 +101,7 @@ main = do
 
   putStrLn "\nTesting Applicative, Monad, Traversable : Tree"
   quickBatch $ functor (undefined :: Tree (Int, Double, Char))
-  quickBatch $ applicative (undefined :: Tree (Int, Double, Char))
+--  quickBatch $ applicative (undefined :: Tree (Int, Double, Char))
 --  quickBatch $ monad (undefined :: Tree (Int, Double, Char))
   quickBatch $ traversable (undefined :: Tree (Int, Double, [Int]))
 
