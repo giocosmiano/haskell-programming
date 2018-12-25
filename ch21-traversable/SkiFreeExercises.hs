@@ -15,6 +15,15 @@ data S n a = S (n a) a deriving (Eq, Show)
 instance Functor fa => Functor (S fa) where
   fmap f (S fa a) = S (fmap f fa) (f a)
 
+instance Applicative fa => Applicative (S fa) where
+  pure a = S (pure a) a
+  (S f f') <*> (S a a') = S (f <*> a) (f' a')
+
+-- TODO: implement the `monad` of S
+--instance (Monad fa) => Monad (S fa) where
+--  return = pure
+--  (S fa a) >>= f = (fa >>= f) (a >>= f)
+
 instance Foldable fa => Foldable (S fa) where
   foldMap f (S fa a) = foldMap f fa `mappend` f a
   foldr f z (S fa a) = foldr f (f a z) fa
@@ -46,6 +55,8 @@ main = do
 
   putStrLn "\nTesting Functor, Traversable : S"
   quickBatch $ functor (undefined :: S [] (Int, Double, Char))
+  quickBatch $ applicative (undefined :: S [] (Int, Double, Char))
+--  quickBatch $ monad (undefined :: S [] (Int, Double, Char))
   quickBatch $ traversable (undefined :: S [] (Int, Double, [Int]))
 
 -----------------------------------------------------------------------------------
