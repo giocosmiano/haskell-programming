@@ -64,10 +64,13 @@ append (Cons x xs) ys = Cons x $ xs `append` ys
 instance Arbitrary a => Arbitrary (List a) where
   arbitrary = do
     a <- arbitrary
-    oneof [return $ Nil,
-           return $ (Cons a Nil),
-           return $ (Cons a (Cons a Nil)),
-           return $ (Cons a (Cons a (Cons a (Cons a (Cons a Nil)))))]
+    frequency
+      [
+        (1, return Nil),
+        (2, return $ Cons a Nil),
+        (4, return $ Cons a (Cons a Nil)),
+        (8, return $ Cons a (Cons a (Cons a (Cons a (Cons a Nil)))))
+      ]
 
 instance Eq a => EqProp (List a) where (=-=) = eq
 
