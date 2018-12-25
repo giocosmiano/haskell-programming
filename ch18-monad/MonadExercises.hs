@@ -233,6 +233,32 @@ instance (Eq a, Eq b) => EqProp (Four' a b) where (=-=) = eq
 
 -----------------------------------------------------------------------------------
 
+data Four'' a b = Four'' a b b b
+               deriving (Eq, Show)
+
+instance Functor (Four'' a) where
+  fmap f (Four'' a b' b'' b) = Four'' a (f b') (f b'') $ f b
+
+instance (Monoid a) => Applicative (Four'' a) where
+  pure x = Four'' mempty x x x
+  (Four'' x f f' f'') <*> (Four'' x' b b' b'') = Four'' (x <> x') (f b) (f' b') $ f'' b''
+
+instance (Monoid a) => Monad (Four'' a) where
+  return = pure
+  Four'' w x y z >>= f =
+    let Four'' w' x y z' = f z
+    in  Four'' (w <> w') x y z'
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Four'' a b) where
+  arbitrary = do
+    a  <- arbitrary
+    b  <- arbitrary
+    return (Four'' a b b b)
+
+instance (Eq a, Eq b) => EqProp (Four'' a b) where (=-=) = eq
+
+-----------------------------------------------------------------------------------
+
 -- search --> haskell applicative function checkers
 -- https://stackoverflow.com/questions/36009335/how-do-i-test-this-applicative-instance-with-checkers-no-instance-for-coarbitr
 
@@ -293,3 +319,9 @@ main = do
   putStrLn "\nTesting Applicative, Monad : Four'"
   quickBatch $ applicative (undefined :: Four' [String] (Int, Double, Char))
   quickBatch $ monad (undefined :: Four' [String] (Int, Double, Char))
+
+-----------------------------------------------------------------------------------
+
+  putStrLn "\nTesting Applicative, Monad : Four''"
+  quickBatch $ applicative (undefined :: Four'' [String] (Int, Double, Char))
+  quickBatch $ monad (undefined :: Four'' [String] (Int, Double, Char))
