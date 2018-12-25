@@ -10,6 +10,69 @@ import Test.QuickCheck.Classes
 
 -----------------------------------------------------------------------------------
 
+newtype Identity a = Identity a
+                   deriving (Eq, Ord, Show)
+
+instance Functor Identity where
+  fmap f (Identity x) = Identity $ f x
+
+instance Applicative Identity where
+  pure = Identity
+  (Identity f) <*> (Identity a) = Identity $ f a
+
+instance (Arbitrary a) => Arbitrary (Identity a) where
+  arbitrary = Identity <$> arbitrary
+
+instance (Eq a) => EqProp (Identity a) where (=-=) = eq
+
+-----------------------------------------------------------------------------------
+
+newtype Constant a b = Constant { getConstant :: a }
+                     deriving (Eq, Ord, Show)
+
+instance Functor (Constant a) where
+  fmap _ (Constant a) = Constant a
+
+instance Monoid a => Applicative (Constant a) where
+  pure a = Constant mempty
+  Constant x <*> Constant x' = Constant $ x `mappend` x'
+
+instance (Arbitrary a) => Arbitrary (Constant a b) where
+  arbitrary = Constant <$> arbitrary
+
+instance (Eq a) => EqProp (Constant a b) where (=-=) = eq
+
+-----------------------------------------------------------------------------------
+
+data List a = Nil
+            | Cons a (List a)
+            deriving (Eq, Show)
+
+instance Functor List where
+  fmap _ Nil = Nil
+  fmap f (Cons x xs) = Cons (f x) (fmap f xs)
+
+instance Applicative List where
+  pure x              = Cons x Nil
+  (Cons f fs) <*> xs  = (fmap f xs) `append` (fs <*> xs)
+  _           <*> _   = Nil
+
+append :: List a -> List a -> List a
+append Nil ys = ys
+append (Cons x xs) ys = Cons x $ xs `append` ys
+
+instance Arbitrary a => Arbitrary (List a) where
+  arbitrary = do
+    a <- arbitrary
+    oneof [return $ Nil,
+           return $ (Cons a Nil),
+           return $ (Cons a (Cons a Nil)),
+           return $ (Cons a (Cons a (Cons a (Cons a (Cons a Nil)))))]
+
+instance Eq a => EqProp (List a) where (=-=) = eq
+
+-----------------------------------------------------------------------------------
+
 data Two a b = Two a b
              deriving (Eq, Show)
 
@@ -52,7 +115,7 @@ instance Functor (Three' a) where
 
 instance (Monoid a) => Applicative (Three' a) where
   pure x = Three' mempty x x
-  (Three' x f f') <*> (Three' x' y y') = Three' (x <> x') (f y) $ f y'
+  (Three' x f f') <*> (Three' x' y y') = Three' (x <> x') (f y) $ f' y'
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where
   arbitrary = do
@@ -106,6 +169,26 @@ instance (Eq a, Eq b) => EqProp (Four' a b) where (=-=) = eq
 
 -----------------------------------------------------------------------------------
 
+data Four'' a b = Four'' a b b b
+               deriving (Eq, Show)
+
+instance Functor (Four'' a) where
+  fmap f (Four'' a b' b'' b) = Four'' a (f b') (f b'') $ f b
+
+instance (Monoid a) => Applicative (Four'' a) where
+  pure x = Four'' mempty x x x
+  (Four'' x f f' f'') <*> (Four'' x' b b' b'') = Four'' (x <> x') (f b) (f' b') $ f'' b''
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Four'' a b) where
+  arbitrary = do
+    a  <- arbitrary
+    b  <- arbitrary
+    return (Four'' a b b b)
+
+instance (Eq a, Eq b) => EqProp (Four'' a b) where (=-=) = eq
+
+-----------------------------------------------------------------------------------
+
 -- search --> haskell applicative function checkers
 -- https://stackoverflow.com/questions/36009335/how-do-i-test-this-applicative-instance-with-checkers-no-instance-for-coarbitr
 
@@ -118,17 +201,48 @@ instance (Eq a, Eq b) => EqProp (Four' a b) where (=-=) = eq
 -- https://github.com/conal/checkers/blob/master/src/Test/QuickCheck/Classes.hs
 
 main = do
+
+  putStrLn "\nTesting Applicative : Identity"
+  quickBatch $ applicative (undefined :: Identity (Int, Double, Char))
+
+-----------------------------------------------------------------------------------
+
+  putStrLn "\nTesting Applicative : Constant"
+  quickBatch $ applicative (undefined :: Constant [String] (Int, Double, Char))
+
+-----------------------------------------------------------------------------------
+
+  putStrLn "\nTesting Applicative : List"
+  quickBatch $ applicative (undefined :: List (Int, Double, Char))
+
+-----------------------------------------------------------------------------------
+
   putStrLn "\nTesting applicative Two"
   quickBatch $ applicative (undefined :: Two String (Int, Double, Char))
+
+-----------------------------------------------------------------------------------
 
   putStrLn "\nTesting applicative Three"
   quickBatch $ applicative (undefined :: Three String (Maybe String) (Int, Double, Char))
 
+-----------------------------------------------------------------------------------
+
   putStrLn "\nTesting applicative Three'"
   quickBatch $ applicative (undefined :: Three' String (Int, Double, Char))
+
+-----------------------------------------------------------------------------------
 
   putStrLn "\nTesting applicative Four"
   quickBatch $ applicative (undefined :: Four String (Maybe String) [String] (Int, Double, Char))
 
+-----------------------------------------------------------------------------------
+
   putStrLn "\nTesting applicative Four'"
   quickBatch $ applicative (undefined :: Four' [String] (Int, Double, Char))
+
+-----------------------------------------------------------------------------------
+
+  putStrLn "\nTesting applicative Four''"
+  quickBatch $ applicative (undefined :: Four'' [String] (Int, Double, Char))
+
+-----------------------------------------------------------------------------------
