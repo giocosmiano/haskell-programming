@@ -20,9 +20,9 @@ instance Applicative fa => Applicative (S fa) where
   (S f f') <*> (S a a') = S (f <*> a) (f' a')
 
 -- TODO: implement the `monad` of S
---instance (Monad fa) => Monad (S fa) where
---  return = pure
---  (S fa a) >>= f = (fa >>= f) (a >>= f)
+instance (Monad fa) => Monad (S fa) where
+  return = pure
+  (S fa a) >>= f = f a >>= (fa >>= f)
 
 instance Foldable fa => Foldable (S fa) where
   foldMap f (S fa a) = foldMap f fa `mappend` f a
