@@ -17,12 +17,15 @@ instance Functor fa => Functor (S fa) where
 
 instance Applicative fa => Applicative (S fa) where
   pure a = S (pure a) a
-  (S f f') <*> (S a a') = S (f <*> a) (f' a')
+  (S fa f) <*> (S fa' a) = S (fa <*> fa') (f a)
 
--- TODO: implement the `monad` of S
---instance (Monad fa) => Monad (S fa) where
---  return = pure
---  (S fa a) >>= f = f a >>= (fa >>= f)
+-- TODO: fix the implementation of `monad` S
+instance (Monad fa) => Monad (S fa) where
+  return = pure
+--  (S fa a) >>= f = S (fa >>= f) (f a)
+  (S fa a) >>= f =
+    let S fa' a' = f a
+    in  S fa' a'
 
 instance Foldable fa => Foldable (S fa) where
   foldMap f (S fa a) = foldMap f fa `mappend` f a
@@ -56,7 +59,7 @@ main = do
   putStrLn "\nTesting Functor, Traversable : S"
   quickBatch $ functor (undefined :: S [] (Int, Double, Char))
   quickBatch $ applicative (undefined :: S [] (Int, Double, Char))
---  quickBatch $ monad (undefined :: S [] (Int, Double, Char))
+  quickBatch $ monad (undefined :: S [] (Int, Double, Char))
   quickBatch $ traversable (undefined :: S [] (Int, Double, [Int]))
 
 -----------------------------------------------------------------------------------
