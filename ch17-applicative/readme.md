@@ -19,7 +19,7 @@ class Functor f => Applicative f where
 ```haskell
   mappend :: Monoid a => a -> a -> a
 
-  mappend :: f             f      f 
+  mappend :: f          -> f   -> f 
   (<*>)   :: f (a -> b) -> f a -> f b
   (<$>)   ::   (a -> b) -> f a -> f b
 ```
