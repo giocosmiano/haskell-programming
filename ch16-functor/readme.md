@@ -8,6 +8,8 @@ class Functor f where
 ```haskell
   fmap  :: Functor f => (a -> b) -> f a -> f b
   (<$>) :: Functor f => (a -> b) -> f a -> f b
+
+   ($)  ::              (a -> b) ->   a ->   b -- function application
 ```
 
 ### Identity Law
