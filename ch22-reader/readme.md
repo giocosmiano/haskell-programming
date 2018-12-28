@@ -62,7 +62,7 @@ instance Monad (Reader r) where
   return = pure
 
   (>>=) :: Reader r a -> (a -> Reader r b) -> Reader r b
-  (Reader ra) >>= aRb = Reader $ \x -> aRb (ra x) x
+  (Reader ra) >>= aRb = Reader $ \x -> runReader (aRb (ra x)) x
 
 -- visualizing the Monad pattern for Reader
 -- return = pure
