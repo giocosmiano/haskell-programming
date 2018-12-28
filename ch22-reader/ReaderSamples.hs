@@ -189,6 +189,13 @@ getDogRM = do
   addy <- address
   return $ Dog name addy
 
+-- e.g.
+-- getDogRM' pers  -> Dog {dogsName = DogName "Barkley", dogsAddress = Address "Sesame Street"}
+-- getDogRM' chris -> Dog {dogsName = DogName "Papu", dogsAddress = Address "Austin"}
+-- with Reader Monad
+getDogRM' :: Person -> Dog
+getDogRM' = \r -> Dog (dogName r) (address r)
+
 -----------------------------------------------------------------------------------
 
 newtype Reader r a = Reader { runReader :: r -> a }
