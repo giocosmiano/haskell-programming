@@ -100,23 +100,32 @@ main = do
   print $ bolt 7
   print $ fmap bolt z
 
-{-
---When you run this in GHCi, your results should look like this
-
-Prelude> main
-Just [3,2,1]
-[[1,4],[1,5],[1,6],[2,4],[2,5],[2,6],[3,4],[3,5],[3,6]]
-Just [6,9]
-Just 15
-Nothing
-True
-[True,False,False]
--}
+  putStrLn $ "\nAdded few more practices"
+  print $ all (==True) $ sequA 5
+  print $ sequA $ fromMaybe 0 summed'
+  print $ bolt $ fromMaybe 0 ys
 
 -----------------------------------------------------------------------------------
--- few more added practices
+-- When you run this in GHCi, your results should look like this
+-----------------------------------------------------------------------------------
+-- Prelude> main
+-- Just [3,2,1]
+-- [[1,4],[1,5],[1,6],[2,4],[2,5],[2,6],[3,4],[3,5],[3,6]]
+-- Just [6,9]
+-- Just 15
+-- Nothing
+-- True
+-- [True,False,False]
+
+-----------------------------------------------------------------------------------
+-- Added few more practices
 -----------------------------------------------------------------------------------
 -- 1. fold the boolean conjunction operator over the list of results of sequA (applied to some value).
 -- 2. apply sequA to summed'; you’ll need fromMaybe.
 -- 3. apply bolt to ys; you’ll need fromMaybe.
+
+-- Added few more practices
+-- False
+-- [True,False,False]
+-- False
 
