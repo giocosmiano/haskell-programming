@@ -74,4 +74,13 @@ instance Monad (Reader r) where
 -- (>>=) :: (r -> a) -> (a -> (r -> b)) -> (r -> b)
 ```
 
+ - When we use >>= to feed a monadic value to a function, the result is always a monadic value.
+   So, in this case, when we feed a function to another function, the result is a function as well.
+   That’s why the result starts off as a lambda.
+ 
+ - All of the implementations of >>= so far somehow isolated the result from the monadic value and
+   then applied the function `aRb` to that result. The same thing happens here. To get the result
+   from a function, we need to apply it to something, which is why we use `(ra x)` here, and then
+   we apply `aRb` to that. `aRb` returns a monadic value, which is a function in our case, so we apply
+   it to `x` as well
 
