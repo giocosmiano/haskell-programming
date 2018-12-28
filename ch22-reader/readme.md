@@ -84,3 +84,13 @@ instance Monad (Reader r) where
    we apply `aRb` to that. `aRb` returns a monadic value, which is a function in our case, so we apply
    it to `x` as well
 
+
+***Monad Transformer***
+ - A monad transformer is a special type that takes a monad as an argument and returns a monad as a result.
+   It allows us to combine two monads into one that shares the behaviors of both, such as allowing us to
+   add exception handling to a `State` monad. It is somewhat common to create a stack of transformers
+   to create one large monad that has features from several monads, for example, rolling `Reader`,
+   `Either`, and `IO` together to get a monad that captures the behavior of waiting for an argument that
+   will get passed around to multiple functions but is likely to come in via some kind of `I/O` action
+   and has the possibility of failure we might like to catch. Often this stack will be given a type
+   alias for convenience.
