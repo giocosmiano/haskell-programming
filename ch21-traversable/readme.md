@@ -11,6 +11,27 @@ class (Functor t, Foldable t) => Traversable t where
   sequenceA = traverse id
 ```
 
+## `traverse`
+ - is mapping a function over some embedded value(s), like `fmap`, but similar to `flip bind`, that function is itself
+   generating more structure. However, unlike `flip bind`, that structure can be of a different type than the
+   structure we lifted over to apply the function. And at the end, it will flip the two structures around,
+   as sequenceA did.
+```haskell
+Prelude> import Data.Functor.Identity
+Prelude> traverse (Identity . (+1)) [1, 2, 3]
+Identity [2,3,4]
+Prelude> runIdentity $ traverse (Identity . (+1)) [1, 2, 3]
+[2,3,4]
+```
+
+## `sequenceA`
+ - is flipping two contexts or structures. It doesn’t by itself allow you to apply any function to the a value
+   inside the structure; it only flips the layers of structure around.
+```haskell
+Prelude> sequenceA [Just 3, Just 2, Just 1]
+Just [3,2,1]
+```
+
 ## `traverse` Laws
 
 ***1. Naturality***
