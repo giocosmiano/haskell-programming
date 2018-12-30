@@ -1,4 +1,10 @@
 ### Definition
+ - Reader is a way of stringing functions together when all those functions are awaiting one input
+   from a shared environment. The important intuition is that it’s another way of abstracting out
+   function application and gives us a way to do computation in terms of an argument that hasn’t been
+   supplied yet. We use this most often when we have a constant value that we will obtain from somewhere
+   outside our program that will be an argument to a whole bunch of functions. Using `Reader` allows us
+   to avoid passing that argument around explicitly.
 
 ***Reader kind***
 ```haskell
