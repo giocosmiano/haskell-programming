@@ -92,6 +92,12 @@ instance Monad (Reader r) where
 -- (>>=) :: (r -> a) -> (a -> (r -> b)) -> (r -> b)
 ```
 
+```haskell
+-- Sample Monad Reader
+Prelude> (+3) >>= return . (*5) $ 7
+50
+```
+
  - When we use >>= to feed a monadic value to a function, the result is always a monadic value.
    So, in this case, when we feed a function to another function, the result is a function as well.
    That’s why the result starts off as a lambda.
