@@ -1,4 +1,10 @@
 ### Definition
+ - Applicatives are monoidal functors. The Applicative type class allows for function
+   application lifted over structure (like Functor). But with Applicative the function
+   we’re applying is also embedded in some structure. Because the function and the value
+   it’s being applied to both have structure, we have to smash those structures together.
+   So, Applicative involves monoids, like `mappend`, and functors.
+   
 ```haskell
 class Functor f => Applicative f where
 
