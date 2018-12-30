@@ -1,4 +1,18 @@
 ### Definition
+ - Monad is an `Applicative Functor` with some unique features that make it a bit more powerful than
+   either alone. A `Functor` maps a function over some structure; an `Applicative` maps a function
+   that is contained in some structure over some other structure and then combines the two layers of
+   structure like `mappend`.
+   
+ - Think of `Monads` as another way of applying functions over structure, with the ability of the function
+   to alter the structure, something we’ve not seen in `Functor` and `Applicative`. `Monad` can inject more
+   structure. However, it has the ability to flatten those two layers of structure into one is what
+   makes `Monad` special. And it’s by putting that `join` function together with the mapping function
+   that we get `bind`, also known as `>>=`.
+
+ - The `Monad` type class is generalized structure manipulation with some laws to make it sensible. Just like
+   `Functor` and `Applicative`.
+
 ```haskell
 class Applicative m => Monad m where
 
