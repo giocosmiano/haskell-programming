@@ -37,7 +37,7 @@ State { runState ::                    s -> (a, s) }
 
 ***State vs randomR***
 ```haskell
-State { runState ::                    s -> (a, s) }
-        randomR  :: (...) => (a, a) -> g -> (a, g)
+State { runState ::                                      s -> (a, s) }
+        randomR  :: (RandomGen g, Random a) => (a, a) -> g -> (a, g)
 ```
 
