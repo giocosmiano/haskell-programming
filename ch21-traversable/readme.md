@@ -1,4 +1,9 @@
 ### Definition
+ - Traversable allows you to transform elements inside the structure like a `Functor`, producing `Applicative` effects
+   along the way, and lift those potentially multiple instances of `Applicative` structure outside of the traversable
+   structure. It is commonly described as a way to traverse a data structure, mapping a function inside a structure
+   while accumulating the applicative contexts along the way.
+
 ```haskell
 class (Functor t, Foldable t) => Traversable t where
 
