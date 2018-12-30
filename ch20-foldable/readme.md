@@ -1,4 +1,6 @@
 ### Definition
+ - Foldable is a type class of data structures that can be folded to a summary value.
+
 ```haskell
 class Foldable (t :: * -> *) where
 
