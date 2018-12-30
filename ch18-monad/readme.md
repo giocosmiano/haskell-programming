@@ -28,6 +28,26 @@ Prelude> fmap (\x -> [(x*5, x+3)]) [6,7,8]
 
 Prelude> fmap (\x -> Just (x*5, x+3)) (Just 7)
 Just (Just (35,10))
+
+-- on the other hand, this will throw an error because the types are different, [] vs Maybe
+Prelude> [6,7,8] >>= \x -> Just (x*5, x+3)
+<interactive>:15:19: error:
+    Couldn't match type 'Maybe' with '[]'
+    Expected type: [(b, b)]
+      Actual type: Maybe (b, b)
+
+Prelude> (Just 7) >>= \x -> [(x*5, x+3)]
+<interactive>:16:20: error:
+    Couldn't match type '[]' with 'Maybe'
+    Expected type: Maybe (b, b)
+      Actual type: [(b, b)]
+
+-- to fix the error, use the `return` to put the results back to its original structure
+Prelude> [6,7,8] >>= return . \x -> Just (x*5, x+3)
+[Just (30,9),Just (35,10),Just (40,11)]
+
+Prelude> (Just 7) >>= return . \x -> [(x*5, x+3)]
+Just [(35,10)]
 ```
 
 ### Monad class
