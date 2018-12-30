@@ -35,6 +35,12 @@ OR
 -- (<$>) :: (a -> b) -> (r -> a) -> (r -> b)
 ```
 
+```haskell
+-- Sample Functor Reader
+Prelude> fmap (+3) (*5) 7
+38
+```
+
 ***Function Composition***
 ```haskell
 compose :: (b -> c) -> (a -> b) -> (a -> c)
@@ -60,6 +66,12 @@ instance Applicative (Reader r) where
 
 -- (<*>) ::    f (a -> b) ->     f a  ->     f b
 -- (<*>) :: (r -> a -> b) -> (r -> a) -> (r -> b)
+```
+
+```haskell
+-- Sample Applicative Reader
+Prelude> (+) <$> (+3) <*> (*5) $ 7
+45
 ```
 
 ***Monad Reader***
