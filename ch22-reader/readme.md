@@ -39,6 +39,9 @@ OR
 -- Sample Functor Reader
 Prelude> fmap (+3) (*5) 7
 38
+
+Prelude> fmap (runReader $ Reader $ (+3)) (runReader $ Reader $ (*5)) 7
+38
 ```
 
 ***Function Composition***
@@ -72,6 +75,9 @@ instance Applicative (Reader r) where
 -- Sample Applicative Reader
 Prelude> (+) <$> (+3) <*> (*5) $ 7
 45
+
+Prelude> (+) <$> (runReader $ Reader $ (+3)) <*> (runReader $ Reader $ (*5)) $ 7
+45
 ```
 
 ***Monad Reader***
@@ -95,6 +101,9 @@ instance Monad (Reader r) where
 ```haskell
 -- Sample Monad Reader
 Prelude> (+3) >>= return . (*5) $ 7
+50
+
+Prelude> (runReader $ Reader $ (+3)) >>= return . (runReader $ Reader $ (*5)) $ 7
 50
 ```
 
