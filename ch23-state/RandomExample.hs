@@ -160,6 +160,10 @@ rollsToGetTwenty g = go 0 0 g
 rollsToGetTwentyUsingRandomIO :: IO Int
 rollsToGetTwentyUsingRandomIO = (rollsToGetTwenty . mkStdGen) <$> randomIO
 
+-- NOTE ***
+-- Under the hood, it’s the same interface and State Monad driven mechanism, but it’s
+-- mutating a single globally used StdGen to walk the generator forward on each use.
+
 -----------------------------------------------------------------------------------
 
 main = do
