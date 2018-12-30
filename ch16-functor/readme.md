@@ -1,4 +1,8 @@
 ### Definition
+ - Functor is a way to apply a function over or around some structure that
+   we don’t want to alter. That is, we want to apply the function to the value
+   that is “inside” some structure and leave the structure alone.
+
 ```haskell
 class Functor f where
 
