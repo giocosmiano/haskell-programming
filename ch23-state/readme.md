@@ -29,3 +29,15 @@ State :: (s -> (a, s)) -> State s a
 runState :: State s a -> s -> (a, s)
 ```
 
+***State vs random***
+```haskell
+State { runState ::                    s -> (a, s) }
+        random   :: (Random a) => StdGen -> (a, StdGen)
+```
+
+***State vs randomR***
+```haskell
+State { runState ::                    s -> (a, s) }
+        randomR  :: (...) => (a, a) -> g -> (a, g)
+```
+
