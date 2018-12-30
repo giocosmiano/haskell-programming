@@ -187,7 +187,7 @@ rollsToGetN n g = go 0 0 g
 -- rollsToGetNUsingRandomIO 50 -> 15
 -- rollsToGetNUsingRandomIO 50 -> 16
 rollsToGetNUsingRandomIO :: Int -> IO Int
-rollsToGetNUsingRandomIO n = ((rollsToGetN n). mkStdGen) <$> randomIO
+rollsToGetNUsingRandomIO n = ((rollsToGetN n) . mkStdGen) <$> randomIO
 
 -----------------------------------------------------------------------------------
 
