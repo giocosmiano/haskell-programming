@@ -10,9 +10,20 @@
    makes `Monad` special. And it’s by putting that `join` function together with the mapping function
    that we get `bind`, also known as `>>=`.
 
- - The `Monad` type class is generalized structure manipulation with some laws to make it sensible. Just like
-   `Functor` and `Applicative`.
+ - The `Monad` type class is essentially a **generalized structure manipulation with some laws** to make
+   it sensible. Just like `Functor` and `Applicative`.
 
+```haskell
+-- Sample Monad with added structure then flatten implicitly by `join`  
+Prelude> [6,7,8] >>= \x -> [(x*5, x+3)]
+[(30,9),(35,10),(40,11)]
+
+-- as oppose to Functor that only applies the function to values in the structure while leaving the structure intact
+Prelude> fmap (\x -> [(x*5, x+3)]) [6,7,8]
+[[(30,9)],[(35,10)],[(40,11)]]
+```
+
+### Monad class
 ```haskell
 class Applicative m => Monad m where
 
