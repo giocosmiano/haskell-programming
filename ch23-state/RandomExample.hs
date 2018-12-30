@@ -136,7 +136,7 @@ nDie n = replicateM n rollDie'
 -----------------------------------------------------------------------------------
 
 -- e.g.
--- rollsToGetTwenty (mkStdGen 0) -> 5
+-- rollsToGetTwenty $ mkStdGen 0 -> 5
 rollsToGetTwenty :: StdGen -> Int
 rollsToGetTwenty g = go 0 0 g
   where
@@ -147,7 +147,6 @@ rollsToGetTwenty g = go 0 0 g
         let (die, nextGen) = randomR (1, 6) gen
         in  go (sum + die)
                (count + 1) nextGen
-
 
 -----------------------------------------------------------------------------------
 -- randomIO :: Random a => IO a
@@ -163,6 +162,32 @@ rollsToGetTwentyUsingRandomIO = (rollsToGetTwenty . mkStdGen) <$> randomIO
 -- NOTE ***
 -- Under the hood, it’s the same interface and State Monad driven mechanism, but it’s
 -- mutating a single globally used StdGen to walk the generator forward on each use.
+
+-----------------------------------------------------------------------------------
+
+-- e.g.
+-- rollsToGetN 50 $ mkStdGen 0 -> 14
+rollsToGetN :: Int -> StdGen -> Int
+rollsToGetN n g = go 0 0 g
+  where
+    go :: Int -> Int -> StdGen -> Int
+    go  sum count gen
+      | sum >= n = count
+      | otherwise =
+        let (die, nextGen) = randomR (1, 6) gen
+        in  go (sum + die)
+               (count + 1) nextGen
+
+-----------------------------------------------------------------------------------
+-- randomIO :: Random a => IO a
+-----------------------------------------------------------------------------------
+
+-- e.g.
+-- rollsToGetNUsingRandomIO 50 -> 18
+-- rollsToGetNUsingRandomIO 50 -> 15
+-- rollsToGetNUsingRandomIO 50 -> 16
+rollsToGetNUsingRandomIO :: Int -> IO Int
+rollsToGetNUsingRandomIO n = ((rollsToGetN n). mkStdGen) <$> randomIO
 
 -----------------------------------------------------------------------------------
 
@@ -186,3 +211,11 @@ main = do
   putStrLn "\nrollsToGetTwentyUsingRandomIO"
   rollsToGetTwentyValue <- rollsToGetTwentyUsingRandomIO
   print $ rollsToGetTwentyValue
+
+  putStrLn $ "\nAdded few more practices"
+  putStrLn $ "rollsToGetN 50"
+  print $ rollsToGetN 50 $ mkStdGen 0
+
+  putStrLn "\nrollsToGetNUsingRandomIO 50"
+  rollsToGetNValue <- rollsToGetNUsingRandomIO 50
+  print $ rollsToGetNValue
