@@ -83,6 +83,14 @@ rollDieThreeTimes = do
 -----------------------------------------------------------------------------------
 -- the state function is a constructor that takes a State-like
 -- function and embeds it in the State monad transformer.
+--
+-- for details see
+-- http://hackage.haskell.org/package/transformers-0.5.5.0/docs/Control-Monad-Trans-State-Lazy.html
+-- http://hackage.haskell.org/package/mtl-2.2.2/docs/Control-Monad-State-Lazy.html
+
+-- e.g.
+-- state $ randomR (1,6) -- randomR will return function `(g -> (a, g))` which will
+-- then become an input to `state` function
 
 -----------------------------------------------------------------------------------
 
