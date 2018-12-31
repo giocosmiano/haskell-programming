@@ -182,12 +182,12 @@ rollsToGetN n g = go 0 0 g
 
 type CountLogger = (Int, [Die])
 
-initCountLogger :: Int -> [Die] -> CountLogger
-initCountLogger n d = (n, d)
+setCountLogger :: Int -> [Die] -> CountLogger
+setCountLogger n d = (n, d)
 
 rollsCountLogged :: Int -> StdGen -> CountLogger
 rollsCountLogged = undefined
---rollsCountLogged n g = go 0 (initCountLogger 0 []) g
+--rollsCountLogged n g = go 0 (setCountLogger 0 []) g
 --  where
 --    go :: Int -> CountLogger -> StdGen -> Int
 --    go  sum countLogger gen
@@ -196,7 +196,7 @@ rollsCountLogged = undefined
 --        let (die, nextGen) = randomR (1, 6) gen
 --            count = (fst countLogger) + 1
 --            dies  = (snd countLogger) ++ [intToDie die]
---        in  go (sum + die) (initCountLogger count dies) nextGen
+--        in  go (sum + die) (setCountLogger count dies) nextGen
 
 -----------------------------------------------------------------------------------
 -- randomIO :: Random a => IO a
