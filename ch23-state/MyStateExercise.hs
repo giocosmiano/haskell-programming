@@ -28,6 +28,8 @@ instance Applicative (Moi s) where
     in  (f' a', s'')
 
 -- e.g.
+-- runMoi ((Moi $ \s -> (5, s)) >>= return . (+3)) 7 -> (8,7)
+-- runMoi ((Moi $ \s -> (5, s)) >>= return . (*3)) 7 -> (15,7)
 instance Monad (Moi s) where
   return = pure
 
