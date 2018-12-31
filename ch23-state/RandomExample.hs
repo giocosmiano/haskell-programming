@@ -197,16 +197,16 @@ setCountLogger :: Int -> [Die] -> CountLogger
 setCountLogger n d = (n, d)
 
 rollsCountLogged :: Int -> StdGen -> CountLogger
-rollsCountLogged n g = go 0 (setCountLogger 0 []) n g
+rollsCountLogged n g = go 0 n g $ setCountLogger 0 []
   where
-    go :: Int -> CountLogger -> Int -> StdGen -> CountLogger
-    go  sum countLogger n' gen
+    go :: Int -> Int -> StdGen -> CountLogger -> CountLogger
+    go  sum n' gen countLogger
       | sum >= n' = countLogger
       | otherwise =
         let (die, nextGen) = randomR (1, 6) gen
             count = (fst countLogger) + 1
             dies  = (snd countLogger) ++ [intToDie die]
-        in  go (sum + die) (setCountLogger count dies) n' nextGen
+        in  go (sum + die) n' nextGen $ setCountLogger count dies
 
 -----------------------------------------------------------------------------------
 -- randomIO :: Random a => IO a
@@ -245,10 +245,10 @@ main = do
   putStrLn $ "rollsToGetN 50"
   print $ rollsToGetN 50 $ mkStdGen 0
 
-  putStrLn "\nrollsToGetNUsingRandomIO 50"
-  rollsToGetNValue <- rollsToGetNUsingRandomIO 50
+  putStrLn "\nrollsToGetNUsingRandomIO 20"
+  rollsToGetNValue <- rollsToGetNUsingRandomIO 20
   print $ rollsToGetNValue
 
-  putStrLn "\nrollsCountLoggedUsingRandomIO 50"
-  rollsCountLoggedValue <- rollsCountLoggedUsingRandomIO 50
+  putStrLn "\nrollsCountLoggedUsingRandomIO 20"
+  rollsCountLoggedValue <- rollsCountLoggedUsingRandomIO 20
   print $ rollsCountLoggedValue
