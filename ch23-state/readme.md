@@ -53,6 +53,7 @@ State { runState ::                                      s -> (a, s) }
 ### For further reading
  - [All About Monads](https://wiki.haskell.org/All_About_Monads)
  - [All About Monads - The State monad](https://wiki.haskell.org/All_About_Monads#The_State_monad)
- - [School of Haskell - State Monad](https://www.schoolofhaskell.com/school/starting-with-haskell/basics-of-haskell/12-State-Monad)
+ - [Basics of Haskell - by Bartosz Milewski](https://www.schoolofhaskell.com/school/starting-with-haskell/basics-of-haskell)
+ - [School of Haskell - State Monad - by Bartosz Milewski](https://www.schoolofhaskell.com/school/starting-with-haskell/basics-of-haskell/12-State-Monad)
  - [The State Monad: A Tutorial for the Confused?](http://brandon.si/code/the-state-monad-a-tutorial-for-the-confused/)
- - [What I Wish I Knew When Learning Haskell](http://dev.stephendiehl.com/hask/)
+ - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
