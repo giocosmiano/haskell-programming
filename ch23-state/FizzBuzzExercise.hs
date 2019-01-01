@@ -28,7 +28,8 @@ fizzBuzz n
 -----------------------------------------------------------------------------------
 
 -- e.g.
--- fizzBuzzList [1..20] -> ["Buzz","19","Fizz","17","16","FizzBuzz","14","13","Fizz","11","Buzz","Fizz","8","7","Fizz","Buzz","4","Fizz","2","1"]
+-- fizzBuzzList [1..20] ->
+-- ["Buzz","19","Fizz","17","16","FizzBuzz","14","13","Fizz","11","Buzz","Fizz","8","7","Fizz","Buzz","4","Fizz","2","1"]
 fizzBuzzList :: [Integer] -> [String]
 fizzBuzzList list = execState (mapM_ addResult list) []
 
@@ -41,7 +42,8 @@ addResult n = do
 -----------------------------------------------------------------------------------
 
 -- e.g.
--- fizzBuzzList' [1..20] -> ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz"]
+-- fizzBuzzList' [1..20] ->
+-- ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz"]
 fizzBuzzList' :: [Integer] -> [String]
 fizzBuzzList' list =
   let dlist = execState (mapM_ addResult' list) DL.empty
@@ -73,7 +75,8 @@ addResult' n = do
 -----------------------------------------------------------------------------------
 
 -- e.g.
--- fizzBuzzList'' [1..20] -> fromList ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz"]
+-- fizzBuzzList'' [1..20] ->
+-- fromList ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz"]
 fizzBuzzList'' :: [Integer] -> DL.DList String
 fizzBuzzList'' list = execState (mapM_ addResult'' list) DL.empty
 
@@ -86,7 +89,8 @@ addResult'' n = do
 -----------------------------------------------------------------------------------
 
 -- e.g.
--- fizzBuzzFromTo 1 20 -> ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz"]
+-- fizzBuzzFromTo 1 20 ->
+-- ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz"]
 fizzBuzzFromTo :: Integer -> Integer -> [String]
 fizzBuzzFromTo from to = execState (mapM_ addResultFromTo $ enumFromTo from to) []
 
