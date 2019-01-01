@@ -16,10 +16,6 @@ import Control.Monad.Trans.State
 -- https://stackoverflow.com/questions/3352418/what-is-a-dlist
 import qualified Data.DList as DL
 
-import Test.QuickCheck
-import Test.QuickCheck.Checkers
-import Test.QuickCheck.Classes
-
 -----------------------------------------------------------------------------------
 
 fizzBuzz :: Integer -> String
@@ -31,8 +27,10 @@ fizzBuzz n
 
 -----------------------------------------------------------------------------------
 
-fizzbuzzList :: [Integer] -> [String]
-fizzbuzzList list = execState (mapM_ addResult list) []
+-- e.g.
+-- fizzBuzzList [1..20] -> ["Buzz","19","Fizz","17","16","FizzBuzz","14","13","Fizz","11","Buzz","Fizz","8","7","Fizz","Buzz","4","Fizz","2","1"]
+fizzBuzzList :: [Integer] -> [String]
+fizzBuzzList list = execState (mapM_ addResult list) []
 
 addResult :: Integer -> State [String] ()
 addResult n = do
@@ -42,8 +40,10 @@ addResult n = do
 
 -----------------------------------------------------------------------------------
 
-fizzbuzzList' :: [Integer] -> [String]
-fizzbuzzList' list =
+-- e.g.
+-- fizzBuzzList' [1..20] -> ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz"]
+fizzBuzzList' :: [Integer] -> [String]
+fizzBuzzList' list =
   let dlist = execState (mapM_ addResult' list) DL.empty
   -- convert back to normal list
   in  DL.apply dlist []
@@ -57,11 +57,25 @@ addResult' n = do
   put (DL.snoc xs result)
 
 -----------------------------------------------------------------------------------
+
 -- mapM_ :: (Monad m, Foldable t) => (a -> m b) -> t a -> m ()
+
+-- Because mapping a function that returns an I/O action over a list and then
+-- sequencing it is so common, the utility functions `mapM` and `mapM_` were introduced.
+-- `mapM` takes a function and a list, maps the function over the list, and
+-- then sequences it. `mapM_` does the same thing, but it throws away the result
+-- later. We usually use mapM_ when we don’t care what result our sequenced I/O actions have.
+
+-- e.g.
+-- mapM  print [1,2,3]
+-- mapM_ print [1,2,3]
+
 -----------------------------------------------------------------------------------
 
-fizzbuzzList'' :: [Integer] -> DL.DList String
-fizzbuzzList'' list = execState (mapM_ addResult'' list) DL.empty
+-- e.g.
+-- fizzBuzzList'' [1..20] -> fromList ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz"]
+fizzBuzzList'' :: [Integer] -> DL.DList String
+fizzBuzzList'' list = execState (mapM_ addResult'' list) DL.empty
 
 addResult'' :: Integer -> State (DL.DList String) ()
 addResult'' n = do
@@ -71,8 +85,19 @@ addResult'' n = do
 
 -----------------------------------------------------------------------------------
 
-fizzbuzzFromTo :: Integer -> Integer -> [String]
-fizzbuzzFromTo = undefined
+-- e.g.
+-- fizzBuzzFromTo 1 20 -> ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz"]
+fizzBuzzFromTo :: Integer -> Integer -> [String]
+fizzBuzzFromTo from to = execState (mapM_ addResultFromTo $ enumFromTo from to) []
+
+addResultFromTo :: Integer -> State [String] ()
+addResultFromTo n = do
+  xs <- get
+  let result = fizzBuzz n
+  put (xs ++ [result])
+
+-- OR
+--fizzBuzzFromTo from to = fizzBuzzList' $ enumFromTo from to
 
 -----------------------------------------------------------------------------------
 
@@ -82,13 +107,13 @@ main = do
   putStrLn "\nfizzBuzz"
   mapM_ (putStrLn . fizzBuzz) [1..20]
 
-  putStrLn "\nfizzbuzzList"
-  mapM_ putStrLn $ reverse $ fizzbuzzList [1..20]
+  putStrLn "\nfizzBuzzList"
+  mapM_ putStrLn $ reverse $ fizzBuzzList [1..20]
 
-  putStrLn "\nfizzbuzzList'"
-  mapM_ putStrLn $ fizzbuzzList' [1..20]
+  putStrLn "\nfizzBuzzList'"
+  mapM_ putStrLn $ fizzBuzzList' [1..20]
 
-  putStrLn "\nfizzbuzzList''"
-  mapM_ putStrLn $ fizzbuzzList'' [1..20]
+  putStrLn "\nfizzBuzzList''"
+  mapM_ putStrLn $ fizzBuzzList'' [1..20]
 
 -----------------------------------------------------------------------------------
