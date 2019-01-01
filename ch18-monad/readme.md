@@ -149,3 +149,13 @@ m >>= return = m
 
   mb >>= g = join $ fmap g mb
 ```
+
+### For further reading
+ - [All About Monads](https://wiki.haskell.org/All_About_Monads)
+ - [What a Monad is not](https://wiki.haskell.org/What_a_Monad_is_not)
+ - [Real World Haskell - by Bryan O'Sullivan](http://book.realworldhaskell.org/read/)
+ - [Real World Haskell - Monads](http://book.realworldhaskell.org/read/monads.html)
+ - [Real World Haskell - Programming with Monads](http://book.realworldhaskell.org/read/programming-with-monads.html)
+ - [How to desugar Haskell code - by Gabriel Gonzalez](http://www.haskellforall.com/2014/10/how-to-desugar-haskell-code.html)
+ - [Monads Made Difficult - by Stephen Diehl](http://www.stephendiehl.com/posts/monads.html)
+ - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
