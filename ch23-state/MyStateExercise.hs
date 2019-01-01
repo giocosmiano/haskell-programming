@@ -35,12 +35,13 @@ instance Monad (Moi s) where
 
   (Moi f) >>= g = Moi $ \s ->
     let (a, newState) = f s -- apply first/previous stateful computation `f` to `s` creating tuple with `newState`
-        Moi h = g a -- apply function `g` to output value `a ` creating new Moi stateful computation/function `h`
-    in  h newState -- apply the new Moi stateful computation/function `h` to `newState` resulting to new tuple with newState
+    in  runMoi (g a) newState -- apply function `g` to output value `a ` creating new Moi stateful, feeding `newState`
 
+-- OR
 --  (Moi f) >>= g = Moi $ \s ->
---    let (a, newState) = runMoi f s -- apply first/previous stateful computation `f` to `s` creating tuple with `newState`
---    in  runMoi (g a) newState -- apply function `g` to output value `a ` creating new Moi stateful, feeding `newState`
+--    let (a, newState) = f s -- apply first/previous stateful computation `f` to `s` creating tuple with `newState`
+--        Moi h = g a -- apply function `g` to output value `a ` creating new Moi stateful computation/function `h`
+--    in  h newState -- apply the new Moi stateful computation/function `h` to `newState` resulting to new tuple with newState
 
 -----------------------------------------------------------------------------------
 --
