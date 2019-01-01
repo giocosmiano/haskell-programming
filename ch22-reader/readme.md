@@ -129,6 +129,10 @@ Prelude> (runReader $ Reader (+3)) >>= return . (runReader $ Reader (*5)) $ 7
    alias for convenience.
 
 ### For further reading
+ - [All About Monads](https://wiki.haskell.org/All_About_Monads)
+ - [All About Monads - The Reader monad](https://wiki.haskell.org/All_About_Monads#The_Reader_monad)
+ - [Real World Haskell](http://book.realworldhaskell.org/read/)
+ - [Real World Haskell - Programming with Monads](http://book.realworldhaskell.org/read/programming-with-monads.html)
  - [Simple Reader Monad](https://blog.ssanj.net/posts/2014-09-23-A-Simple-Reader-Monad-Example.html)
  - [The Reader Monad Part 1](https://hackernoon.com/the-reader-monad-part-1-1e4d947983a8)
  - [The Reader Monad Part 2](https://medium.com/@jonathangfischoff/monad-reader-part-2-d812dda1d03e)
