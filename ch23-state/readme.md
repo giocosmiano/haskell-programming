@@ -50,3 +50,7 @@ State { runState ::                                      s -> (a, s) }
         randomR  :: (RandomGen g, Random a) => (a, a) -> g -> (a, g)
 ```
 
+### For further reading
+ - [School of Haskell - State Monad](https://www.schoolofhaskell.com/school/starting-with-haskell/basics-of-haskell/12-State-Monad)
+ - [The State Monad: A Tutorial for the Confused?](http://brandon.si/code/the-state-monad-a-tutorial-for-the-confused/)
+ - [What I Wish I Knew When Learning Haskell](http://dev.stephendiehl.com/hask/)
