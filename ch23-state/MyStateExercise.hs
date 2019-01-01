@@ -38,9 +38,14 @@ instance Monad (Moi s) where
         Moi h = g a -- apply function `g` to output value `a ` creating new Moi stateful computation/function `h`
     in  h newState -- apply the new Moi stateful computation/function `h` to `newState` resulting to new tuple with newState
 
+--  (Moi f) >>= g = Moi $ \s ->
+--    let (a, newState) = runMoi f s -- apply first/previous stateful computation `f` to `s` creating tuple with `newState`
+--    in  runMoi (g a) newState -- apply function `g` to output value `a ` creating new Moi stateful, feeding `newState`
+
 -----------------------------------------------------------------------------------
 --
 -- for further reading
+-- https://www.schoolofhaskell.com/school/starting-with-haskell/basics-of-haskell/12-State-Monad
 -- http://brandon.si/code/the-state-monad-a-tutorial-for-the-confused/
 -- http://dev.stephendiehl.com/hask/
 
