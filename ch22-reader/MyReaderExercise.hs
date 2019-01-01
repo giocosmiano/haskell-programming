@@ -19,21 +19,21 @@ asks f = Reader f
 -----------------------------------------------------------------------------------
 
 -- e.g.
--- fmap (+3) (*5) 7                                               -> 38
--- fmap (runReader $ Reader $ (+3)) (runReader $ Reader $ (*5)) 7 -> 38
+-- fmap (+3) (*5) 7                                           -> 38
+-- fmap (runReader $ Reader (+3)) (runReader $ Reader (*5)) 7 -> 38
 instance Functor (Reader r) where
   fmap f (Reader ra) = Reader $ \x -> f (ra x)
 
 -- e.g.
--- (+) <$> (+3) <*> (*5) $ 7                                               -> 45
--- (+) <$> (runReader $ Reader $ (+3)) <*> (runReader $ Reader $ (*5)) $ 7 -> 45
+-- (+) <$> (+3) <*> (*5) $ 7                                           -> 45
+-- (+) <$> (runReader $ Reader (+3)) <*> (runReader $ Reader (*5)) $ 7 -> 45
 instance Applicative (Reader r) where
   pure a = Reader $ \_ -> a
   (Reader rab) <*> (Reader ra) = Reader $ \x -> rab x (ra x)
 
 -- e.g.
--- (+3) >>= return . (*5) $ 7                                               -> 50
--- (runReader $ Reader $ (+3)) >>= return . (runReader $ Reader $ (*5)) $ 7 -> 50
+-- (+3) >>= return . (*5) $ 7                                           -> 50
+-- (runReader $ Reader (+3)) >>= return . (runReader $ Reader (*5)) $ 7 -> 50
 instance Monad (Reader r) where
   return = pure
   (Reader ra) >>= aRb = Reader $ \x -> runReader (aRb (ra x)) x
