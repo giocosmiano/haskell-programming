@@ -23,9 +23,18 @@ newtype State s a = State { runState :: s -> (a, s) }
    isomorphic to the type it wraps. That is, there must be a way to go from the newtype to the thing it
    wraps and back again without losing information.
 
-```haskell
-State :: (s -> (a, s)) -> State s a
+### `state` function
+ - State has one data constructor also called `State`. It takes a function as an argument. The interesting thing
+   is that this constructor is **not** exported from the library so you can't pattern match on it. If you want to
+   create a new monadic `State`, use the function `state`.
+ ```haskell
+state :: (s -> (a, s)) -> State s a
+```
 
+### `runState` function
+ - Instead of extracting an action from `State`, which you can't do, and acting with it on some state, you call
+   the function `runState` which does it for you.
+ ```haskell
 runState :: State s a -> s -> (a, s)
 ```
 
