@@ -76,7 +76,8 @@ addResult' n = do
 
 -- e.g.
 -- fizzBuzzList'' [1..20] ->
--- fromList ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz"]
+-- fromList ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz",
+-- "16","17","Fizz","19","Buzz"]
 fizzBuzzList'' :: [Integer] -> DL.DList String
 fizzBuzzList'' list = execState (mapM_ addResult'' list) DL.empty
 
@@ -119,5 +120,8 @@ main = do
 
   putStrLn "\nfizzBuzzList''"
   mapM_ putStrLn $ fizzBuzzList'' [1..20]
+
+  putStrLn "\nfizzBuzzFromTo"
+  mapM_ putStrLn $ fizzBuzzFromTo 1 20
 
 -----------------------------------------------------------------------------------
