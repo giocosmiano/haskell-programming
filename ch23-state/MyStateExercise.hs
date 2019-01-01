@@ -39,6 +39,48 @@ instance Monad (Moi s) where
     in  h newState -- apply the new Moi stateful computation/function `h` to `newState` resulting to new tuple with newState
 
 -----------------------------------------------------------------------------------
+--
+-- for further reading
+-- http://brandon.si/code/the-state-monad-a-tutorial-for-the-confused/
+-- http://dev.stephendiehl.com/hask/
+
+-- `get` is when we want to construct a `State`, feeding some `s` to State returning `(s, s)`
+-- e.g.
+-- runMoi get "curryIsAmaze" -> ("curryIsAmaze","curryIsAmaze")
+get :: Moi s s
+get = Moi $ \s -> (s, s)
+
+-- `put` is when we want to construct a `State`, feeding some `s` to State returning `((), s)`
+-- e.g.
+-- runMoi (put "blah") "woot" -> ((),"blah")
+put :: s -> Moi s ()
+put s = Moi $ \_ -> ((), s)
+
+-- `exec` is when we want the `state` value and not the `a` value
+-- e.g.
+-- exec (put "wilma") "daphne" -> "wilma"
+-- exec get "scooby papu"      -> "scooby papu"
+exec :: Moi s a -> s -> s
+exec sa s = snd $ runMoi sa s
+
+-- `eval` is when we want the `a` value and not the `state` value
+-- e.g.
+-- eval get "bunnicula"     -> "bunnicula"
+-- eval get "stake a bunny" -> "stake a bunny"
+eval :: Moi s a -> s -> a
+eval sa s = fst $ runMoi sa s
+
+-- `modify` is when we want to construct a `State` with function to modifying the state,
+-- feeding some `s` to State returning `((), fn s)`
+-- e.g.
+-- runMoi (modify (+1)) 0                -> ((),1)
+-- runMoi (modify (+1) >> modify (+1)) 0 -> ((),2)
+-- runMoi (modify (+3) >> modify (*5)) 0 -> ((),15)
+-- runMoi (modify (*3) >> modify (+5)) 0 -> ((),5)
+modify :: (s -> s) -> Moi s ()
+modify f = Moi $ \s -> ((), f s)
+
+-----------------------------------------------------------------------------------
 
 -- TODO: how-to implement quickBatch for State???
 {-
