@@ -40,7 +40,7 @@ OR
 Prelude> fmap (+3) (*5) 7
 38
 
-Prelude> fmap (runReader $ Reader $ (+3)) (runReader $ Reader $ (*5)) 7
+Prelude> fmap (runReader $ Reader (+3)) (runReader $ Reader (*5)) 7
 38
 ```
 
@@ -76,7 +76,7 @@ instance Applicative (Reader r) where
 Prelude> (+) <$> (+3) <*> (*5) $ 7
 45
 
-Prelude> (+) <$> (runReader $ Reader $ (+3)) <*> (runReader $ Reader $ (*5)) $ 7
+Prelude> (+) <$> (runReader $ Reader (+3)) <*> (runReader $ Reader (*5)) $ 7
 45
 ```
 
@@ -103,7 +103,7 @@ instance Monad (Reader r) where
 Prelude> (+3) >>= return . (*5) $ 7
 50
 
-Prelude> (runReader $ Reader $ (+3)) >>= return . (runReader $ Reader $ (*5)) $ 7
+Prelude> (runReader $ Reader (+3)) >>= return . (runReader $ Reader (*5)) $ 7
 50
 ```
 
@@ -127,3 +127,10 @@ Prelude> (runReader $ Reader $ (+3)) >>= return . (runReader $ Reader $ (*5)) $ 
    will get passed around to multiple functions but is likely to come in via some kind of `I/O` action
    and has the possibility of failure we might like to catch. Often this stack will be given a type
    alias for convenience.
+
+### For further reading
+ - [Simple Reader Monad](https://blog.ssanj.net/posts/2014-09-23-A-Simple-Reader-Monad-Example.html)
+ - [The Reader Monad Part 1](https://hackernoon.com/the-reader-monad-part-1-1e4d947983a8)
+ - [The Reader Monad Part 2](https://medium.com/@jonathangfischoff/monad-reader-part-2-d812dda1d03e)
+ - [Reader and Writer Monads](https://mmhaskell.com/monads-4/)
+ - [What I Wish I Knew When Learning Haskell](http://dev.stephendiehl.com/hask/)
