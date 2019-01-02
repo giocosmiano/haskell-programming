@@ -13,9 +13,11 @@
    and for gluing together parsers in a modular fashion to parse data according to complex rules.
 
 ***Packages needed***
+ - [parsers - Parsing combinators](https://hackage.haskell.org/package/parsers)
+   - [parsers github](https://github.com/ekmett/parsers/)
  - [trifecta - modern parser combinator library with convenient diagnostics](https://hackage.haskell.org/package/trifecta-1.5.2)
    - [trifecta github](https://github.com/ekmett/trifecta/)
- - [aeson: Fast JSON parsing and encoding](https://hackage.haskell.org/package/aeson)
+ - [aeson - Fast JSON parsing and encoding](https://hackage.haskell.org/package/aeson)
    - [aeson github](https://github.com/bos/aeson)
 
 ### For further reading
