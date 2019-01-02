@@ -50,6 +50,30 @@ State { runState ::                                      s -> (a, s) }
         randomR  :: (RandomGen g, Random a) => (a, a) -> g -> (a, g)
 ```
 
+***State _Monadic Structure_***
+ - The `(State s)` is a monadic structure on `State s a` thus the function will only be applied to `a`  
+ - e.g. `(runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >> modify (*5) >> return 9001) 3` evaluates to `(9001,40)`
+    - `get` evaluates to `(3,3)`
+    - `put 5` evaluates to `((),5)`
+    - `return 9` evaluates to `(9,5)`
+    - `modify (+3)` evaluates to `(9,8)`
+    - `return 12` evaluates to `(12,8)`
+    - `modify (*5)` evaluates to `(12,40)`
+    - `return 9001` evaluates to `(9001,40)`
+
+```haskell
+Prelude> :t (>>)
+(>>) :: Monad m => m a -> m b -> m b
+
+Prelude> import Control.Monad.State
+Prelude> (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >> modify (*5) >> return 9001) 3
+(9001,40)
+
+Prelude> import Control.Monad.Trans.State
+Prelude> (runStateT $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >> modify (*5) >> return 9001) 3
+(9001,40)
+```
+
 ### For further reading
  - [All About Monads](https://wiki.haskell.org/All_About_Monads)
  - [All About Monads - The State monad](https://wiki.haskell.org/All_About_Monads#The_State_monad)
