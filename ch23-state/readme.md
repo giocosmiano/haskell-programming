@@ -50,7 +50,7 @@ State { runState ::                                      s -> (a, s) }
         randomR  :: (RandomGen g, Random a) => (a, a) -> g -> (a, g)
 ```
 
-***State _Monadic Structure_***
+***State Monadic Structure***
  - The `(State s)` is a monadic structure on `State s a` thus the function will only be applied to `a`  
  - e.g. `(runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >> modify (*5) >> return 9001) 3` evaluates to `(9001,40)`
     - `get` evaluates to `(3,3)`
@@ -66,10 +66,38 @@ Prelude> :t (>>)
 (>>) :: Monad m => m a -> m b -> m b
 
 Prelude> import Control.Monad.State
+
+Prelude> :t get
+get :: MonadState s m => m s
+
+Prelude> :t put
+put :: MonadState s m => s -> m ()
+
+Prelude> :t runState
+runState :: State s a -> s -> (a, s)
+
 Prelude> (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >> modify (*5) >> return 9001) 3
 (9001,40)
+```
 
+### State Monad Transformer
+ - the `state` function is a constructor that takes a State-like function and embeds it in the State monad transformer.
+
+```haskell
 Prelude> import Control.Monad.Trans.State
+
+Prelude> :t state
+state :: Monad m => (s -> (a, s)) -> StateT s m a
+
+Prelude> :t get
+get :: Monad m => StateT s m s
+
+Prelude> :t put
+put :: Monad m => s -> StateT s m ()
+
+Prelude> :t runStateT
+runStateT :: StateT s m a -> s -> m (a, s)
+
 Prelude> (runStateT $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >> modify (*5) >> return 9001) 3
 (9001,40)
 ```
