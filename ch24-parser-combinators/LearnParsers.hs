@@ -1,5 +1,7 @@
 module LearnParsers where
 
+import Text.Parser.Combinators
+
 --
 -- A modern parser combinator library with convenient diagnostics
 -- https://github.com/ekmett/trifecta/
@@ -61,13 +63,55 @@ pNL :: [Char] -> IO ()
 pNL s = putStrLn ('\n' : s)
 
 -----------------------------------------------------------------------------------
--- parseString :: Parser a -> Text.Trifecta.Delta.Delta -> String -> Result a
+-- char   :: CharParsing m => Char   -> m Char
+-- string :: CharParsing m => String -> m String
+--
+-- parseString :: Parser a
+--             -> Text.Trifecta.Delta.Delta
+--             -> String
+--             -> Result a
+--
+-- parseByteString :: Parser a
+--                 -> Text.Trifecta.Delta.Delta
+--                 -> Data.ByteString.Internal.ByteString
+--                 -> Result a
 -----------------------------------------------------------------------------------
 -- The `𝑝` argument in `testParse` function is a parser. Specifically, it’s a character
 -- parser. The functions `one` and `oneTwo` have the type Parser Char.
 
 testParse :: Parser Char -> IO ()
 testParse p = print $ parseString p mempty "123"
+
+-- e.g.
+-- parseString (char 'a') mempty "a"              -> Success 'a'
+-- parseString (char 'b' >> char 'c') mempty "bc" -> Success 'c'
+-- parseString (string "abc") mempty "abc"        -> Success "abc"
+-- parseString (string "abc") mempty "abcdef"     -> Success "abc"
+
+-- parseByteString (char 'a') mempty "a"              -> Success 'a'
+-- parseByteString (char 'b' >> char 'c') mempty "bc" -> Success 'c'
+-- parseByteString (string "abc") mempty "abc"        -> Success "abc"
+-- parseByteString (string "abc") mempty "abcdef"     -> Success "abc"
+
+-- parseString (char 'b') mempty "a"
+-- Failure (interactive):1:1: error: expected: "b"; a<EOF>
+
+-- parseString (char 'b' >> char 'c') mempty "b" ->
+-- Failure (interactive):1:2: error: unexpected EOF, expected: "c"
+
+-- parseString (string "abc") mempty "bc" ->
+-- Failure (interactive):1:1: error: expected: "abc"; bc<EOF>
+
+-- parseString (string "abc") mempty "ab" ->
+-- Failure (interactive):1:1: error: expected: "abc"; ab<EOF>
+
+-----------------------------------------------------------------------------------
+
+testParseString :: Parser String -> IO ()
+testParseString p = print $ parseString p mempty "123"
+
+parsePractice1 :: Parser String
+parsePractice1 = string "123"
 
 -----------------------------------------------------------------------------------
 
@@ -86,6 +130,14 @@ main = do
 
   pNL "oneTwo':"
   testParse oneTwo'
+
+  putStrLn $ "\nParsing practices"
+  pNL "parsePractice1: parseString (string \"123\") mempty \"123\""
+  print $ parseString parsePractice1 mempty "123"
+
+  pNL "parsePractice2: parseString (string \"123\" >> eof) mempty \"123\""
+  print $ parseString (parsePractice1 >> eof) mempty "123"
+
 
 -----------------------------------------------------------------------------------
 
