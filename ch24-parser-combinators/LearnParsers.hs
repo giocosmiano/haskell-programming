@@ -9,6 +9,32 @@ module LearnParsers where
 import Text.Trifecta
 
 -----------------------------------------------------------------------------------
+-- newtype Reader r a = Reader { runReader :: r -> a }
+-- newtype State s a = State { runState :: s -> (a, s) }
+-----------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------
+-- type Parser a = String -> Maybe (a, String)
+-----------------------------------------------------------------------------------
+-- `Parser` is a bit like State, plus failure.
+-- 1. Await a string value
+-- 2. Produce a result which may or may not succeed. A Nothing value means the parse failed.
+-- 3. Return a tuple of the value you wanted and whatever’s left of the string that you
+--    didn’t consume to produce the value of type `𝑎`.
+--
+-- The idea here with the `Parser` type is that the State is handling
+-- the fact that you need to await an eventual text input and
+-- that having parsed something out of that text input results in
+-- a new state of the input stream. It also lets you return a value
+-- independent of the state, while Maybe handles the possibility
+-- of the parser failure.
+-----------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------
+-- unexpected :: Parsing m => String -> m a
+-----------------------------------------------------------------------------------
+-- `unexpected` is a means of throwing errors in parsers like trifecta
+-- which are an instance of the Parsing typeclass
 
 stop :: Parser a
 stop = unexpected "stop"
@@ -18,7 +44,7 @@ one :: Parser Char
 one = char '1'
 
 -- read a single character '1', then die
-one' :: Parser b
+one' :: Parser a
 one' = one >> stop
 -- equivalent to char '1' >> stop
 
@@ -28,26 +54,36 @@ oneTwo = char '1' >> char '2'
 
 -- read two characters,
 -- '1' and '2', then die
-oneTwo' :: Parser b
+oneTwo' :: Parser a
 oneTwo' = oneTwo >> stop
-
-testParse :: Parser Char -> IO ()
-testParse p = print $ parseString p mempty "123"
 
 pNL :: [Char] -> IO ()
 pNL s = putStrLn ('\n' : s)
+
+-----------------------------------------------------------------------------------
+-- parseString :: Parser a -> Text.Trifecta.Delta.Delta -> String -> Result a
+-----------------------------------------------------------------------------------
+-- The `𝑝` argument in `testParse` function is a parser. Specifically, it’s a character
+-- parser. The functions `one` and `oneTwo` have the type Parser Char.
+
+testParse :: Parser Char -> IO ()
+testParse p = print $ parseString p mempty "123"
 
 -----------------------------------------------------------------------------------
 
 main = do
   pNL "stop:"
   testParse stop
+
   pNL "one:"
   testParse one
+
   pNL "one':"
   testParse one'
+
   pNL "oneTwo:"
   testParse oneTwo
+
   pNL "oneTwo':"
   testParse oneTwo'
 
