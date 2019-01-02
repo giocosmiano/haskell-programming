@@ -1,6 +1,7 @@
 module LearnParsers where
 
 import Text.Parser.Combinators
+import qualified Data.ByteString.Char8 as C
 
 --
 -- A modern parser combinator library with convenient diagnostics
@@ -88,10 +89,11 @@ testParse p = print $ parseString p mempty "123"
 -- parseString (string "abc") mempty "abc"        -> Success "abc"
 -- parseString (string "abc") mempty "abcdef"     -> Success "abc"
 
--- parseByteString (char 'a') mempty "a"              -> Success 'a'
--- parseByteString (char 'b' >> char 'c') mempty "bc" -> Success 'c'
--- parseByteString (string "abc") mempty "abc"        -> Success "abc"
--- parseByteString (string "abc") mempty "abcdef"     -> Success "abc"
+-- make sure to `import qualified Data.ByteString.Char8 as C`
+-- parseByteString (char 'a') mempty (C.pack "a")              -> Success 'a'
+-- parseByteString (char 'b' >> char 'c') mempty (C.pack "bc") -> Success 'c'
+-- parseByteString (string "abc") mempty (C.pack "abc")        -> Success "abc"
+-- parseByteString (string "abc") mempty (C.pack "abcdef")     -> Success "abc"
 
 -- parseString (char 'b') mempty "a"
 -- Failure (interactive):1:1: error: expected: "b"; a<EOF>
