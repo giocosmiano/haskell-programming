@@ -73,6 +73,9 @@ get :: MonadState s m => m s
 Prelude> :t put
 put :: MonadState s m => s -> m ()
 
+Prelude> :t modify
+modify :: MonadState s m => (s -> s) -> m ()
+
 Prelude> :t runState
 runState :: State s a -> s -> (a, s)
 
@@ -94,6 +97,9 @@ get :: Monad m => StateT s m s
 
 Prelude> :t put
 put :: Monad m => s -> StateT s m ()
+
+Prelude> :t modify
+modify :: Monad m => (s -> s) -> StateT s m ()
 
 Prelude> :t runStateT
 runStateT :: StateT s m a -> s -> m (a, s)
