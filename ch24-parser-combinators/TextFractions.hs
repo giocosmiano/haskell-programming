@@ -18,6 +18,11 @@ shouldWork = "1/2"
 shouldAlsoWork = "2/1"
 
 -----------------------------------------------------------------------------------
+-- see for details
+-- http://hackage.haskell.org/package/parsers
+-- http://hackage.haskell.org/package/parsers-0.12.9/docs/Text-Parser-Char.html
+-- http://hackage.haskell.org/package/parsers-0.12.9/docs/Text-Parser-Combinators.html
+-----------------------------------------------------------------------------------
 -- char    :: CharParsing  m => Char   -> m Char
 -- string  :: CharParsing  m => String -> m String
 -- decimal :: TokenParsing m =>           m Integer
