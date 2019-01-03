@@ -38,8 +38,10 @@ def
 |]
 
 -----------------------------------------------------------------------------------
+-- see for details (or the definition below)
+-- https://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html
+-----------------------------------------------------------------------------------
 -- all these functions are in Control.Applicative
--- see the definitions below
 --
 -- (<|>) :: Alternative f => f a -> f a -> f a
 -- some  :: Alternative f => f a -> f [a]
@@ -119,6 +121,9 @@ main2 = do
   let p f i = parseString f mempty i
   print $ p parseNos eitherOrGood
 
+-----------------------------------------------------------------------------------
+-- see for details
+-- https://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html
 -----------------------------------------------------------------------------------
 
 {-
