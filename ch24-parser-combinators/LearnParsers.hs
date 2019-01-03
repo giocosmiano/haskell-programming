@@ -88,6 +88,7 @@ testParse p = print $ parseString p mempty "123"
 -- parseString (char 'b' >> char 'c') mempty "bc" -> Success 'c'
 -- parseString (string "abc") mempty "abc"        -> Success "abc"
 -- parseString (string "abc") mempty "abcdef"     -> Success "abc"
+-- parseString integer mempty "123abc"            -> Success 123
 
 -- make sure to `import qualified Data.ByteString.Char8 as C`
 -- parseByteString (char 'a') mempty (C.pack "a")              -> Success 'a'
@@ -106,6 +107,9 @@ testParse p = print $ parseString p mempty "123"
 
 -- parseString (string "abc") mempty "ab" ->
 -- Failure (interactive):1:1: error: expected: "abc"; ab<EOF>
+
+-- parseString (integer >> eof) mempty "123abc"   -> Success 123
+-- Failure (interactive):1:1: error: expected: digit; 123abc<EOF>
 
 -----------------------------------------------------------------------------------
 
