@@ -54,7 +54,11 @@ def
 -- `some` is one or more.
 
 -----------------------------------------------------------------------------------
-
+-- see for details
+-- http://hackage.haskell.org/package/parsers
+-- http://hackage.haskell.org/package/parsers-0.12.9/docs/Text-Parser-Char.html
+-- http://hackage.haskell.org/package/parsers-0.12.9/docs/Text-Parser-Combinators.html
+-----------------------------------------------------------------------------------
 -- skipMany :: Parsing m => m a -> m ()
 -- oneOf    :: CharParsing m => [Char] -> m Char
 
