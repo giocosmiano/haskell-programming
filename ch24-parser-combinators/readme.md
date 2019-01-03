@@ -12,13 +12,23 @@
    which permits `Reader`-style implicit argument passing. Among other things, combinators allow for recursion
    and for gluing together parsers in a modular fashion to parse data according to complex rules.
 
-***Packages needed***
- - [parsers - Parsing combinators](https://hackage.haskell.org/package/parsers)
-   - [parsers github](https://github.com/ekmett/parsers/)
- - [trifecta - modern parser combinator library with convenient diagnostics](https://hackage.haskell.org/package/trifecta-1.5.2)
-   - [trifecta github](https://github.com/ekmett/trifecta/)
- - [aeson - Fast JSON parsing and encoding](https://hackage.haskell.org/package/aeson)
-   - [aeson github](https://github.com/bos/aeson)
+***Haskell's parsing ecosystem***
+ - Haskell has several excellent parsing libraries available. `parsec` and `attoparsec` are perhaps the two most
+   well known parser combinator libraries in Haskell, but there is also `megaparsec` and others. `aeson` and
+   `cassava` are among the libraries designed for parsing specific types of data ( `JSON` data and `CSV` data,
+   respectively).
+
+ - If you intend to do a lot of parsing in production, you may need to get comfortable using `attoparsec`, as
+   it is particularly known for very speedy parsing
+
+ - Haskell parsing libraries
+   - [parsers - Parsing combinators](https://hackage.haskell.org/package/parsers)
+   - [trifecta - modern parser combinator library with convenient diagnostics](https://hackage.haskell.org/package/trifecta-1.5.2)
+   - [aeson - Fast JSON parsing and encoding](https://hackage.haskell.org/package/aeson)
+   - [cassava - A CSV parsing and encoding library](https://hackage.haskell.org/package/cassava)
+   - [parsec - Monadic parser combinators](https://hackage.haskell.org/package/parsec)
+   - [megaparsec - Monadic parser combinators](https://hackage.haskell.org/package/megaparsec)
+   - [attoparsec - Fast combinator parsing for bytestrings and text](https://hackage.haskell.org/package/attoparsec)
 
 ### For further reading
  - [Parsec try a-or-b considered harmful - by Edward Z. Yang](http://blog.ezyang.com/2014/05/parsec-try-a-or-b-considered-harmful/)
