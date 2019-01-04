@@ -217,6 +217,7 @@ maybeSuccess _ = Nothing
 main :: IO ()
 main = hspec $ do
 
+  -- assignmentEx = "woot=1"
   describe "Assignment Parsing" $
     it "can parse a simple assignment" $ do
       let m = parseByteString
@@ -226,6 +227,7 @@ main = hspec $ do
       print m
       r' `shouldBe` Just ("woot", "1")
 
+  -- headerEx = "[blah]"
   describe "Header Parsing" $
     it "can parse a simple header" $ do
       let m = parseByteString parseHeader
@@ -234,6 +236,7 @@ main = hspec $ do
       print m
       r' `shouldBe` Just (Header "blah")
 
+  -- i = "; woot\n[blah]"
   describe "Comment parsing" $
     it "Skips comment before header" $ do
       let p = skipComments >> parseHeader
@@ -243,6 +246,7 @@ main = hspec $ do
       print m
       r' `shouldBe` Just (Header "blah")
 
+  -- sectionEx = "; ignore me\n[states]\nChris=Texas"
   describe "Section parsing" $
     it "can parse a simple section" $ do
       let m = parseByteString parseSection
@@ -253,6 +257,16 @@ main = hspec $ do
       print m
       r' `shouldBe` expected'
 
+{-
+sectionEx'' = [r|
+; comment
+[section]
+host=wikipedia.org
+alias=claw
+[whatisit]
+red=intoothandclaw
+|]
+-}
   describe "INI parsing" $
     it "Can parse multiple sections" $ do
       let m = parseByteString parseIni
