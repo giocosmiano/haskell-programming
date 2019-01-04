@@ -69,8 +69,19 @@ addResult' n = do
 -- later. We usually use mapM_ when we don’t care what result our sequenced I/O actions have.
 
 -- e.g.
--- mapM  print [1,2,3]
--- mapM_ print [1,2,3]
+-- mapM  print [1,2,3] -> [(),(),()]   -- same as `traverse  print [1,2,3]`
+-- mapM_ print [1,2,3] -> ()           -- same as `traverse_ print [1,2,3]`
+-- mapM  Just [1,2,3]  -> Just [1,2,3] -- same as `traverse  Just [1,2,3]`
+-- mapM_ Just [1,2,3]  -> Just ()      -- same as `traverse_ Just [1,2,3]`
+--
+-- execState (mapM_ addResult [1,2,3,4,5,6,7,8,9,10,11,12]) []
+-- ["Fizz","11","Buzz","Fizz","8","7","Fizz","Buzz","4","Fizz","2","1"]
+--
+-- execState (mapM_ addResult' [1,2,3,4,5,6,7,8,9,10,11,12]) DL.empty
+-- fromList ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz"]
+--
+-- execState (mapM_ addResult'' [1,2,3,4,5,6,7,8,9,10,11,12]) DL.empty
+-- fromList ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz"]
 
 -----------------------------------------------------------------------------------
 
