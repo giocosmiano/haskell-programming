@@ -120,6 +120,58 @@ parsePractice1 :: Parser String
 parsePractice1 = string "123"
 
 -----------------------------------------------------------------------------------
+-- token parsing
+-----------------------------------------------------------------------------------
+
+-- NOT token parsing
+-- e.g.
+-- parseString (some digit) mempty "123 456"        -> Success "123"
+-- parseString (some (some digit)) mempty "123 456" -> Success ["123"]
+-- parseString (some integer) mempty "123\n\n 456"  -> Success [123,456]
+
+-- token parsing
+-- e.g.
+-- parseString pInteger mempty "1\n2\n 3\n"        -> Success [1,2,3]
+-- parseString pInteger mempty "123\n 456\n 789\n" -> Success [123,456,789]
+pInteger :: Parser [Integer]
+pInteger = some $ do
+  i <- token (some digit)
+  return (read i)
+
+{-
+
+Prelude> s = "1\n2\n3"
+Prelude> parseString p' mempty s
+Success [1,2,3]
+Prelude> parseString (token (some digit)) mempty s
+Success "1"
+Prelude> parseString (some (token (some digit))) mempty s
+Success ["1","2","3"]
+
+Prelude> tknWhole = token $ char 'a' >> char 'b'
+Prelude> parseString tknWhole mempty "a b"
+Failure (interactive):1:2: error: expected: "b"; a b<EOF>
+
+Prelude> parseString tknWhole mempty "ab ab"
+Success 'b'
+Prelude> parseString (some tknWhole) mempty "ab ab"
+Success "bb"
+
+Prelude> tknCharA = (token (char 'a')) >> char 'b'
+Prelude> parseString tknCharA mempty "a b"
+Success 'b'
+Prelude> parseString (some tknCharA) mempty "a ba b"
+Success "bb"
+Prelude> parseString (some tknCharA) mempty "a b a b"
+Success "b"
+
+Prelude> tknBoth = token (char 'a') >> token (char 'b')
+Prelude> parseString (some tknBoth) mempty "a b a b"
+Success "bb"
+
+-}
+
+-----------------------------------------------------------------------------------
 
 main = do
   pNL "stop:"
