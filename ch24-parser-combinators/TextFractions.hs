@@ -56,6 +56,11 @@ main = do
 -- this handles the divide by 0 exception error
 -----------------------------------------------------------------------------------
 
+-- e.g.
+-- parseString virtuousFraction mempty "11/15" -> Success (11 % 15)
+-- parseString virtuousFraction mempty "12/24" -> Success (1 % 2)
+-- parseString virtuousFraction mempty "1/0"  ->
+-- Failure (interactive):1:1: error: Denominator cannot be zero
 virtuousFraction :: Parser Rational
 virtuousFraction = do
   numerator <- decimal
@@ -89,16 +94,31 @@ testVirtuous = do
 -- receives an input with an integer followed by an EOF and fail in all other cases:
 
 -- e.g.
--- parseString parsePractice mempty "123"    -> Success 123
--- parseString parsePractice mempty "123abc" ->
+-- parseString parseInteger mempty "123"    -> Success 123
+-- parseString parseInteger mempty "123abc" ->
 -- Failure (interactive):1:1: error: expected: digit; 123abc<EOF>
 
 -- using the `do` notation
 -- parseString (do val <- integer; _ <- eof; return val) mempty "123" -> Success 123
-parsePractice :: Parser Integer
-parsePractice = do
+parseInteger :: Parser Integer
+parseInteger = do
   val  <- integer
   _    <- eof -- ignore the `eof`
   return val
+
+-----------------------------------------------------------------------------------
+
+-- Exercise using `try` return either Rational or Integer
+-- e.g.
+-- parseString parseRationalOrInteger mempty "12/24"  -> Success (Left (1 % 2))
+-- parseString parseRationalOrInteger mempty "123"    -> Success (Right 123)
+-- parseString parseRationalOrInteger mempty "123abc" ->
+-- Failure (interactive):1:1: error: expected: digit; 123abc<EOF>
+type RationalOrInteger = Either Rational Integer
+
+parseRationalOrInteger :: Parser RationalOrInteger
+parseRationalOrInteger = do
+  v <- (Left <$> try virtuousFraction) <|> (Right <$> parseInteger)
+  return v
 
 -----------------------------------------------------------------------------------
