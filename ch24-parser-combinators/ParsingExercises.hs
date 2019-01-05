@@ -32,7 +32,23 @@ type Release = [NumberOrString]
 type Metadata = [NumberOrString]
 
 data SemVer = SemVer Major Minor Patch Release Metadata
-            deriving (Eq, Show, Ord)
+            deriving (Eq, Show)
+
+-- e.g.
+-- SemVer 2 1 1 [] [] >  SemVer 1 1 0 [] [] -> True
+-- SemVer 2 1 1 [] [] >  SemVer 3 1 0 [] [] -> False
+-- SemVer 2 2 1 [] [] >  SemVer 2 1 0 [] [] -> True
+-- SemVer 2 1 1 [] [] >  SemVer 2 2 0 [] [] -> False
+-- SemVer 2 2 1 [] [] >  SemVer 2 2 0 [] [] -> True
+-- SemVer 2 2 1 [] [] >  SemVer 2 2 2 [] [] -> False
+-- SemVer 2 2 1 [] [] == SemVer 2 2 1 [] [] -> True
+instance Ord SemVer where
+  (SemVer maj' min' pat' _ _)
+    `compare`
+       (SemVer maj'' min'' pat'' _ _)
+         | (maj' `compare` maj'') /= EQ = (maj' `compare` maj'')
+         | (min' `compare` min'') /= EQ = (min' `compare` min'')
+         | otherwise                    = (pat' `compare` pat'')
 
 -- e.g.
 -- parseString parseSemVer mempty "2.1.1"                      -> Success (SemVer 2 1 1 [] [])
