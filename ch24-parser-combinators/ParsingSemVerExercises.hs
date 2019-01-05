@@ -28,6 +28,8 @@ type Metadata = [NumberOrString]
 data SemVer = SemVer Major Minor Patch Release Metadata
             deriving (Eq, Show)
 
+-----------------------------------------------------------------------------------
+
 -- e.g.
 -- SemVer 2 1 1 [] [] >  SemVer 1 1 0 [] [] -> True
 -- SemVer 2 1 1 [] [] >  SemVer 3 1 0 [] [] -> False
@@ -63,11 +65,17 @@ parseSemVer = do
   metadata <- parseNbrOrStr
   return $ SemVer major minor patch releases metadata
 
+-----------------------------------------------------------------------------------
+
 parseNbrOrStr :: Parser [NumberOrString]
 parseNbrOrStr = sepBy parseAlphaNum (symbol ".")
+
+-----------------------------------------------------------------------------------
 
 parseAlphaNum :: Parser NumberOrString
 parseAlphaNum = do
   alpNbr <- some (noneOf ".+")
   let val = if all isDigit alpNbr then (NOSI (read alpNbr :: Integer)) else NOSS alpNbr
   return val
+
+-----------------------------------------------------------------------------------
