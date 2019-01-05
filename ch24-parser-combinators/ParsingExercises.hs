@@ -123,7 +123,6 @@ data PhoneNumber = PhoneNumber NumberingPlanArea Exchange LineNumber
 -- parseString parsePhone mempty "(123) 456-7890" -> Success (PhoneNumber 123 456 7890)
 -- parseString parsePhone mempty "1-123-456-7890" -> Success (PhoneNumber 123 456 7890)
 parsePhone :: Parser PhoneNumber
---parsePhone = undefined
 parsePhone = do
   v <- parsePhoneDigit
   let list  = foldr (\x b -> show x ++ b) [] v
@@ -139,3 +138,27 @@ parsePhoneDigit = some $ do
 --  v <- some digit
   v <- many (string "1-") >> many (oneOf "- ()") >> some digit
   return (read v)
+
+-- e.g.
+-- parseString parsePhone' mempty "123-456-7890"   -> Success (PhoneNumber 123 456 7890)
+-- parseString parsePhone' mempty "1234567890"     -> Success (PhoneNumber 123 456 7890)
+-- parseString parsePhone' mempty "(123) 456-7890" -> Success (PhoneNumber 123 456 7890)
+-- parseString parsePhone' mempty "1-123-456-7890" -> Success (PhoneNumber 123 456 7890)
+parsePhoneDelim :: Parser (Maybe Char)
+parsePhoneDelim = optional (oneOf "- ()")
+
+parsePhone' :: Parser PhoneNumber
+parsePhone' = do
+  optional (string "1-")
+
+  parsePhoneDelim
+  npa <- count 3 digit
+  parsePhoneDelim
+
+  parsePhoneDelim
+  nxx <- count 3 digit
+
+  parsePhoneDelim
+  lnNbr <- count 4 digit
+
+  return $ PhoneNumber (read npa) (read nxx) (read lnNbr)
