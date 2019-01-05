@@ -38,7 +38,8 @@ data SemVer = SemVer Major Minor Patch Release Metadata
 -- parseString parseSemVer mempty "2.1.1"                      -> Success (SemVer 2 1 1 [] [])
 -- parseString parseSemVer mempty "1.0.0-x.7.z.92"             -> Success (SemVer 1 0 0 [NOSS "x",NOSI 7,NOSS "z",NOSI 92] [])
 -- parseString parseSemVer mempty "1.0.0-gamma+002"            -> Success (SemVer 1 0 0 [NOSS "gamma"] [NOSI 2])
--- parseString parseSemVer mempty "1.0.0-beta+oof.sha.41af286" -> Success (SemVer 1 0 0 [NOSS "beta"] [NOSS "oof",NOSS "sha",NOSS "41af286"])
+-- parseString parseSemVer mempty "1.0.0-beta+oof.sha.41af286" ->
+-- Success (SemVer 1 0 0 [NOSS "beta"] [NOSS "oof",NOSS "sha",NOSS "41af286"])
 parseSemVer :: Parser SemVer
 parseSemVer = do
   major    <- integer
