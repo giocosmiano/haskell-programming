@@ -75,7 +75,7 @@ parseNbrOrStr = sepBy parseAlphaNum (symbol ".")
 
 parseAlphaNum :: Parser NumberOrString
 parseAlphaNum = do
-  alpNbr <- some alphaNum
+  alpNbr <- some (noneOf ".+")
   let val = if all isDigit alpNbr then (NOSI (read alpNbr :: Integer)) else NOSS alpNbr
   return val
 
