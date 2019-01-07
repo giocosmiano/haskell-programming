@@ -237,10 +237,8 @@ Haskell λ > runIdentity $ traverse (Identity . (+1)) [1, 2, 3]
 [2,3,4]
 ```
 
- - `sequenceA` is mapping a function over some embedded value(s), like `fmap`, but similar to `flip bind`, that function is itself
-   generating more structure. However, unlike `flip bind`, that structure can be of a different type than the
-   structure we lifted over to apply the function. And at the end, it will flip the two structures around,
-   as sequenceA did.
+ - `sequenceA` is flipping two contexts or structures. It doesn’t by itself allow you to apply any function to the a value
+   inside the structure; it only flips the layers of structure around.
 ```haskell
 Haskell λ > sequenceA [Just 3, Just 2, Just 1]
 Just [3,2,1]
