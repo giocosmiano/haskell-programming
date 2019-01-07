@@ -121,10 +121,23 @@ Haskell λ > addAndMultiply 3 5 7
    - To add different type class instances to a type that is otherwise unchanged
      representationally, such as with Sum and Product
 
+```haskell
+Haskell λ > import Data.Monoid
+
+Haskell λ > Sum 3 <> Sum 5 <> Sum 7
+Sum {getSum = 15}
+
+Haskell λ > Product 3 <> Product 5 <> Product 7
+Product {getProduct = 105}
+```
+
 #### Chapter 16 - Functor
  - Laws
+
  - IO Functor
+
  - Functors are unique to a datatype
+
  - Functor is a way to apply a function over or around some structure that
    we don’t want to alter. That is, we want to apply the function to the value
    that is “inside” some structure and leave the structure alone.
@@ -138,8 +151,11 @@ Just (MyName {getMyName = "gio"})
 
 #### Chapter 17 - Applicative
  - Laws
+
  - Functor vs Applicative
+
  - ZipList Monoid
+
  - Applicatives are monoidal functors. The Applicative type class allows for function
    application lifted over structure (like Functor). But with Applicative the function
    we’re applying is also embedded in some structure. Because the function and the value
@@ -156,13 +172,17 @@ Just 15
 
 #### Chapter 18 - Monad
  - Laws
+
  - `do` syntax and monads
+
  - Application and composition
+
  - Think of `Monads` as another way of applying functions over structure, with the ability of the function
    to alter the structure, something we’ve not seen in `Functor` and `Applicative`. `Monad` can inject more
    structure. However, it has the ability to flatten those two layers of structure into one is what
    makes `Monad` special. And it’s by putting that `join` function together with the mapping function
    that we get `bind`, also known as `>>=`.
+
  - The `Monad` type class is essentially a **generalized structure manipulation with some laws** to make
    it sensible. Just like `Functor` and `Applicative`.
 
@@ -180,6 +200,7 @@ hello world
 
 #### Chapter 20 - Foldable
  - Revenge of the monoids
+
  - Foldable is a type class of data structures that can be folded to a summary value.
 
 ```haskell
@@ -194,11 +215,18 @@ Haskell λ > foldr (*) 1 [1,2,3,4,5]
 
 #### Chapter 21 - Traversable
  - Laws
+
  - traverse, sequenceA
+
  - Traversable allows you to transform elements inside the structure like a `Functor`, producing `Applicative` effects
    along the way, and lift those potentially multiple instances of `Applicative` structure outside of the traversable
    structure. It is commonly described as a way to traverse a data structure, mapping a function inside a structure
    while accumulating the applicative contexts along the way.
+
+ - `traverse` is mapping a function over some embedded value(s), like `fmap`, but similar to `flip bind`, that function is itself
+   generating more structure. However, unlike `flip bind`, that structure can be of a different type than the
+   structure we lifted over to apply the function. And at the end, it will flip the two structures around,
+   as sequenceA did.
 ```haskell
 Haskell λ > import Data.Functor.Identity
 
@@ -207,15 +235,24 @@ Identity [2,3,4]
 
 Haskell λ > runIdentity $ traverse (Identity . (+1)) [1, 2, 3]
 [2,3,4]
+```
 
+ - `sequenceA` is mapping a function over some embedded value(s), like `fmap`, but similar to `flip bind`, that function is itself
+   generating more structure. However, unlike `flip bind`, that structure can be of a different type than the
+   structure we lifted over to apply the function. And at the end, it will flip the two structures around,
+   as sequenceA did.
+```haskell
 Haskell λ > sequenceA [Just 3, Just 2, Just 1]
 Just [3,2,1]
 ```
 
 #### Chapter 22 - Reader
  - Breaking down the Functor of functions
+
  - Functions have an Applicative too
+
  - Monad of functions
+
  - Reader is a way of stringing functions together when all those functions are awaiting one input
    from a shared environment. The important intuition is that it’s another way of abstracting out
    function application and gives us a way to do computation in terms of an argument that hasn’t been
@@ -232,7 +269,9 @@ Haskell λ > (+) <$> (runReader $ Reader (+3)) <*> (runReader $ Reader (*5)) $ 7
 
 #### Chapter 23 - State
  - `State` newtype
+
  - Random numbers
+
  - The `State` type in Haskell is a means of expressing state that may change in the course of evaluating code
    without resort to mutation. The monadic interface for State is more of a convenience than a strict
    necessity for working with State.
@@ -246,12 +285,15 @@ Haskell λ > (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >>
 
 #### Chapter 24 - Parser combinators
  - Haskell’s parsing ecosystem
+
  - Marshalling from an AST to a datatype
+
  - A parser is a function that takes some textual input (it could be a String, or another datatype such as
    ByteString or Text) and returns some structure as an output. That structure might be a tree, for example,
    or an indexed map of locations in the parsed data. Parsers analyze structure in conformance with rules
    specified in a grammar, whether it’s a grammar of a human language, a programming language, or a format
    such as JSON.
+
  - A parser combinator is a higher-order function that takes parsers as input and returns a new parser as output.
 
 
