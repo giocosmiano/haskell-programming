@@ -2,10 +2,8 @@
 
 ### Notes on my journey working on chapter exercises
 
- - Functions are evaluated and reduced into a value called [Beta reduction](https://wiki.haskell.org/Beta_reduction) 
-
  - Functional programming is a function of data transformation. This concept helps me in a big way into understanding
-   `Functor`, `Applicative` and eventually `Monad` 
+   `Functor`, `Applicative` and `Monad` 
    - `f x = y`
      - `f` - function
      - `x` - input such as Integer, Bool, String or even complex [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type)
@@ -13,16 +11,18 @@
      - `y` - output such as Integer, Bool, String or even complex [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type)
        such as Product, Employee etc
 
- - Functions, by default is curried, meaning it only accepts 1-argument and returns either
+ - Functions are evaluated and eventually reduced into a value called [Beta reduction](https://wiki.haskell.org/Beta_reduction) 
+
+ - Function, by default, is curried meaning it only accepts 1-argument and returns either
    - the reduced value
-   - OR another function that will be further applied and eventually will reduced into a value   
+   - OR another function that will be further applied, and so on, that will eventually reduced into a value   
 
  - Functions are data because they're high-order function. See `Chapter 22 - Reader`  
 
 #### Chapter 1 - All You Need is Lambda
- - I have an OOP background, and have a very good understanding of FP working with [Scala](https://www.scala-lang.org/) and
+ - My background is primarily OOP, and have a very good understanding of FP working with [Scala](https://www.scala-lang.org/) and
    [ES6 high order functions](https://eloquentjavascript.net/05_higher_order.html) but this chapter provides
-   a good foundation on understanding of [lambda calculus](https://en.wikipedia.org/wiki/Lambda_calculus)
+   a good foundational details on [lambda calculus](https://en.wikipedia.org/wiki/Lambda_calculus)
 
 ```haskell
 Haskell λ > let addAndMultiply = \x -> \y -> \z -> x + y * z
