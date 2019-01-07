@@ -238,7 +238,7 @@ Haskell λ > (+) <$> (runReader $ Reader (+3)) <*> (runReader $ Reader (*5)) $ 7
    necessity for working with State.
 
 ```haskell
-Haskell λ > import Control.Monad.States
+Haskell λ > import Control.Monad.State
 
 Haskell λ > (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >> modify (*5) >> return 9001) 3
 (9001,40)
