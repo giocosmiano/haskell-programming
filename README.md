@@ -1,6 +1,6 @@
 ## This is my personal repository learning `Haskell` from this excellent book [Haskell Programming, by Christopher Allen And Julie Moronuki](http://haskellbook.com/)
 
-### Notes on my journey from working on chapter exercises
+### Notes on my journey working on chapter exercises
 
  - Functions are evaluated and reduced into a value called [Beta reduction](https://wiki.haskell.org/Beta_reduction) 
 
