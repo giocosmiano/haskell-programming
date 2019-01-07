@@ -34,20 +34,25 @@ data LogInfo = LogInfo Day TimeActivities
              deriving (Eq, Show)
 
 -----------------------------------------------------------------------------------
+-- TODO: still needs work to structure correctly -> date, time, activity
+-----------------------------------------------------------------------------------
 
 -- e.g.
 -- parseLogger
-parseLogger :: Result [LogInfo]
+parseLogger :: Result DailyActivities
 parseLogger = parseByteString parseLogData mempty dailyLogs
 
--- e.g.
--- parseByteString parseLogData mempty dailyLogs
-parseLogData :: Parser [LogInfo]
-parseLogData = some $ do
+parseLogData :: Parser DailyActivities
+parseLogData = do
+  a <- parseDailyActivities
+  return $ M.fromList a
+
+parseDailyActivities :: Parser [(Day, TimeActivities)]
+parseDailyActivities = some $ do
   skipComments
   d <- parseDate
   a <- some parseTimeActivity
-  return $ LogInfo d (M.fromList a)
+  return $ (d, M.fromList a)
 
 parseDate :: Parser Day
 parseDate = do
