@@ -2,7 +2,7 @@
 
 ### Notes on my journey working on chapter exercises
 
- - Functional programming is a function of data transformation. This concept helps me in a big way into understanding
+ - Functional programming is a function of data transformation and composition. This concept helps me in a big way into understanding
    `Functor`, `Applicative` and `Monad` 
    - `f x = y`
      - `f` - function
