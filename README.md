@@ -26,6 +26,7 @@
 
 ```haskell
 Haskell λ > let addAndMultiply = \x -> \y -> \z -> x + y * z
+
 Haskell λ > addAndMultiply 3 5 7
 38
 ```
@@ -128,6 +129,13 @@ Haskell λ > addAndMultiply 3 5 7
    we don’t want to alter. That is, we want to apply the function to the value
    that is “inside” some structure and leave the structure alone.
 
+```haskell
+Haskell λ > newtype MyName = MyName { getMyName :: String } deriving (Eq, Show)
+
+Haskell λ > MyName <$> Just "gio"
+Just (MyName {getMyName = "gio"})
+```
+
 #### Chapter 17 - Applicative
  - Laws
  - Functor vs Applicative
@@ -137,6 +145,14 @@ Haskell λ > addAndMultiply 3 5 7
    we’re applying is also embedded in some structure. Because the function and the value
    it’s being applied to both have structure, we have to smash those structures together.
    So, Applicative involves monoids, like `mappend`, and functors.
+
+```haskell
+Haskell λ > (*) <$> Just 3 <*> Just 5  
+Just 15
+
+Haskell λ > Just (*3) <*> Just 5 
+Just 15
+```
 
 #### Chapter 18 - Monad
  - Laws
@@ -150,6 +166,12 @@ Haskell λ > addAndMultiply 3 5 7
  - The `Monad` type class is essentially a **generalized structure manipulation with some laws** to make
    it sensible. Just like `Functor` and `Applicative`.
 
+```haskell
+Haskell λ > getLine >>= putStrLn
+hello world
+hello world
+```
+
 #### Chapter 19 - Applying structure
  - Monoid
  - Functor
@@ -160,6 +182,16 @@ Haskell λ > addAndMultiply 3 5 7
  - Revenge of the monoids
  - Foldable is a type class of data structures that can be folded to a summary value.
 
+```haskell
+Haskell λ > import Data.Functor.Constant
+
+Haskell λ > foldr (*) 3 (Constant 5)
+3
+
+Haskell λ > foldr (*) 1 [1,2,3,4,5]
+120
+```
+
 #### Chapter 21 - Traversable
  - Laws
  - traverse, sequenceA
@@ -167,6 +199,18 @@ Haskell λ > addAndMultiply 3 5 7
    along the way, and lift those potentially multiple instances of `Applicative` structure outside of the traversable
    structure. It is commonly described as a way to traverse a data structure, mapping a function inside a structure
    while accumulating the applicative contexts along the way.
+```haskell
+Haskell λ > import Data.Functor.Identity
+
+Haskell λ > traverse (Identity . (+1)) [1, 2, 3]
+Identity [2,3,4]
+
+Haskell λ > runIdentity $ traverse (Identity . (+1)) [1, 2, 3]
+[2,3,4]
+
+Haskell λ > sequenceA [Just 3, Just 2, Just 1]
+Just [3,2,1]
+```
 
 #### Chapter 22 - Reader
  - Breaking down the Functor of functions
@@ -178,6 +222,13 @@ Haskell λ > addAndMultiply 3 5 7
    supplied yet. We use this most often when we have a constant value that we will obtain from somewhere
    outside our program that will be an argument to a whole bunch of functions. Using `Reader` allows us
    to avoid passing that argument around explicitly.
+```haskell
+Haskell λ > (+) <$> (+3) <*> (*5) $ 7
+45
+
+Haskell λ > (+) <$> (runReader $ Reader (+3)) <*> (runReader $ Reader (*5)) $ 7
+45
+```
 
 #### Chapter 23 - State
  - `State` newtype
@@ -185,6 +236,13 @@ Haskell λ > addAndMultiply 3 5 7
  - The `State` type in Haskell is a means of expressing state that may change in the course of evaluating code
    without resort to mutation. The monadic interface for State is more of a convenience than a strict
    necessity for working with State.
+
+```haskell
+Haskell λ > import Control.Monad.State
+
+Haskell λ > (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >> modify (*5) >> return 9001) 3
+(9001,40)
+```
 
 #### Chapter 24 - Parser combinators
  - Haskell’s parsing ecosystem
