@@ -24,10 +24,10 @@ import Text.RawString.QQ
 type Activity = String
 type Comments = String
 type TimeSpentInMinutes = Integer
-type TimeActivities  = Map TimeOfDay Activity
+type TimeActivities  = Map LocalTime Activity
 type DailyActivities = Map Day TimeActivities
 
-data TimeActivity = TimeActivity TimeOfDay Activity
+data TimeActivity = TimeActivity LocalTime Activity
                   deriving (Eq, Show)
 
 data LogInfo = LogInfo Day TimeActivities
@@ -51,7 +51,7 @@ parseDailyActivities :: Parser [(Day, TimeActivities)]
 parseDailyActivities = some $ do
   skipComments
   d <- parseDate
-  a <- some parseTimeActivity
+  a <- some $ parseTimeActivity d
   return $ (d, M.fromList a)
 
 parseDate :: Parser Day
@@ -73,13 +73,14 @@ parseTimeOfDay = do
   someSpace
   return $ TimeOfDay h m 0
 
-parseTimeActivity :: Parser (TimeOfDay, Activity)
-parseTimeActivity = do
+parseTimeActivity :: Day -> Parser (LocalTime, Activity)
+parseTimeActivity d = do
   t <- parseTimeOfDay
   s <- some (noneOf "\n")
   let (a:_) = splitOn "--" s
+      lt    = LocalTime d t
   skipEOL
-  return (t, a)
+  return (lt, a)
 
 -----------------------------------------------------------------------------------
 
