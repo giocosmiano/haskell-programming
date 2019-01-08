@@ -186,10 +186,23 @@ Just 15
  - The `Monad` type class is essentially a **generalized structure manipulation with some laws** to make
    it sensible. Just like `Functor` and `Applicative`.
 
+ - Sample `Monad`
 ```haskell
 Haskell λ > getLine >>= putStrLn
 hello world
 hello world
+
+Haskell λ > :t getLine >>= putStrLn
+getLine >>= putStrLn :: IO ()
+```
+
+ - As oppose to a `Functor`
+```haskell
+Haskell λ > putStrLn <$> getLine
+hello world
+
+Haskell λ > :t putStrLn <$> getLine
+putStrLn <$> getLine :: IO (IO ())
 ```
 
 #### Chapter 19 - Applying structure
