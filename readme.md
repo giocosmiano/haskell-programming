@@ -2,8 +2,8 @@
 
 ### Notes on my journey working on chapter exercises
 
- - Functional programming is a function of data transformation and composition. This concept helps me in a big way into understanding
-   `Functor`, `Applicative` and `Monad` 
+ - Functional programming is a function of data transformation and composition. This concept helps me in a big way, reminding me to get back
+   to this simple pattern `f x = y` every time I get lost deciphering functorial structure within structure of `Functor`, `Applicative` and `Monad` 
    - `f x = y`
      - `f` - function
      - `x` - input such as Integer, Bool, String or even complex [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type)
@@ -257,6 +257,29 @@ Haskell λ > sequenceA [Just 3, Just 2, Just 1]
 Just [3,2,1]
 ```
 
+ - On the [SkiFreeExercises](https://github.com/giocosmiano/haskell-programming/blob/master/ch21-traversable/SkiFreeExercises.hs),
+   I'm able to write the `Functor`, `Applicative`, `Foldable` and `Traversable` instance of `S` structure, where `n` is also a
+   functorial structure. The `Monad` instance, however, is failing on the `right identity law` running the `quickBatch` check from
+   [quickCheck](http://hackage.haskell.org/package/QuickCheck). I still have to figure out how-to fix this correctly.
+```haskell
+data S n a = S (n a) a deriving (Eq, Show)
+
+-- TODO: fix the implementation of `monad` S
+instance (Monad fa) => Monad (S fa) where
+  return = pure
+--  (S fa a) >>= f = S (fa >>= f) (f a)
+  (S fa a) >>= f =
+    let S fa' a' = f a
+    in  S fa' a'
+```
+
+```haskell
+monad laws:
+  left  identity: +++ OK, passed 500 tests.
+  right identity: *** Failed! Falsifiable (after 1 test): S [] 0
+  associativity:  +++ OK, passed 500 tests.
+```
+
 #### Chapter 22 - Reader
  - Breaking down the Functor of functions
 
@@ -295,17 +318,15 @@ Haskell λ > (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >>
 ```
 
 #### Chapter 24 - Parser combinators
+ - Parser
+
+ - Parser combinator
+
  - Haskell’s parsing ecosystem
 
  - Marshalling from an AST to a datatype
 
- - A parser is a function that takes some textual input (it could be a String, or another datatype such as
-   ByteString or Text) and returns some structure as an output. That structure might be a tree, for example,
-   or an indexed map of locations in the parsed data. Parsers analyze structure in conformance with rules
-   specified in a grammar, whether it’s a grammar of a human language, a programming language, or a format
-   such as JSON.
-
- - A parser combinator is a higher-order function that takes parsers as input and returns a new parser as output.
+ - The exercises on this chapter has a very substantial resource that jogged my brain. 
 
 
 
