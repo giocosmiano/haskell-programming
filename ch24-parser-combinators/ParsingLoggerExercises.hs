@@ -40,8 +40,8 @@ data LogInfo = LogInfo Day TimeActivities
 
 listOfDailyLogs :: Maybe [TimeActivity]
 listOfDailyLogs = do
-  xs <- maybeSuccess $ parseLogger
-  let dailyActivities = M.elems <$> xs -- using <$> because the possibility of Nothing in Maybe
+  mDailyActivities   <- maybeSuccess $ parseLogger
+  let dailyActivities = M.elems <$> mDailyActivities -- using <$> because the possibility of Nothing in Maybe
       timeActivities  = M.elems dailyActivities -- getting the lists of timeActivities for each dailyActivities
       unsortedActs    = join timeActivities -- flattening the list of list from timeActivities for each dailyActivities
       sortedActs =
