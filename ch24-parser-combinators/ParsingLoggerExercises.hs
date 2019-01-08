@@ -8,6 +8,7 @@ import Control.Monad
 import Data.Char
 import Data.ByteString (ByteString)
 import Data.Maybe
+import Data.List (sortBy)
 
 import Data.Map (Map)
 import qualified Data.Map as M
@@ -24,17 +25,39 @@ import Text.RawString.QQ
 type Activity = String
 type Comments = String
 type TimeSpentInMinutes = Integer
-type TimeActivities  = Map LocalTime Activity
+type TimeActivities  = Map LocalTime TimeActivity
 type DailyActivities = Map Day TimeActivities
 
-data TimeActivity = TimeActivity LocalTime Activity
-                  deriving (Eq, Show)
+data TimeActivity = TimeActivity LocalTime Activity TimeSpentInMinutes
+                  deriving (Eq, Show, Ord)
 
 data LogInfo = LogInfo Day TimeActivities
-             deriving (Eq, Show)
+             deriving (Eq, Show, Ord)
 
 -----------------------------------------------------------------------------------
--- TODO: still needs work to structure correctly -> date, time, activity
+-- listing the daily logs
+-----------------------------------------------------------------------------------
+
+listOfDailyLogs :: Maybe [TimeActivity]
+listOfDailyLogs = do
+  xs <- maybeSuccess $ parseLogger
+  let dailyActivities = M.elems <$> xs -- using <$> because the possibility of Nothing in Maybe
+      timeActivities  = M.elems dailyActivities -- getting the lists of timeActivities for each dailyActivities
+      unsortedActs    = join timeActivities -- flattening the list of list from timeActivities for each dailyActivities
+      sortedActs =
+        sortBy (\(TimeActivity t _ _) (TimeActivity t' _ _) -> compare t t') unsortedActs
+      activities = foldr timeSpentOnActivity [] sortedActs
+  return activities
+
+timeSpentOnActivity :: TimeActivity -> [TimeActivity] -> [TimeActivity]
+timeSpentOnActivity (TimeActivity t a _) list =
+  if null list
+  then list ++ [(TimeActivity t a 0)]
+  else
+    let (TimeActivity t' a' _) = last list
+--        timeDiff = diffLocalTime t' t
+    in  list ++ [TimeActivity t' a' 0]
+
 -----------------------------------------------------------------------------------
 
 -- e.g.
@@ -73,14 +96,15 @@ parseTimeOfDay = do
   someSpace
   return $ TimeOfDay h m 0
 
-parseTimeActivity :: Day -> Parser (LocalTime, Activity)
+parseTimeActivity :: Day -> Parser (LocalTime, TimeActivity)
 parseTimeActivity d = do
   t <- parseTimeOfDay
   s <- some (noneOf "\n")
   let (a:_) = splitOn "--" s
       lt    = LocalTime d t
+      ta    = TimeActivity lt a 0
   skipEOL
-  return (lt, a)
+  return (lt, ta)
 
 -----------------------------------------------------------------------------------
 
@@ -95,6 +119,10 @@ skipComments = skipMany $ do
   parseComments
   skipMany (noneOf "\n")
   skipEOL
+
+maybeSuccess :: Result a -> Maybe a
+maybeSuccess (Success a) = Just a
+maybeSuccess _ = Nothing
 
 -----------------------------------------------------------------------------------
 
