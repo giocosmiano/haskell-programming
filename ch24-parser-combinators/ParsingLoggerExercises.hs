@@ -40,23 +40,24 @@ data LogInfo = LogInfo Day TimeActivities
 
 listOfDailyLogs :: Maybe [TimeActivity]
 listOfDailyLogs = do
-  mDailyActivities   <- maybeSuccess $ parseLogger
-  let dailyActivities = M.elems <$> mDailyActivities -- using <$> because the possibility of Nothing in Maybe
-      timeActivities  = M.elems dailyActivities -- getting the lists of timeActivities for each dailyActivities
-      unsortedActs    = join timeActivities -- flattening the list of list from timeActivities for each dailyActivities
-      sortedActs =
-        sortBy (\(TimeActivity t _ _) (TimeActivity t' _ _) -> compare t t') unsortedActs
-      activities = foldr timeSpentOnActivity [] sortedActs
+  mDailyActivities    <- maybeSuccess $ parseLogger
+  let dailyActivities  = M.elems <$> mDailyActivities -- using <$> because the possibility of Nothing in Maybe
+      timeActivities   = M.elems dailyActivities -- getting the lists of timeActivities for each dailyActivities
+      unsortedActs     = join timeActivities -- flattening the list of list from timeActivities for each dailyActivities
+      actWithTimeSpent = foldr timeSpentOnActivity [] unsortedActs
+      activities       =
+        sortBy (\(TimeActivity t _ _) (TimeActivity t' _ _) -> compare t t') actWithTimeSpent
   return activities
 
 timeSpentOnActivity :: TimeActivity -> [TimeActivity] -> [TimeActivity]
 timeSpentOnActivity (TimeActivity t a _) list =
   if null list
-  then list ++ [(TimeActivity t a 0)]
+  then list ++ [TimeActivity t a 0]
   else
     let (TimeActivity t' a' _) = last list
+    in  list ++ [TimeActivity t a 0]
 --        timeDiff = diffLocalTime t' t
-    in  list ++ [TimeActivity t' a' 0]
+--    in  list ++ [TimeActivity t a timeDiff]
 
 -----------------------------------------------------------------------------------
 
