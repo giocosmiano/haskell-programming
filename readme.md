@@ -3,7 +3,8 @@
 ### Notes on my journey working on chapter exercises
 
  - Functional programming is a function of data transformation and composition. This concept helps me in a big way, reminding me to get back
-   to this simple pattern `f x = y` every time I get lost deciphering functorial structure within structure of `Functor`, `Applicative` and `Monad` 
+   to this simple pattern `f x = y` every time I get lost where to apply the function on functorial structure within structure of `Functor`,
+   `Applicative` and `Monad` 
    - `f x = y`
      - `f` - function
      - `x` - input such as Integer, Bool, String or even complex [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type)
@@ -186,7 +187,7 @@ Just 15
  - The `Monad` type class is essentially a **generalized structure manipulation with some laws** to make
    it sensible. Just like `Functor` and `Applicative`.
 
- - Sample `Monad`
+ - Sample `Monad` that uses `join` implicitly to flatten the structure within structure
 ```haskell
 Haskell λ > getLine >>= putStrLn
 hello world
@@ -203,6 +204,18 @@ hello world
 
 Haskell λ > :t putStrLn <$> getLine
 putStrLn <$> getLine :: IO (IO ())
+```
+
+ - To turn the `Functor` into a `Monad`, use the `join` explicitly to flatten the structure within structure
+```haskell
+Haskell λ > import Control.Monad
+
+Haskell λ > join $ putStrLn <$> getLine
+hello world
+hello world
+
+Haskell λ > :t join $ putStrLn <$> getLine
+join $ putStrLn <$> getLine :: IO ()
 ```
 
 #### Chapter 19 - Applying structure
