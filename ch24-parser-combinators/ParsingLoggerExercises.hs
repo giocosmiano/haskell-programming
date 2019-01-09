@@ -57,8 +57,7 @@ sortByLocalTime :: [TimeActivity] -> [TimeActivity]
 sortByLocalTime = sortBy $ \(TimeActivity t _ _) (TimeActivity t' _ _) -> compare t t'
 
 -----------------------------------------------------------------------------------
--- | TODO: fix to correctly compute `timeSpentOnActivity`
--- see these references for further reading
+-- | see these references for further reading
 -- https://wiki.haskell.org/Time
 -- https://two-wrongs.com/haskell-time-library-tutorial
 -----------------------------------------------------------------------------------
