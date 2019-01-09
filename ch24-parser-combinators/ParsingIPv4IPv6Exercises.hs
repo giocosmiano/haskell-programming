@@ -58,13 +58,15 @@ ipv4ToIPAddress (IPv4 o1 o2 o3 o4) =
   in  IPAddress $ w1 + w2 + w3 + w4
 
 -----------------------------------------------------------------------------------
--- TODO: fix to correct the implementation of ipv6
+-- TODO: very messy and needs cleaning up, will revisit to correct the implementation of ipv6
 -- parser for IPv6 address https://en.wikipedia.org/wiki/IPv6
---
--- http://answers.google.com/answers/threadview/id/770645.html
--- https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/network-ipv6.html
--- https://www.ibm.com/support/knowledgecenter/en/ssw_ibm_i_72/rzai2/rzai2ipv6addrformat.htm
--- https://www.juniper.net/documentation/en_US/junos/topics/concept/ipv6-flow-ipv6-address-types.html
+-----------------------------------------------------------------------------------
+
+-- Per discussion -> http://answers.google.com/answers/threadview/id/770645.html
+-- The use of '::' indicates one or more groups of 16 bits of zeros. The '::' can
+-- only appear once in an address.  The '::' can also be used to compress leading
+-- or trailing zeros in an address.
+
 -----------------------------------------------------------------------------------
 
 type HexDigits = String
@@ -90,7 +92,7 @@ data IPAddress6 = IPAddress6 Word64 Word64
 -- 1:0::3
 -- ::0:3
 -- 1:0::
-parseIPv6Address :: Parser HexDigits
+parseIPv6Address :: Parser IPv6
 parseIPv6Address = do
   skipOptional skipWhitespace
   h1 <- optional parseHexDigits
@@ -109,12 +111,13 @@ parseIPv6Address = do
   _  <- skipOptional $ char ':'
   h8 <- optional parseHexDigits
   ab <- optional parseIPv6Abbr
---   let ipv6List  = [h1, h2, h3, h4, h5, h6, h7, h8]
---       ctrIpv6   = length . filter countEmptyIpv6 ipv6List
---       tupleIpv6 = map (\x -> (x, ctrIpv6)) ipv6List
---       filledInIpv6 = fillingInIpv6 tupleIpv6
+  let ipv6List  = [h1, h2, h3, h4, h5, h6, h7, h8]
+      ctrIpv6   = countEmptyIpv6 ipv6List
+      tmpInIpv6 = resetInIpv6 ctrIpv6 ipv6List
+      newIpv6   = fillInIpv6 tmpInIpv6
+      ipv6      = generateIPv6 newIpv6 (getIPv6Abbr ab)
   skipEOL
-  return $ getHexDigit h8
+  return ipv6
 
 parseHexDigits :: Parser HexDigits
 parseHexDigits = do
@@ -130,11 +133,21 @@ parseIPv6Abbr = do
 countEmptyIpv6 :: [Maybe HexDigits] -> Int
 countEmptyIpv6 = length . filter (\x -> isNothing x)
 
-fillingInIpv6 :: Int -> [Maybe HexDigits] -> [(Maybe HexDigits, Int)]
-fillingInIpv6 ctr []     = []
-fillingInIpv6 ctr (x:xs) =
-  let newCtr = if ctr > 0 && isNothing x then ctr - 1 else ctr
-  in  [(x, newCtr)] ++ (fillingInIpv6 newCtr xs)
+-- TODO: will revisit once I get the time to correctly implement filling-in the gaps in collapsed addresses
+resetInIpv6 :: Int -> [Maybe HexDigits] -> [(Maybe HexDigits, Int)]
+resetInIpv6 ctr [] = []
+resetInIpv6 ctr all@(x:xs) =
+  let newCtr = if ctr > 0 && isNothing x then ctr - 1 else 0
+  in  [(x, newCtr)] ++ resetInIpv6 newCtr xs
+
+fillInIpv6 :: [(Maybe HexDigits, Int)] -> [HexDigits]
+fillInIpv6 []     = []
+fillInIpv6 (x:xs) =
+  let hexDigits   = fst x
+      ctr         = snd x
+      newHexDigit = if ctr > 0 then Nothing else hexDigits
+      valHexDigit = getHexDigit newHexDigit
+  in  [valHexDigit] ++ fillInIpv6 xs
 
 getHexDigit :: Maybe HexDigits -> HexDigits
 getHexDigit Nothing  = "0"
@@ -143,6 +156,18 @@ getHexDigit (Just x) = x
 getIPv6Abbr :: Maybe Int8 -> Int8
 getIPv6Abbr Nothing  = 0
 getIPv6Abbr (Just x) = x
+
+generateIPv6 :: [HexDigits] -> IPv6Abbr -> IPv6
+generateIPv6 xs abbr =
+  let h1 = xs !! 0
+      h2 = xs !! 1
+      h3 = xs !! 2
+      h4 = xs !! 3
+      h5 = xs !! 4
+      h6 = xs !! 5
+      h7 = xs !! 6
+      h8 = xs !! 7
+  in  IPv6 h1 h2 h3 h4 h5 h6 h7 h8 abbr
 
 -----------------------------------------------------------------------------------
 
