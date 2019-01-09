@@ -19,7 +19,7 @@ import Text.Trifecta
 import Text.RawString.QQ
 
 -----------------------------------------------------------------------------------
--- parser daily logger file
+-- | parser daily logger file
 -----------------------------------------------------------------------------------
 
 type Activity = String
@@ -35,7 +35,7 @@ data LogInfo = LogInfo Day TimeActivities
              deriving (Eq, Show, Ord)
 
 -----------------------------------------------------------------------------------
--- listing the daily logs
+-- | listing the daily logs
 -----------------------------------------------------------------------------------
 
 listOfDailyLogs :: Maybe [TimeActivity]
@@ -43,25 +43,35 @@ listOfDailyLogs = do
   mDailyActivities    <- maybeSuccess $ parseLogger
   let dailyActivities  = M.elems <$> mDailyActivities -- using <$> because the possibility of Nothing in Maybe
       timeActivities   = M.elems dailyActivities -- getting the lists of timeActivities for each dailyActivities
-      unsortedActs     = join timeActivities -- flattening the list of list from timeActivities for each dailyActivities
-      actWithTimeSpent = foldr timeSpentOnActivity [] unsortedActs
-      activities       =
-        sortBy (\(TimeActivity t _ _) (TimeActivity t' _ _) -> compare t t') actWithTimeSpent
-  return activities
+      tmpActivities'   = join timeActivities -- flattening the list of list from timeActivities for each dailyActivities
+      actWithTimeSpent = foldr timeSpentOnActivity [] $ sortByLocalTime tmpActivities'
+  return $ sortByLocalTime actWithTimeSpent
 
+sortByLocalTime :: [TimeActivity] -> [TimeActivity]
+sortByLocalTime = sortBy (\(TimeActivity t _ _) (TimeActivity t' _ _) -> compare t t')
+
+-----------------------------------------------------------------------------------
+-- | TODO: fix to correctly compute `timeSpentOnActivity`
+-- see this haskell time library tutorial
+-- https://two-wrongs.com/haskell-time-library-tutorial
+-----------------------------------------------------------------------------------
 timeSpentOnActivity :: TimeActivity -> [TimeActivity] -> [TimeActivity]
 timeSpentOnActivity (TimeActivity t a _) list =
   if null list
   then list ++ [TimeActivity t a 0]
   else
     let (TimeActivity t' a' _) = last list
-    in  list ++ [TimeActivity t a 0]
---        timeDiff = diffLocalTime t' t
---    in  list ++ [TimeActivity t a timeDiff]
+-- why am I getting this error : Variable not in scope: diffLocalTime :: LocalTime -> LocalTime -> t
+--        ltDiff    = diffLocalTime  t' t
+        utcTime   = localTimeToUTC utc t
+        utcTime'  = localTimeToUTC utc t'
+        timeDiff  = diffUTCTime utcTime' utcTime
+        timeDiff' = (floor timeDiff) `div` 60 -- in minutes
+    in  list ++ [TimeActivity t a timeDiff']
 
 -----------------------------------------------------------------------------------
 
--- e.g.
+-- | e.g.
 -- parseLogger
 parseLogger :: Result DailyActivities
 parseLogger = parseByteString parseLogData mempty dailyLogs
