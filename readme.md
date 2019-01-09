@@ -20,7 +20,7 @@
 
  - Functions are data because they're high-order function. See `Chapter 22 - Reader`  
 
- - Always helpful to use `:t` for type, `:k` for kind or `:i` info to get more details   
+ - Always helpful to use *`:t`* for type, *`:k`* for kind or *`:i`* info to get more details   
 
 #### Chapter 1 - All You Need is Lambda
  - My background is primarily OOP, and have a very good understanding of FP working with [Scala](https://www.scala-lang.org/) and
