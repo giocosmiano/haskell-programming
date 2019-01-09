@@ -3,13 +3,13 @@
 ### Notes on my journey working on chapter exercises
 
  - Functional programming is a function of data transformation and composition. This concept helps me in a big way, reminding me to get back
-   to this simple pattern `f x = y` every time I get lost where to apply the function on functorial structure within structure of `Functor`,
-   `Applicative` and `Monad` 
+   to this simple pattern `f x = y` every time I get lost where to apply the function on layers of functorial structures, i. e. structure within
+   structure, of `Functor`, `Applicative` and `Monad`. 
    - `f x = y`
      - `f` - function
-     - `x` - input such as Integer, Bool, String or even complex [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type)
+     - `x` - input such as Integer, String or even complex [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type)
        such as Product, Employee etc
-     - `y` - output such as Integer, Bool, String or even complex [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type)
+     - `y` - output such as Integer, String or even complex [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type)
        such as Product, Employee etc
 
  - Functions are evaluated and eventually reduced into a value called [Beta reduction](https://wiki.haskell.org/Beta_reduction) 
@@ -19,6 +19,8 @@
    - OR another function that will be further applied, and so on, that will eventually reduced into a value   
 
  - Functions are data because they're high-order function. See `Chapter 22 - Reader`  
+
+ - Always helpful to use `:t` for type, `:k` for kind or `:i` info to get more details   
 
 #### Chapter 1 - All You Need is Lambda
  - My background is primarily OOP, and have a very good understanding of FP working with [Scala](https://www.scala-lang.org/) and
