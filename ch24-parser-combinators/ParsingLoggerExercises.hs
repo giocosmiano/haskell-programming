@@ -8,7 +8,7 @@ import Control.Monad
 import Data.Char
 import Data.ByteString (ByteString)
 import Data.Maybe
-import Data.List (sortBy)
+import Data.List (sortBy, intercalate)
 
 import Data.Map (Map)
 import qualified Data.Map as M
@@ -34,25 +34,32 @@ data TimeActivity = TimeActivity LocalTime Activity TimeSpentInMinutes
 data LogInfo = LogInfo Day TimeActivities
              deriving (Eq, Show, Ord)
 
+newtype DailyLogs = DailyLogs { getDailyLogs :: [TimeActivity] }
+                  deriving (Eq, Ord)
+
+instance Show DailyLogs where
+  show (DailyLogs xs) = intercalate "\n" $ map show xs
+
 -----------------------------------------------------------------------------------
 -- | listing the daily logs
 -----------------------------------------------------------------------------------
 
-listOfDailyLogs :: Maybe [TimeActivity]
+listOfDailyLogs :: Maybe DailyLogs
 listOfDailyLogs = do
   mDailyActivities    <- maybeSuccess $ parseLogger
   let dailyActivities  = M.elems <$> mDailyActivities -- using <$> because the possibility of Nothing in Maybe
       timeActivities   = M.elems dailyActivities -- getting the lists of timeActivities for each dailyActivities
       tmpActivities'   = join timeActivities -- flattening the list of list from timeActivities for each dailyActivities
       actWithTimeSpent = foldr timeSpentOnActivity [] $ sortByLocalTime tmpActivities'
-  return $ sortByLocalTime actWithTimeSpent
+  return $ DailyLogs $ sortByLocalTime actWithTimeSpent
 
 sortByLocalTime :: [TimeActivity] -> [TimeActivity]
-sortByLocalTime = sortBy (\(TimeActivity t _ _) (TimeActivity t' _ _) -> compare t t')
+sortByLocalTime = sortBy $ \(TimeActivity t _ _) (TimeActivity t' _ _) -> compare t t'
 
 -----------------------------------------------------------------------------------
 -- | TODO: fix to correctly compute `timeSpentOnActivity`
--- see this haskell time library tutorial
+-- see these references for further reading
+-- https://wiki.haskell.org/Time
 -- https://two-wrongs.com/haskell-time-library-tutorial
 -----------------------------------------------------------------------------------
 timeSpentOnActivity :: TimeActivity -> [TimeActivity] -> [TimeActivity]
@@ -66,7 +73,7 @@ timeSpentOnActivity (TimeActivity t a _) list =
         utcTime   = localTimeToUTC utc t
         utcTime'  = localTimeToUTC utc t'
         timeDiff  = diffUTCTime utcTime' utcTime
-        timeDiff' = (floor timeDiff) `div` 60 -- in minutes
+        timeDiff' = (floor timeDiff :: Integer) `div` 60 -- in minutes
     in  list ++ [TimeActivity t a timeDiff']
 
 -----------------------------------------------------------------------------------
