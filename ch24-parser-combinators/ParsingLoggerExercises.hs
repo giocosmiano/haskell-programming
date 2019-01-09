@@ -62,18 +62,18 @@ sortByLocalTime = sortBy $ \(TimeActivity t _ _) (TimeActivity t' _ _) -> compar
 -- https://two-wrongs.com/haskell-time-library-tutorial
 -----------------------------------------------------------------------------------
 timeSpentOnActivity :: TimeActivity -> [TimeActivity] -> [TimeActivity]
-timeSpentOnActivity (TimeActivity t a _) list =
-  if null list
-  then list ++ [TimeActivity t a 0]
-  else
-    let (TimeActivity t' a' _) = last list
--- why am I getting this error : Variable not in scope: diffLocalTime :: LocalTime -> LocalTime -> t
---        ltDiff    = diffLocalTime  t' t
-        utcTime   = localTimeToUTC utc t
-        utcTime'  = localTimeToUTC utc t'
-        timeDiff  = diffUTCTime utcTime' utcTime
-        timeDiff' = (floor timeDiff :: Integer) `div` 60 -- in minutes
-    in  list ++ [TimeActivity t a timeDiff']
+timeSpentOnActivity (TimeActivity t a _) timeActivities =
+  let timeDiff = if null timeActivities
+      then 0
+      else
+        let (TimeActivity t' a' _) = last timeActivities
+-- why am I getting this error??? -> Variable not in scope: diffLocalTime :: LocalTime -> LocalTime -> t
+--            ltDiff    = diffLocalTime  t' t
+            utcTime   = localTimeToUTC utc t
+            utcTime'  = localTimeToUTC utc t'
+            timeDiff  = diffUTCTime utcTime' utcTime
+        in  (floor timeDiff :: Integer) `div` 60 -- in minutes
+  in  timeActivities ++ [TimeActivity t a timeDiff]
 
 -----------------------------------------------------------------------------------
 
