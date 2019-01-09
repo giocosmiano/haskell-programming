@@ -14,7 +14,7 @@ import Text.Trifecta
 import Text.RawString.QQ
 
 -----------------------------------------------------------------------------------
--- parser for IPv4 address https://en.wikipedia.org/wiki/IPv4
+-- | parser for IPv4 address https://en.wikipedia.org/wiki/IPv4
 -----------------------------------------------------------------------------------
 
 type Octet  = Word32
@@ -27,7 +27,7 @@ data IPAddress = IPAddress Word32
 
 -----------------------------------------------------------------------------------
 
--- e.g.
+-- | e.g.
 -- parseString parseIPv4Address mempty "255.255.255.255" -> Success (IPAddress 4294967295)
 -- parseString parseIPv4Address mempty "198.179.137.194" -> Success (IPAddress 3333654978)
 -- parseString parseIPv4Address mempty "172.16.254.1"    -> Success (IPAddress 2886794753)
@@ -59,7 +59,7 @@ ipv4ToIPAddress (IPv4 o1 o2 o3 o4) =
   in  IPAddress $ w1 + w2 + w3 + w4
 
 -----------------------------------------------------------------------------------
--- TODO: very messy and needs cleaning up, will revisit to implement ipv6 to word64
+-- | TODO: very messy and needs cleaning up, will revisit to implement ipv6 to word64
 -- parser for IPv6 address https://en.wikipedia.org/wiki/IPv6
 -----------------------------------------------------------------------------------
 
@@ -84,20 +84,20 @@ instance Show IPv6 where
 data IPAddress6 = IPAddress6 Word64 Word64
                 deriving (Eq, Ord, Show)
 
--- e.g.
+-- | e.g.
 -- parseString parseIPv6Address mempty "0:0:0:0:0:ffff:ac10:fe01"                ->
 -- parseString parseIPv6Address mempty "0:0:0:0:0:ffff:cc78:f"                   ->
 -- parseString parseIPv6Address mempty "FE80:0000:0000:0000:0202:B3FF:FE1E:8329" ->
 -- parseString parseIPv6Address mempty "2001:DB8::8:800:200C:417A"               ->
 -- parseString parseIPv6Address mempty "FE80::0202:B3FF:FE1E:8329"               ->
 
--- are these valid ipv6 formats???
+-- | are these valid ipv6 formats???
 -- 1::0:3
 -- 1:0::3
 -- ::0:3
 -- 1:0::
 
--- for debugging only; won't work exactly because some values can go beyond the hex 0-f
+-- | for debugging only; won't work exactly because some values can go beyond the hex 0-f
 parseIPv6Address'' :: Parser [String]
 parseIPv6Address'' = do
   skipOptional skipWhitespace
@@ -108,7 +108,7 @@ parseIPv6Address'' = do
   skipEOL
   return hexDigits
 
--- for debugging purposes only
+-- | for debugging purposes only
 parseIPv6Address' :: Parser [Maybe HexDigits]
 parseIPv6Address' = do
   skipOptional skipWhitespace
@@ -169,7 +169,7 @@ parseIPv6Abbr = do
   return $ read v
 
 -----------------------------------------------------------------------------------
--- NOTE *** this is the tricky part mentioned in the book
+-- | NOTE *** this is the tricky part mentioned in the book
 -- Per discussion -> http://answers.google.com/answers/threadview/id/770645.html
 -- The use of '::' indicates one or more groups of 16 bits of zeros. The '::' can only appear
 -- once in an address.  The '::' can also be used to compress leading or trailing zeros in an address.
@@ -177,12 +177,12 @@ parseIPv6Abbr = do
 -- `countEmptyIpv6` is used to determine the counts of empty elements that will be move from the tail
 -- e.g.
 
--- resulting to 2 counts from tail that will be moved into the middle
+-- | resulting to 2 counts from tail that will be moved into the middle
 -- "FE80::0202:B3FF:FE1E:8329"
 -- will be parsed to           -> [Just "FE80",Nothing,Just "0202",Just "B3FF",Just "FE1E",Just "8329",Nothing,Nothing]
 -- which should be turned into -> [Just "FE80",Nothing,Nothing,Nothing,Just "0202",Just "B3FF",Just "FE1E",Just "8329"]
 
--- resulting to 2 counts from tail that will be moved into the after the 1st Nothing
+-- | resulting to 2 counts from tail that will be moved into the after the 1st Nothing
 -- "::0202:B3FF:FE1E:8329"
 -- will be parsed to           -> [Nothing,Nothing,Just "0202",Just "B3FF",Just "FE1E",Just "8329",Nothing,Nothing]
 -- which should be turned into -> [Nothing,Nothing,Nothing,Nothing,Just "0202",Just "B3FF",Just "FE1E",Just "8329"]
