@@ -9,6 +9,7 @@ import Control.Monad.State
 import Data.Maybe
 import Data.Int
 import Data.Word
+import Data.List.Split (splitOn)
 import Text.Trifecta
 import Text.RawString.QQ
 
@@ -95,6 +96,19 @@ data IPAddress6 = IPAddress6 Word64 Word64
 -- 1:0::3
 -- ::0:3
 -- 1:0::
+
+-- for debugging only; won't work exactly because some values can go beyond the hex 0-f
+parseIPv6Address'' :: Parser [String]
+parseIPv6Address'' = do
+  skipOptional skipWhitespace
+  ipv6 <- sepBy1 (some (noneOf "/\n")) (char ':')
+  let hexValue  = head ipv6
+      hexDigits = splitOn ":" hexValue
+  ab <- optional parseIPv6Abbr
+  skipEOL
+  return hexDigits
+
+-- for debugging purposes only
 parseIPv6Address' :: Parser [Maybe HexDigits]
 parseIPv6Address' = do
   skipOptional skipWhitespace
