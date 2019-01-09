@@ -58,14 +58,13 @@ ipv4ToIPAddress (IPv4 o1 o2 o3 o4) =
   in  IPAddress $ w1 + w2 + w3 + w4
 
 -----------------------------------------------------------------------------------
--- TODO: very messy and needs cleaning up, will revisit to correct the implementation of ipv6
+-- TODO: very messy and needs cleaning up, will revisit to implement ipv6 to word64
 -- parser for IPv6 address https://en.wikipedia.org/wiki/IPv6
 -----------------------------------------------------------------------------------
 
 -- Per discussion -> http://answers.google.com/answers/threadview/id/770645.html
--- The use of '::' indicates one or more groups of 16 bits of zeros. The '::' can
--- only appear once in an address.  The '::' can also be used to compress leading
--- or trailing zeros in an address.
+-- The use of '::' indicates one or more groups of 16 bits of zeros. The '::' can only appear
+-- once in an address.  The '::' can also be used to compress leading or trailing zeros in an address.
 
 -----------------------------------------------------------------------------------
 
@@ -74,8 +73,12 @@ type IPv6Abbr  = Int8
 
 data IPv6 = IPv6 HexDigits HexDigits HexDigits HexDigits
                  HexDigits HexDigits HexDigits HexDigits
-                 IPv6Abbr
-          deriving (Eq, Ord, Show)
+          deriving (Eq, Ord)
+
+instance Show IPv6 where
+  show (IPv6 h1 h2 h3 h4 h5 h6 h7 h8) =
+    show $ h1 ++ ":" ++ h2 ++ ":" ++ h3 ++ ":" ++ h4 ++ ":" ++
+           h5 ++ ":" ++ h6 ++ ":" ++ h7 ++ ":" ++ h8
 
 data IPAddress6 = IPAddress6 Word64 Word64
                 deriving (Eq, Ord, Show)
@@ -92,32 +95,53 @@ data IPAddress6 = IPAddress6 Word64 Word64
 -- 1:0::3
 -- ::0:3
 -- 1:0::
+parseIPv6Address' :: Parser [Maybe HexDigits]
+parseIPv6Address' = do
+  skipOptional skipWhitespace
+  h1 <- optional parseHexDigits
+  _  <- optional $ char ':'
+  h2 <- optional parseHexDigits
+  _  <- optional $ char ':'
+  h3 <- optional parseHexDigits
+  _  <- optional $ char ':'
+  h4 <- optional parseHexDigits
+  _  <- optional $ char ':'
+  h5 <- optional parseHexDigits
+  _  <- optional $ char ':'
+  h6 <- optional parseHexDigits
+  _  <- optional $ char ':'
+  h7 <- optional parseHexDigits
+  _  <- optional $ char ':'
+  h8 <- optional parseHexDigits
+  ab <- optional parseIPv6Abbr
+  skipEOL
+  return [h1, h2, h3, h4, h5, h6, h7, h8]
+
 parseIPv6Address :: Parser IPv6
 parseIPv6Address = do
   skipOptional skipWhitespace
   h1 <- optional parseHexDigits
-  _  <- skipOptional $ char ':'
+  _  <- optional $ char ':'
   h2 <- optional parseHexDigits
-  _  <- skipOptional $ char ':'
+  _  <- optional $ char ':'
   h3 <- optional parseHexDigits
-  _  <- skipOptional $ char ':'
+  _  <- optional $ char ':'
   h4 <- optional parseHexDigits
-  _  <- skipOptional $ char ':'
+  _  <- optional $ char ':'
   h5 <- optional parseHexDigits
-  _  <- skipOptional $ char ':'
+  _  <- optional $ char ':'
   h6 <- optional parseHexDigits
-  _  <- skipOptional $ char ':'
+  _  <- optional $ char ':'
   h7 <- optional parseHexDigits
-  _  <- skipOptional $ char ':'
+  _  <- optional $ char ':'
   h8 <- optional parseHexDigits
   ab <- optional parseIPv6Abbr
   let ipv6List  = [h1, h2, h3, h4, h5, h6, h7, h8]
       ctrIpv6   = countEmptyIpv6 ipv6List
-      tmpInIpv6 = resetInIpv6 ctrIpv6 ipv6List
-      newIpv6   = fillInIpv6 tmpInIpv6
-      ipv6      = generateIPv6 newIpv6 (getIPv6Abbr ab)
+      tmpInIpv6 = fillInIpv6 ctrIpv6 ipv6List
+      newIpv6   = take 8 $ foldr (\x b -> [getHexDigit x] ++ b) [] tmpInIpv6
   skipEOL
-  return ipv6
+  return $ generateIPv6 newIpv6
 
 parseHexDigits :: Parser HexDigits
 parseHexDigits = do
@@ -130,24 +154,36 @@ parseIPv6Abbr = do
   v <- try (count 2 octDigit) <|> count 1 octDigit
   return $ read v
 
+-----------------------------------------------------------------------------------
+-- NOTE *** this is the tricky part mentioned in the book
+-- Per discussion -> http://answers.google.com/answers/threadview/id/770645.html
+-- The use of '::' indicates one or more groups of 16 bits of zeros. The '::' can only appear
+-- once in an address.  The '::' can also be used to compress leading or trailing zeros in an address.
+-----------------------------------------------------------------------------------
+-- `countEmptyIpv6` is used to determine the counts of empty elements that will be move from the tail
+-- e.g.
+
+-- resulting to 2 counts from tail that will be moved into the middle
+-- "FE80::0202:B3FF:FE1E:8329"
+-- will be parsed to           -> [Just "FE80",Nothing,Just "0202",Just "B3FF",Just "FE1E",Just "8329",Nothing,Nothing]
+-- which should be turned into -> [Just "FE80",Nothing,Nothing,Nothing,Just "0202",Just "B3FF",Just "FE1E",Just "8329"]
+
+-- resulting to 2 counts from tail that will be moved into the after the 1st Nothing
+-- "::0202:B3FF:FE1E:8329"
+-- will be parsed to           -> [Nothing,Nothing,Just "0202",Just "B3FF",Just "FE1E",Just "8329",Nothing,Nothing]
+-- which should be turned into -> [Nothing,Nothing,Nothing,Nothing,Just "0202",Just "B3FF",Just "FE1E",Just "8329"]
 countEmptyIpv6 :: [Maybe HexDigits] -> Int
-countEmptyIpv6 = length . filter (\x -> isNothing x)
+countEmptyIpv6 hexDigits =
+  let emptyTailCtr = length $ takeWhile (\x -> isNothing x) $ reverse hexDigits
+      emptyCtr     = length $ filter (\x -> isNothing x) hexDigits
+  in  if emptyTailCtr > 0 then emptyTailCtr else emptyCtr
 
--- TODO: will revisit once I get the time to correctly implement filling-in the gaps in collapsed addresses
-resetInIpv6 :: Int -> [Maybe HexDigits] -> [(Maybe HexDigits, Int)]
-resetInIpv6 ctr [] = []
-resetInIpv6 ctr all@(x:xs) =
-  let newCtr = if ctr > 0 && isNothing x then ctr - 1 else 0
-  in  [(x, newCtr)] ++ resetInIpv6 newCtr xs
-
-fillInIpv6 :: [(Maybe HexDigits, Int)] -> [HexDigits]
-fillInIpv6 []     = []
-fillInIpv6 (x:xs) =
-  let hexDigits   = fst x
-      ctr         = snd x
-      newHexDigit = if ctr > 0 then Nothing else hexDigits
-      valHexDigit = getHexDigit newHexDigit
-  in  [valHexDigit] ++ fillInIpv6 xs
+fillInIpv6 :: Int -> [Maybe HexDigits] -> [Maybe HexDigits]
+fillInIpv6 ctr [] = []
+fillInIpv6 ctr (x:xs) =
+  let emptyList = if ctr > 0 && isNothing x then replicate ctr Nothing else []
+      newCtr    = if length emptyList > 0 then 0 else ctr
+  in  [x] ++ emptyList ++ fillInIpv6 newCtr xs
 
 getHexDigit :: Maybe HexDigits -> HexDigits
 getHexDigit Nothing  = "0"
@@ -157,8 +193,8 @@ getIPv6Abbr :: Maybe Int8 -> Int8
 getIPv6Abbr Nothing  = 0
 getIPv6Abbr (Just x) = x
 
-generateIPv6 :: [HexDigits] -> IPv6Abbr -> IPv6
-generateIPv6 xs abbr =
+generateIPv6 :: [HexDigits] -> IPv6
+generateIPv6 xs =
   let h1 = xs !! 0
       h2 = xs !! 1
       h3 = xs !! 2
@@ -167,7 +203,7 @@ generateIPv6 xs abbr =
       h6 = xs !! 5
       h7 = xs !! 6
       h8 = xs !! 7
-  in  IPv6 h1 h2 h3 h4 h5 h6 h7 h8 abbr
+  in  IPv6 h1 h2 h3 h4 h5 h6 h7 h8
 
 -----------------------------------------------------------------------------------
 
