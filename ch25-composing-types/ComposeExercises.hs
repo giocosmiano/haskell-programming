@@ -112,17 +112,17 @@ instance (Arbitrary (f (g a)), CoArbitrary (f (g a))) => Arbitrary (Compose f g 
 main = do
 
   putStrLn "\nTesting Applicative, Traversable : One"
-  quickBatch $ functor (undefined :: One [] (Int, Double, Char))
-  quickBatch $ applicative (undefined :: One [] (Int, Double, Char))
-  quickBatch $ traversable (undefined :: One [] (Int, Double, [Int]))
+  quickBatch $ functor (undefined :: One Maybe (Int, Double, Char))
+  quickBatch $ applicative (undefined :: One Maybe (Int, Double, Char))
+  quickBatch $ traversable (undefined :: One Maybe (Int, Double, [Int]))
 
   putStrLn "\nTesting Applicative, Traversable : Three"
-  quickBatch $ functor (undefined :: Three [] [] [] (Int, Double, Char))
-  quickBatch $ applicative (undefined :: Three [] [] [] (Int, Double, Char))
-  quickBatch $ traversable (undefined :: Three [] [] [] (Int, Double, [Int]))
+  quickBatch $ functor (undefined :: Three Maybe Maybe [] (Int, Double, Char))
+  quickBatch $ applicative (undefined :: Three Maybe Maybe [] (Int, Double, Char))
+  quickBatch $ traversable (undefined :: Three Maybe Maybe [] (Int, Double, [Int]))
 
   putStrLn "\nTesting Applicative, Traversable : Compose"
-  quickBatch $ functor (undefined :: Compose [] [] (Int, Double, Char))
-  quickBatch $ applicative (undefined :: Compose [] [] (Int, Double, Char))
-  quickBatch $ traversable (undefined :: Compose [] [] (Int, Double, [Int]))
+  quickBatch $ functor (undefined :: Compose Maybe [] (Int, Double, Char))
+  quickBatch $ applicative (undefined :: Compose Maybe [] (Int, Double, Char))
+  quickBatch $ traversable (undefined :: Compose Maybe [] (Int, Double, [Int]))
 
