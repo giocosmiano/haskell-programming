@@ -7,6 +7,8 @@ import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
 
 -----------------------------------------------------------------------------------
+-- | Data structure with 1-layer of structure
+-----------------------------------------------------------------------------------
 
 newtype One f a = One (f a)
                 deriving (Eq, Show)
@@ -14,6 +16,21 @@ newtype One f a = One (f a)
 instance Functor f => Functor (One f) where
   fmap f (One fa) = One $ fmap f fa
 
+instance (Applicative f) => Applicative (One f) where
+  pure :: a -> One f a
+  pure a = One $ pure a
+
+  (<*>) :: One f (a -> b) -> One f a -> One f b
+  (One f) <*> (One a) = One $ f <*> a
+
+instance (Foldable f) => Foldable (One f) where
+  foldMap f (One fa) = foldMap f fa
+
+instance (Traversable f) => Traversable (One f) where
+  traverse f (One fa) = One <$> traverse f fa
+
+-----------------------------------------------------------------------------------
+-- | Data structure with 3-layers of structure
 -----------------------------------------------------------------------------------
 
 newtype Three f g h a = Three (f (g (h a)))
@@ -22,8 +39,21 @@ newtype Three f g h a = Three (f (g (h a)))
 instance (Functor f, Functor g, Functor h) => Functor (Three f g h) where
   fmap f (Three fgha) = Three $ (fmap . fmap . fmap) f fgha
 
+instance (Applicative f, Applicative g, Applicative h) => Applicative (Three f g h) where
+  pure :: a -> Three f g h a
+  pure a = Three $ (pure . pure . pure) a -- or Three $ pure $ pure $ pure a
+
+  (<*>) :: Three f g h (a -> b) -> Three f g h a -> Three f g h b
+  (Three f) <*> (Three a) = Three $ (fmap ((<*>) . fmap (<*>)) f) <*> a
+
+instance (Foldable f, Foldable g, Foldable h) => Foldable (Three f g h) where
+  foldMap f (Three fgha) = (foldMap . foldMap . foldMap) f fgha
+
+instance (Traversable f, Traversable g, Traversable h) => Traversable (Three f g h) where
+  traverse f (Three fgha) = Three <$> (traverse . traverse . traverse) f fgha
+
 -----------------------------------------------------------------------------------
--- | TODO: continue going thru the book as this is still work in progress
+-- | Data structure with 2-layers of structure
 -----------------------------------------------------------------------------------
 
 newtype Compose f g a = Compose { getCompose :: f (g a) }
@@ -34,10 +64,10 @@ instance (Functor f, Functor g) => Functor (Compose f g) where
 
 instance (Applicative f, Applicative g) => Applicative (Compose f g) where
   pure :: a -> Compose f g a
-  pure a = Compose $ pure $ pure a
+  pure a = Compose $ (pure . pure) a -- or Compose $ pure $ pure a
 
   (<*>) :: Compose f g (a -> b) -> Compose f g a -> Compose f g b
-  (Compose f) <*> (Compose a) = Compose $ fmap (<*>) f <*> a
+  (Compose f) <*> (Compose a) = Compose $ (fmap (<*>) f) <*> a
 
 instance (Foldable f, Foldable g) => Foldable (Compose f g) where
   foldMap f (Compose fga) = (foldMap . foldMap) f fga
