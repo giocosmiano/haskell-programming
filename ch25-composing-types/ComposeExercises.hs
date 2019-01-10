@@ -73,6 +73,9 @@ instance (Functor f, Functor g, Functor h) => Functor (Three f g h) where
 -- | OR ***
 --  fmap f (Three fgha) = Three $ (fmap . fmap) (fmap f) fgha
 
+-- | OR ***
+--  fmap f (Three fgha) = Three $ fmap (fmap (fmap f)) fgha
+
 -- |
 -- e.g.
 -- Three (Just ([Just (*5)])) <*> Three (Just [Just 7])    -> Three (Just [Just 35])
@@ -94,6 +97,9 @@ instance (Foldable f, Foldable g, Foldable h) => Foldable (Three f g h) where
 -- | OR ***
 --  foldMap f (Three fgha) = (foldMap . foldMap) (foldMap f) fgha
 
+-- | OR ***
+--  foldMap f (Three fgha) = foldMap (foldMap (foldMap f)) fgha
+
 -- |
 -- e.g.
 -- import Data.Functor.Identity
@@ -103,6 +109,9 @@ instance (Traversable f, Traversable g, Traversable h) => Traversable (Three f g
 
 -- | OR ***
 --  traverse f (Three fgha) = Three <$> (traverse . traverse) (traverse f) fgha
+
+-- | OR ***
+--  traverse f (Three fgha) = Three <$> traverse (traverse (traverse f)) fgha
 
 instance (Eq (f (g (h a)))) => EqProp (Three f g h a) where (=-=) = eq
 
