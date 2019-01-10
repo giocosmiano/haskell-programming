@@ -8,6 +8,7 @@ import Test.QuickCheck.Classes
 
 -----------------------------------------------------------------------------------
 -- | Data structure with 1-layer of structure in it
+-- we're applying function `f`, via applicative `(<*>)`, to the value inside a 1-layer structure
 -----------------------------------------------------------------------------------
 
 newtype One f a = One (f a)
@@ -36,6 +37,7 @@ instance (Applicative f) => Applicative (One f) where
 -- getSum $ foldMap (+5) $ One ([3,7,10,2]::[Sum Integer]) -> 42
 instance (Foldable f) => Foldable (One f) where
   foldMap f (One fa) = foldMap f fa
+  foldr f z (One fa) = foldr f z fa
 
 -- |
 -- e.g.
@@ -55,7 +57,7 @@ instance (Arbitrary (fa a), CoArbitrary (fa a)) => Arbitrary (One fa a) where
 -- | Data structure with 3-layers of structure in it
 -- The applicative implementation looks a little bit overwhelming but
 -- essentially we're lifting a composed applicative functions ((<*>) . fmap (<*>)),
--- via fmap, so we can apply the function `f` to the value inside the 3-layers of structure
+-- via fmap, so we can apply the function `f` to the value inside a 3-layers of structure
 -----------------------------------------------------------------------------------
 
 newtype Three f g h a = Three (f (g (h a)))
@@ -103,7 +105,7 @@ instance (Arbitrary (f (g (h a))), CoArbitrary (f (g (h a)))) => Arbitrary (Thre
 -- | Data structure with 2-layers of structure in it
 -- The applicative implementation is the same as the 3-layers structure above but
 -- essentially we're lifting the applicative `(<*>)` function, via fmap,
--- so we can apply the function `f` to the value inside the 2-layers of structure
+-- so we can apply the function `f` to the value inside a 2-layers of structure
 -----------------------------------------------------------------------------------
 
 newtype Compose f g a = Compose { getCompose :: f (g a) }
