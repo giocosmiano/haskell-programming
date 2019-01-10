@@ -7,7 +7,7 @@ import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
 
 -----------------------------------------------------------------------------------
--- | Data structure with 1-layer of structure
+-- | Data structure with 1-layer of structure in it
 -----------------------------------------------------------------------------------
 
 newtype One f a = One (f a)
@@ -52,7 +52,7 @@ instance (Arbitrary (fa a), CoArbitrary (fa a)) => Arbitrary (One fa a) where
     return $ One fa
 
 -----------------------------------------------------------------------------------
--- | Data structure with 3-layers of structure
+-- | Data structure with 3-layers of structure in it
 -- The applicative implementation looks a little bit overwhelming but
 -- essentially we're lifting a composed applicative functions ((<*>) . fmap (<*>)),
 -- via fmap, so we can apply the function `f` to the value inside the 3-layers of structure
@@ -100,7 +100,7 @@ instance (Arbitrary (f (g (h a))), CoArbitrary (f (g (h a)))) => Arbitrary (Thre
     return $ Three f
 
 -----------------------------------------------------------------------------------
--- | Data structure with 2-layers of structure
+-- | Data structure with 2-layers of structure in it
 -- The applicative implementation is the same as the 3-layers structure above but
 -- essentially we're lifting the applicative `(<*>)` function, via fmap,
 -- so we can apply the function `f` to the value inside the 2-layers of structure
