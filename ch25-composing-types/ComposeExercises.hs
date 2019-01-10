@@ -8,7 +8,8 @@ import Test.QuickCheck.Classes
 
 -----------------------------------------------------------------------------------
 -- | Data structure with 1-layer of structure in it
--- we're applying function `f`, via applicative `(<*>)`, to the value inside a 1-layer structure
+-- On the applicative implementation we're applying function `f`,
+-- via applicative `(<*>)`, to the value inside a 1-layer structure
 -----------------------------------------------------------------------------------
 
 newtype One f a = One (f a)
