@@ -23,6 +23,8 @@ instance (Functor f, Functor g, Functor h) => Functor (Three f g h) where
   fmap f (Three fgha) = Three $ (fmap . fmap . fmap) f fgha
 
 -----------------------------------------------------------------------------------
+-- | TODO: continue going thru the book as this is still work in progress
+-----------------------------------------------------------------------------------
 
 newtype Compose f g a = Compose { getCompose :: f (g a) }
                       deriving (Eq, Show)
@@ -31,10 +33,28 @@ instance (Functor f, Functor g) => Functor (Compose f g) where
   fmap f (Compose fga) = Compose $ (fmap . fmap) f fga
 
 instance (Applicative f, Applicative g) => Applicative (Compose f g) where
-  pure a = Compose $ pure $ pure a
+  pure :: a -> Compose f g a
+  pure a = Compose $ (pure . pure) a
 
---  (<*>) :: Compose f g (a -> b) -> Compose f g a -> Compose f g b
-  (Compose f) <*> (Compose a) = undefined
+  (<*>) :: Compose f g (a -> b) -> Compose f g a -> Compose f g b
+  (Compose f) <*> (Compose a) = Compose $ ((<*>) <$> f) <*> a
+
+--instance (Foldable f, Foldable g) => Foldable (Compose f g) where
+--  foldMap f (Compose f' g a) = foldMap f g `mappend` f a
+--  foldr f z (Compose f' g a) = foldr f (f a z) fa
+
+--instance (Traversable f, Traversable g) => Traversable (Compose f g) where
+--  traverse f (Compose f' g a) = Compose $ (traverse f f' <$> traverse f g) <*> f a
+
+--instance (Eq (f g a), Eq a) => EqProp (Compose f g a) where (=-=) = eq
+--
+--instance (Arbitrary (f g a), CoArbitrary (f g a),
+--          Arbitrary a, CoArbitrary a) => Arbitrary (Compose f g a) where
+--  arbitrary = do
+--    f <- arbitrary
+--    g <- arbitrary
+--    a <- arbitrary
+--    return $ Compose $ f (g a)
 
 -----------------------------------------------------------------------------------
 
