@@ -1,6 +1,6 @@
 {-# LANGUAGE InstanceSigs #-}
 
-module ComposeExercise where
+module ComposeExercises where
 
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
@@ -29,6 +29,13 @@ instance (Foldable f) => Foldable (One f) where
 instance (Traversable f) => Traversable (One f) where
   traverse f (One fa) = One <$> traverse f fa
 
+instance (Eq (fa a)) => EqProp (One fa a) where (=-=) = eq
+
+instance (Arbitrary (fa a), CoArbitrary (fa a)) => Arbitrary (One fa a) where
+  arbitrary = do
+    fa <- arbitrary
+    return $ One fa
+
 -----------------------------------------------------------------------------------
 -- | Data structure with 3-layers of structure
 -----------------------------------------------------------------------------------
@@ -51,6 +58,13 @@ instance (Foldable f, Foldable g, Foldable h) => Foldable (Three f g h) where
 
 instance (Traversable f, Traversable g, Traversable h) => Traversable (Three f g h) where
   traverse f (Three fgha) = Three <$> (traverse . traverse . traverse) f fgha
+
+instance (Eq (f (g (h a)))) => EqProp (Three f g h a) where (=-=) = eq
+
+instance (Arbitrary (f (g (h a))), CoArbitrary (f (g (h a)))) => Arbitrary (Three f g h a) where
+  arbitrary = do
+    f <- arbitrary
+    return $ Three f
 
 -----------------------------------------------------------------------------------
 -- | Data structure with 2-layers of structure
@@ -75,15 +89,12 @@ instance (Foldable f, Foldable g) => Foldable (Compose f g) where
 instance (Traversable f, Traversable g) => Traversable (Compose f g) where
   traverse f (Compose fga) = Compose <$> (traverse . traverse) f fga
 
---instance (Eq (f g a), Eq a) => EqProp (Compose f g a) where (=-=) = eq
---
---instance (Arbitrary (f g a), CoArbitrary (f g a),
---          Arbitrary a, CoArbitrary a) => Arbitrary (Compose f g a) where
---  arbitrary = do
---    f <- arbitrary
---    g <- arbitrary
---    a <- arbitrary
---    return $ Compose $ f (g a)
+instance (Eq (f (g a))) => EqProp (Compose f g a) where (=-=) = eq
+
+instance (Arbitrary (f (g a)), CoArbitrary (f (g a))) => Arbitrary (Compose f g a) where
+  arbitrary = do
+    f <- arbitrary
+    return $ Compose f
 
 -----------------------------------------------------------------------------------
 
@@ -98,9 +109,20 @@ instance (Traversable f, Traversable g) => Traversable (Compose f g) where
 -- https://github.com/conal/checkers
 -- https://github.com/conal/checkers/blob/master/src/Test/QuickCheck/Classes.hs
 
---main = do
---
---  putStrLn "\nTesting Applicative, Monad : Compose"
---  quickBatch $ functor (undefined :: Compose [Just (Int, Double, Char)]
---  quickBatch $ applicative (undefined :: Compose (Int, Double, Char))
---  quickBatch $ monad (undefined :: Compose (Int, Double, Char))
+main = do
+
+  putStrLn "\nTesting Applicative, Traversable : One"
+  quickBatch $ functor (undefined :: One [] (Int, Double, Char))
+  quickBatch $ applicative (undefined :: One [] (Int, Double, Char))
+  quickBatch $ traversable (undefined :: One [] (Int, Double, [Int]))
+
+  putStrLn "\nTesting Applicative, Traversable : Three"
+  quickBatch $ functor (undefined :: Three [] [] [] (Int, Double, Char))
+  quickBatch $ applicative (undefined :: Three [] [] [] (Int, Double, Char))
+  quickBatch $ traversable (undefined :: Three [] [] [] (Int, Double, [Int]))
+
+  putStrLn "\nTesting Applicative, Traversable : Compose"
+  quickBatch $ functor (undefined :: Compose [] [] (Int, Double, Char))
+  quickBatch $ applicative (undefined :: Compose [] [] (Int, Double, Char))
+  quickBatch $ traversable (undefined :: Compose [] [] (Int, Double, [Int]))
+
