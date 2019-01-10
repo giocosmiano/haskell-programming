@@ -69,6 +69,9 @@ newtype Three f g h a = Three (f (g (h a)))
 instance (Functor f, Functor g, Functor h) => Functor (Three f g h) where
   fmap f (Three fgha) = Three $ (fmap . fmap . fmap) f fgha
 
+-- | OR ***
+--  fmap f (Three fgha) = Three $ (fmap . fmap) (fmap f) fgha
+
 -- |
 -- e.g.
 -- Three (Just ([Just (*5)])) <*> Three (Just [Just 7])    -> Three (Just [Just 35])
@@ -87,12 +90,18 @@ instance (Applicative f, Applicative g, Applicative h) => Applicative (Three f g
 instance (Foldable f, Foldable g, Foldable h) => Foldable (Three f g h) where
   foldMap f (Three fgha) = (foldMap . foldMap . foldMap) f fgha
 
+-- | OR ***
+--  foldMap f (Three fgha) = (foldMap . foldMap) (foldMap f) fgha
+
 -- |
 -- e.g.
 -- import Data.Functor.Identity
 -- traverse (Identity . (*5)) $ Three (Just (Just [3,5,7])) -> Identity (Three (Just (Just [15,25,35])))
 instance (Traversable f, Traversable g, Traversable h) => Traversable (Three f g h) where
   traverse f (Three fgha) = Three <$> (traverse . traverse . traverse) f fgha
+
+-- | OR ***
+--  traverse f (Three fgha) = Three <$> (traverse . traverse) (traverse f) fgha
 
 instance (Eq (f (g (h a)))) => EqProp (Three f g h a) where (=-=) = eq
 
@@ -117,6 +126,9 @@ newtype Compose f g a = Compose { getCompose :: f (g a) }
 instance (Functor f, Functor g) => Functor (Compose f g) where
   fmap f (Compose fga) = Compose $ (fmap . fmap) f fga
 
+-- | OR ***
+--  fmap f (Compose fga) = Compose $ fmap (fmap f) fga
+
 -- |
 -- e.g.
 -- Compose (Just ([(*5)])) <*> Compose (Just [7, 9, 11])     -> Compose {getCompose = Just [35,45,55]}
@@ -135,12 +147,18 @@ instance (Applicative f, Applicative g) => Applicative (Compose f g) where
 instance (Foldable f, Foldable g) => Foldable (Compose f g) where
   foldMap f (Compose fga) = (foldMap . foldMap) f fga
 
+-- | OR ***
+--  foldMap f (Compose fga) = foldMap (foldMap f) fga
+
 -- |
 -- e.g.
 -- import Data.Functor.Identity
 -- traverse (Identity . (*7)) $ Compose (Just [3,5,7]) -> Identity (Compose {getCompose = Just [21,35,49]})
 instance (Traversable f, Traversable g) => Traversable (Compose f g) where
   traverse f (Compose fga) = Compose <$> (traverse . traverse) f fga
+
+-- | OR ***
+--  traverse f (Compose fga) = Compose <$> traverse (traverse f) fga
 
 instance (Eq (f (g a))) => EqProp (Compose f g a) where (=-=) = eq
 
