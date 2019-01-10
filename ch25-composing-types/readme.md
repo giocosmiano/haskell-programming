@@ -29,13 +29,12 @@
      - a ~ Int
 
  ```haskell
-newtype Compose f g a = Compose { getCompose :: f (g a) }
-                      deriving (Eq, Show)
+newtype Compose f g a = Compose { getCompose :: f (g a) } deriving (Eq, Show)
 ```
 
  ```haskell
 Prelude> :i (.)
-    (.) :: (b -> c) -> (a -> b) -> a -> c
+     (.) :: (b -> c) -> (a -> b) -> a -> c
 
 Prelude> :k Compose
 Compose :: (* -> *) -> (* -> *) -> * -> *
