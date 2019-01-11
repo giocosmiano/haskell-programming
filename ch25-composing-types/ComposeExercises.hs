@@ -150,6 +150,10 @@ instance (Applicative f, Applicative g) => Applicative (Compose f g) where
   (<*>) :: Compose f g (a -> b) -> Compose f g a -> Compose f g b
   (Compose f) <*> (Compose a) = Compose $ (fmap (<*>) f) <*> a
 
+-- | OR ***
+--  (<*>) :: Compose f g (a -> b) -> Compose f g a -> Compose f g b
+--  (Compose f) <*> (Compose a) = Compose ((<*>) <$> f <*> a)
+
 -- |
 -- e.g.
 -- getProduct $ product $ Compose (Just ([5,7,9]::[Product Integer]))      -> 315
