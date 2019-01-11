@@ -341,7 +341,32 @@ Haskell λ > (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >>
 
  - Marshalling from an AST to a datatype
 
- - The exercises on this chapter has a very substantial resource that jogged my brain. 
+ - The exercises on this chapter has a very substantial resources that really jogged my brain. 
+
+#### Chapter 25 - Composing types
+ - Composing types
+
+   - Essentially, a structure that has layer(s) of structure in it
+
+   - `Functors` and `Applicatives` are both closed under composition, which means we can compose two `functors`
+     (or two `applicatives`) and return another `functor` (or `applicative`, as the case may be). This is not true
+     of `monads`, however; when we compose two `monads`, the result is **`NOT`** necessarily another `monad`.
+
+```haskell
+newtype SomeType f g a = SomeType { getSomeType :: f (g a) } deriving (Eq, Show)
+```
+
+ - Monad Transformers
+
+   - Because we can't compose two `monads` together and create a new `Monad`, we need `Monad Transformer` to reduce
+     the polymorphism and get concrete information about one of the `monads` that we’re working with, to make the
+     `join` happen   
+
+ - IdentityT
+
+   - Reminder to myself - come back to this chapter when you get lost in `Monad Transformer`
+     [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram#Diagram_chasing) because it is covered in
+     great details. Great job by the authors explaining and going thru it step-by-step.
 
 
 
