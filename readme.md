@@ -1,6 +1,6 @@
 ### This is my personal repository learning `Haskell` from this excellent book [Haskell Programming, by Christopher Allen And Julie Moronuki](http://haskellbook.com/)
 
-### Notes on my journey working on chapter exercises
+### Notes about my journey in working through chapter exercises
 
  - Functional programming is a function of data transformation and composition. This concept helps me in a big way, reminding me to get back
    to this simple pattern `f x = y` every time I get lost where to apply the function on layers of functorial structures, i. e. structure within
