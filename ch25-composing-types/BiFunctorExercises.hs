@@ -24,7 +24,9 @@ class Bifunctor p where
 
 -- |
 -- e.g.
--- bimap (+3) (*5) (Deux 5 7) -> Deux 8 35
+-- bimap  (+3) (*5) (Deux 5 7) -> Deux 8 35
+-- first  (+3) (Deux 5 7)      -> Deux 8 7
+-- second (*5) (Deux 5 7)      -> Deux 5 35
 data Deux a b = Deux a b deriving (Eq, Show)
 
 instance Bifunctor Deux where
@@ -39,7 +41,9 @@ instance Bifunctor Deux where
 
 -- |
 -- e.g.
--- bimap (+3) (*5) (Const 5) -> Const 8
+-- bimap  (+3) (*5) (Const 5) -> Const 8
+-- first  (+3) (Const 5)      -> Const 8
+-- second (*5) (Const 5)      -> Const 5
 data Const a b = Const a deriving (Eq, Show)
 
 instance Bifunctor Const where
@@ -54,7 +58,9 @@ instance Bifunctor Const where
 
 -- |
 -- e.g.
--- bimap (+3) (*5) (Drei 5 7 9) -> Drei 5 10 45
+-- bimap  (+3) (*5) (Drei 5 7 9) -> Drei 5 10 45
+-- first  (+3) (Drei 5 7 9)      -> Drei 5 10 9
+-- second (*5) (Drei 5 7 9)      -> Drei 5 7 45
 data Drei a b c = Drei a b c deriving (Eq, Show)
 
 instance Bifunctor (Drei a) where
@@ -69,7 +75,9 @@ instance Bifunctor (Drei a) where
 
 -- |
 -- e.g.
--- bimap (+3) (*5) (SuperDrei 5 7) -> SuperDrei 5 10
+-- bimap  (+3) (*5) (SuperDrei 5 7) -> SuperDrei 5 10
+-- first  (+3) (SuperDrei 5 7)      -> SuperDrei 5 10
+-- second (*5) (SuperDrei 5 7)      -> SuperDrei 5 7
 data SuperDrei a b c = SuperDrei a b deriving (Eq, Show)
 
 instance Bifunctor (SuperDrei a) where
@@ -84,7 +92,9 @@ instance Bifunctor (SuperDrei a) where
 
 -- |
 -- e.g.
--- bimap (+3) (*5) (SemiDrei 5) -> SemiDrei 5
+-- bimap  (+3) (*5) (SemiDrei 5) -> SemiDrei 5
+-- first  (+3) (SemiDrei 5)      -> SemiDrei 5
+-- second (*5) (SemiDrei 5)      -> SemiDrei 5
 data SemiDrei a b c = SemiDrei a deriving (Eq, Show)
 
 instance Bifunctor (SemiDrei a) where
@@ -95,7 +105,9 @@ instance Bifunctor (SemiDrei a) where
 
 -- |
 -- e.g.
--- bimap (+3) (*5) (Quadzzz 5 7 9 11) -> Quadzzz 5 7 12 55
+-- bimap  (+3) (*5) (Quadzzz 5 7 9 11) -> Quadzzz 5 7 12 55
+-- first  (+3) (Quadzzz 5 7 9 11)      -> Quadzzz 5 7 12 11
+-- second (*5) (Quadzzz 5 7 9 11)      -> Quadzzz 5 7 9 55
 data Quadriceps a b c d = Quadzzz a b c d deriving (Eq, Show)
 
 instance Bifunctor (Quadriceps a b) where
