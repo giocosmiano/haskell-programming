@@ -1,4 +1,3 @@
--- |
 -----------------------------------------------------------------------------------
 -- Haskell packages
 -- https://www.stackage.org/
@@ -6,40 +5,34 @@
 -- Restart ghci after installing a package/library
 -- Prelude> stack ghci
 
--- |
 -----------------------------------------------------------------------------------
 -- Library for reusable QuickCheck properties, particularly for standard type classes, laws and morphisms 
 -- https://github.com/conal/checkers
 -- Prelude> stack build checkers
 
--- |
 -----------------------------------------------------------------------------------
 -- Library that makes HTTP client programming in Haskell easy
 -- http://www.serpentine.com/wreq/
 -- http://hackage.haskell.org/package/wreq
 -- Prelude> stack build wreq
 
--- |
 -----------------------------------------------------------------------------------
 -- Universal document converter
 -- https://pandoc.org/
 -- http://hackage.haskell.org/package/pandoc
 -- Prelude> stack install pandoc
 
--- |
 -----------------------------------------------------------------------------------
 -- Haskell pretty printer
 -- https://github.com/commercialhaskell/hindent
 -- Prelude> stack install hindent
 
--- |
 -----------------------------------------------------------------------------------
 -- Raw string literals for Haskell.
 -- https://github.com/23Skidoo/raw-strings-qq
 -- http://hackage.haskell.org/package/raw-strings-qq
 -- Prelude> stack install raw-strings-qq
 
--- |
 -----------------------------------------------------------------------------------
 -- A Testing Framework for Haskell
 -- https://github.com/hspec/hspec
@@ -47,27 +40,23 @@
 -- http://hackage.haskell.org/package/hspec
 -- Prelude> stack install hspec
 
--- |
 -----------------------------------------------------------------------------------
 -- A modern parser combinator library with convenient diagnostics
 -- https://github.com/ekmett/trifecta/
 -- https://hackage.haskell.org/package/trifecta-1.5.2
 -- Prelude> stack install trifecta
 
--- |
 -----------------------------------------------------------------------------------
 -- Fast JSON parsing and encoding
 -- https://github.com/bos/aeson
 -- http://hackage.haskell.org/package/aeson
 -- Prelude> stack install aeson
 
--- |
 -----------------------------------------------------------------------------------
 -- Cabal: Common Architecture for Building Applications and Libraries
 -- https://www.haskell.org/cabal/
 -- Prelude> stack install cabal
 
--- |
 -----------------------------------------------------------------------------------
 -- PureScript - A strongly-typed functional programming language that compiles to JavaScript
 -- https://github.com/purescript/purescript
