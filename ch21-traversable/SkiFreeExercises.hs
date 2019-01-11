@@ -13,7 +13,7 @@ import Test.QuickCheck.Classes
 -- S implementing Functor, Applicative, Monad and Traversable
 -----------------------------------------------------------------------------------
 
-data S n a = S (n a) a deriving (Eq, Show)
+data S fa a = S (fa a) a deriving (Eq, Show)
 
 instance Functor fa => Functor (S fa) where
   fmap f (S fa a) = S (fmap f fa) (f a)
@@ -59,7 +59,7 @@ instance ( Applicative n, Testable (n Property), EqProp a ) => EqProp (S n a) wh
 -- ST implementing Functor, Applicative, MonadT, and Traversable
 -----------------------------------------------------------------------------------
 
-newtype ST n a = ST { runST :: n a } deriving (Eq, Show)
+newtype ST fa a = ST { runST :: fa a } deriving (Eq, Show)
 
 instance Functor fa => Functor (ST fa) where
   fmap f (ST fa) = ST $ fmap f fa
