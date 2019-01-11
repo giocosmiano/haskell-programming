@@ -39,7 +39,7 @@ instance Applicative Identity where
   (Identity f) <*> (Identity a) = Identity (f a)
 
 instance (Applicative m) => Applicative (IdentityT m) where
-  pure x = IdentityT (pure x)
+  pure = IdentityT . pure
   (IdentityT mab) <*> (IdentityT ma) = IdentityT (mab <*> ma)
 
 -----------------------------------------------------------------------------------
