@@ -13,17 +13,44 @@
 -----------------------------------------------------------------------------------
 -- Library that makes HTTP client programming in Haskell easy
 -- http://www.serpentine.com/wreq/
+-- http://hackage.haskell.org/package/wreq
 -- Prelude> stack build wreq
 
 -----------------------------------------------------------------------------------
 -- Universal document converter
 -- https://pandoc.org/
+-- http://hackage.haskell.org/package/pandoc
 -- Prelude> stack install pandoc
 
 -----------------------------------------------------------------------------------
 -- Haskell pretty printer
 -- https://github.com/commercialhaskell/hindent
 -- Prelude> stack install hindent
+
+-----------------------------------------------------------------------------------
+-- Raw string literals for Haskell.
+-- https://github.com/23Skidoo/raw-strings-qq
+-- http://hackage.haskell.org/package/raw-strings-qq
+-- Prelude> stack install raw-strings-qq
+
+-----------------------------------------------------------------------------------
+-- A Testing Framework for Haskell
+-- https://github.com/hspec/hspec
+-- http://hspec.github.io/
+-- http://hackage.haskell.org/package/hspec
+-- Prelude> stack install hspec
+
+-----------------------------------------------------------------------------------
+-- A modern parser combinator library with convenient diagnostics
+-- https://github.com/ekmett/trifecta/
+-- https://hackage.haskell.org/package/trifecta-1.5.2
+-- Prelude> stack install trifecta
+--
+-----------------------------------------------------------------------------------
+-- Fast JSON parsing and encoding
+-- https://github.com/bos/aeson
+-- http://hackage.haskell.org/package/aeson
+-- Prelude> stack install aeson
 
 -----------------------------------------------------------------------------------
 -- Cabal: Common Architecture for Building Applications and Libraries
@@ -35,3 +62,5 @@
 -- https://github.com/purescript/purescript
 -- http://www.purescript.org/
 -- npm install -g purescript
+
+
