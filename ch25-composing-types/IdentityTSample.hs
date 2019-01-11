@@ -54,6 +54,12 @@ instance Monad Identity where
 instance (Monad m) => Monad (IdentityT m) where
   return = pure
 
+-- | NOTE ***
+-- `Identity ma` on line 64 has a structure of `Identity (m a)`
+-- and when we bind/feed it to function `f` (a -> IdentityT m b), the result is `IdentityT (m b)`,
+-- therefore we need to feed it to `runIdentityT` to extract `(m b)` out of the wrapper `IdentityT (m b)`
+-- and use it to create the structure back to `IdentityT (m b)` on line 65
+
   (>>=) :: IdentityT m a -> (a -> IdentityT m b) -> IdentityT m b
   (IdentityT ma) >>= f =
     IdentityT $ ma >>= runIdentityT . f
