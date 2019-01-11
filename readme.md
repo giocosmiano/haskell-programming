@@ -18,7 +18,7 @@
    - the reduced value
    - OR another function that will be further applied, and so on, that will eventually reduced into a value   
 
- - Functions are data because they're high-order function. See `Chapter 22 - Reader`  
+ - Functions are data because they will eventually get evaluated, and reduced into a value. See [Chapter 22 - Reader](https://github.com/giocosmiano/haskell-programming#chapter-22---reader)  
 
  - Always helpful to use **_`:t`_** for type, **_`:k`_** for kind or **_`:i`_** info to get more details   
 
@@ -85,7 +85,8 @@ Haskell λ > addAndMultiply 3 5 7
 #### Chapter 10 - Folding lists
  - Recursive patterns
  - [foldr vs foldl](https://wiki.haskell.org/Fold)
-   - This chapter helps me a great deal as it preps me for `Chapter 20 - Foldable` and `Chapter 21 - Traversable`
+   - This chapter helped a lot as it preps me for [Chapter 20 - Foldable](https://github.com/giocosmiano/haskell-programming#chapter-20---foldable)
+     and [Chapter 21 - Traversable](https://github.com/giocosmiano/haskell-programming#chapter-21---traversable)
 
 #### Chapter 11 - Algebraic data types
  - Data and type constructors
@@ -272,10 +273,10 @@ Haskell λ > sequenceA [Just 3, Just 2, Just 1]
 Just [3,2,1]
 ```
 
- - On the [SkiFreeExercises](https://github.com/giocosmiano/haskell-programming/blob/master/ch21-traversable/SkiFreeExercises.hs),
+ - ~~On the [SkiFreeExercises](https://github.com/giocosmiano/haskell-programming/blob/master/ch21-traversable/SkiFreeExercises.hs),
    I'm able to write the `Functor`, `Applicative`, `Foldable` and `Traversable` instance of `S` structure, where `n` is also a
    functorial structure. The `Monad` instance, however, is failing on the `right identity law` running the `quickBatch` check from
-   [quickCheck](http://hackage.haskell.org/package/QuickCheck). I still have to figure out how-to fix this correctly.
+   [quickCheck](http://hackage.haskell.org/package/QuickCheck). I still have to figure out how-to fix this correctly.~~
 ```haskell
 data S n a = S (n a) a deriving (Eq, Show)
 
@@ -293,6 +294,18 @@ monad laws:
   left  identity: +++ OK, passed 500 tests.
   right identity: *** Failed! Falsifiable (after 1 test): S [] 0
   associativity:  +++ OK, passed 500 tests.
+```
+
+ - After finishing [Chapter 25 - Composing types](https://github.com/giocosmiano/haskell-programming#chapter-25---composing-types), it is
+   noted in the book that it's **NOT** possible to compose `monad` but rather create a `monad transformer`.
+
+   - I've updated [SkiFreeExercises](https://github.com/giocosmiano/haskell-programming/blob/master/ch21-traversable/SkiFreeExercises.hs)
+     implementing `ST monad transformer` but I still don't know how to include `ST` into `S` structure.     
+
+```haskell
+data S fa a = S (fa a) a deriving (Eq, Show)
+
+newtype ST fa a = ST { runST :: fa a } deriving (Eq, Show)
 ```
 
 #### Chapter 22 - Reader
