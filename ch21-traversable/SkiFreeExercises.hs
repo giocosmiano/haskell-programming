@@ -56,7 +56,7 @@ instance ( Applicative n, Testable (n Property), EqProp a ) => EqProp (S n a) wh
 
 -----------------------------------------------------------------------------------
 -- |
--- ST implementing Functor, Applicative, MonadT (monad transformer), and Traversable
+-- ST implementing Functor, Applicative, MonadT, and Traversable
 -----------------------------------------------------------------------------------
 
 newtype ST n a = ST { runST :: n a } deriving (Eq, Show)
