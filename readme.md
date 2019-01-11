@@ -274,11 +274,11 @@ Just [3,2,1]
 ```
 
  - ~~On the [SkiFreeExercises](https://github.com/giocosmiano/haskell-programming/blob/master/ch21-traversable/SkiFreeExercises.hs),
-   I'm able to write the `Functor`, `Applicative`, `Foldable` and `Traversable` instance of `S` structure, where `n` is also a
+   I'm able to write the `Functor`, `Applicative`, `Foldable` and `Traversable` instance of `S` structure, where `fa` is also a
    functorial structure. The `Monad` instance, however, is failing on the `right identity law` running the `quickBatch` check from
    [quickCheck](http://hackage.haskell.org/package/QuickCheck). I still have to figure out how-to fix this correctly.~~
 ```haskell
-data S n a = S (n a) a deriving (Eq, Show)
+data S fa a = S (fa a) a deriving (Eq, Show)
 
 -- TODO: fix the implementation of `monad` S
 instance (Monad fa) => Monad (S fa) where
@@ -297,10 +297,10 @@ monad laws:
 ```
 
  - After finishing [Chapter 25 - Composing types](https://github.com/giocosmiano/haskell-programming#chapter-25---composing-types), it is
-   noted in the book that it's **NOT** possible to compose `monad` but rather create a `monad transformer`.
+   mentioned in the book that it's **NOT** possible to compose `monad` but rather create a `monad transformer`.
 
    - I've updated [SkiFreeExercises](https://github.com/giocosmiano/haskell-programming/blob/master/ch21-traversable/SkiFreeExercises.hs)
-     implementing `ST monad transformer` but I still don't know how to include `ST` into `S` structure.     
+     implementing `ST monad transformer` but still don't know how to make `ST` into `S` structure. I'll see some more on `Chapter 26 - Monad Transfomers`     
 
 ```haskell
 data S fa a = S (fa a) a deriving (Eq, Show)
