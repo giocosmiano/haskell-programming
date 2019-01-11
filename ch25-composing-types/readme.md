@@ -63,7 +63,7 @@ Monad g => g a -> (a -> g b) -> g b
 ### Monad Transformers
  - `Monad transformer` is a type constructor that takes a `Monad` as an argument and returns a `Monad` as a result.
    The fundamental problem with composing two `monads` lies in the impossibility of joining two unknown `monads`.
-   In order to make that join happen, we need to reduce the polymorphism and get concrete information about one of the
+   In order to make that `join` happen, we need to reduce the polymorphism and get concrete information about one of the
    `monads` that we’re working with. The other `monad` remains polymorphic as a variable type argument to our type
    constructor. Transformers help us make a `monad` out of multiple (2, 3, 4...) types that each have a `Monad` instance
    by wrapping around existing `monads` that provide each bit of wanted functionality.
