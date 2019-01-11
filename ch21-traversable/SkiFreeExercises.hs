@@ -9,6 +9,9 @@ import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
 
 -----------------------------------------------------------------------------------
+-- |
+-- S implementing Functor, Applicative, Monad and Traversable
+-----------------------------------------------------------------------------------
 
 data S n a = S (n a) a deriving (Eq, Show)
 
@@ -52,15 +55,54 @@ instance ( Applicative n, Testable (n Property), EqProp a ) => EqProp (S n a) wh
 -}
 
 -----------------------------------------------------------------------------------
+-- |
+-- ST implementing Functor, Applicative, MonadT (monad transformer), and Traversable
+-----------------------------------------------------------------------------------
+
+newtype ST n a = ST { runST :: n a } deriving (Eq, Show)
+
+instance Functor fa => Functor (ST fa) where
+  fmap f (ST fa) = ST $ fmap f fa
+
+instance Applicative fa => Applicative (ST fa) where
+  pure = ST . pure
+  (ST fa) <*> (ST fa') = ST $ (fa <*> fa')
+
+instance (Monad fa) => Monad (ST fa) where
+  return = pure
+  (ST fa) >>= f =
+    ST $ fa >>= runST . f
+
+instance Foldable fa => Foldable (ST fa) where
+  foldMap f (ST fa) = foldMap f fa
+  foldr f z (ST fa) = foldr f z fa
+
+instance Traversable fa => Traversable (ST fa) where
+  traverse f (ST fa) = ST <$> traverse f fa
+
+instance (Eq (fa a)) => EqProp (ST fa a) where (=-=) = eq
+
+instance (Arbitrary (fa a), CoArbitrary (fa a)) => Arbitrary (ST fa a) where
+  arbitrary = do
+    fa <- arbitrary
+    return $ ST fa
+
+-----------------------------------------------------------------------------------
 
 main = do
 --  sample' (arbitrary :: Gen (S [] Int))
 
-  putStrLn "\nTesting Functor, Traversable : S"
-  quickBatch $ functor (undefined :: S [] (Int, Double, Char))
-  quickBatch $ applicative (undefined :: S [] (Int, Double, Char))
-  quickBatch $ monad (undefined :: S [] (Int, Double, Char))
-  quickBatch $ traversable (undefined :: S [] (Int, Double, [Int]))
+  putStrLn "\nTesting Functor, Applicative, Monad, Traversable : S"
+  quickBatch $ functor (undefined :: S Maybe (Int, Double, Char))
+  quickBatch $ applicative (undefined :: S Maybe (Int, Double, Char))
+  quickBatch $ monad (undefined :: S Maybe (Int, Double, Char))
+  quickBatch $ traversable (undefined :: S Maybe (Int, Double, [Int]))
+
+  putStrLn "\nTesting Functor, Applicative, Monad, Traversable : ST"
+  quickBatch $ functor (undefined :: ST Maybe (Int, Double, Char))
+  quickBatch $ applicative (undefined :: ST Maybe (Int, Double, Char))
+  quickBatch $ monad (undefined :: ST Maybe (Int, Double, Char))
+  quickBatch $ traversable (undefined :: ST Maybe (Int, Double, [Int]))
 
 -----------------------------------------------------------------------------------
 
