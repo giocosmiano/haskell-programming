@@ -1,6 +1,6 @@
 {-# LANGUAGE InstanceSigs #-}
 
-module IdentityTSample where
+module IdentityTExercises where
 
 import Control.Monad
 import Test.QuickCheck
@@ -55,9 +55,9 @@ instance (Monad m) => Monad (IdentityT m) where
   return = pure
 
 -- | NOTE ***
--- `Identity ma` on line 64 has a structure of `Identity (m a)`
--- and when we bind/feed it to function `f` (a -> IdentityT m b), the result is `IdentityT (m b)`,
--- therefore we need to feed it to `runIdentityT` to extract `(m b)` out of the wrapper `IdentityT (m b)`
+-- `Identity ma` has a structure of `Identity (m a)` and when we bind/feed it to
+-- function `f` (a -> IdentityT m b), the result is `IdentityT (m b)`, therefore
+-- we need to feed it to `runIdentityT` to extract `(m b)` out of the wrapper `IdentityT (m b)`
 -- and use it to create the structure back to `IdentityT (m b)` on line 65
 
   (>>=) :: IdentityT m a -> (a -> IdentityT m b) -> IdentityT m b
@@ -135,17 +135,6 @@ instance (Arbitrary (fa a), CoArbitrary (fa a)) => Arbitrary (IdentityT fa a) wh
     return $ IdentityT fa
 
 -----------------------------------------------------------------------------------
-
--- search --> haskell applicative function checkers
--- https://stackoverflow.com/questions/36009335/how-do-i-test-this-applicative-instance-with-checkers-no-instance-for-coarbitr
-
--- https://begriffs.com/posts/2017-01-14-design-use-quickcheck.html
-
--- https://hackage.haskell.org/package/checkers
--- https://hackage.haskell.org/package/checkers-0.4.11/docs/Test-QuickCheck-Classes.html
-
--- https://github.com/conal/checkers
--- https://github.com/conal/checkers/blob/master/src/Test/QuickCheck/Classes.hs
 
 main = do
 
