@@ -2,10 +2,6 @@
 
 module MaybeTSample where
 
-import Test.QuickCheck
-import Test.QuickCheck.Checkers
-import Test.QuickCheck.Classes
-
 -----------------------------------------------------------------------------------
 
 newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
