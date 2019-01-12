@@ -40,7 +40,7 @@ instance Applicative Identity where
 
 instance (Applicative m) => Applicative (IdentityT m) where
   pure = IdentityT . pure
-  (IdentityT mab) <*> (IdentityT ma) = IdentityT (mab <*> ma)
+  (IdentityT maf) <*> (IdentityT ma) = IdentityT (maf <*> ma)
 
 -----------------------------------------------------------------------------------
 -- | Monad implementations
