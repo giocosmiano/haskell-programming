@@ -12,7 +12,7 @@ instance (Functor m) => Functor (MaybeT m) where
 instance (Applicative m) => Applicative (MaybeT m) where
   pure ma = MaybeT $ (pure . pure) ma
 
-  (MaybeT mab) <*> (MaybeT ma) = MaybeT $ (fmap (<*>) mab) <*> ma
+  (MaybeT maf) <*> (MaybeT ma) = MaybeT $ (fmap (<*>) maf) <*> ma
 
 -----------------------------------------------------------------------------------
 
