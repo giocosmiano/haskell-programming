@@ -5,28 +5,33 @@
    [ReduxJS](https://redux.js.org/), that are primarily developed with FP concepts in mind, such as immutability, composition, high-order
    function etc.
 
-   Not until mid-2018 that I picked up this book to learn. I can say that the authors did an excellent job writing this, shout-out to them.
-   I'm having fun doing the chapter exercises as they force me to think, connect the dots and perform [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram)         
+   Not until the fall season of 2018 that I picked up this book to learn. I can say that the authors did an excellent job writing this,
+   shout-out to them. I'm now able to demystify `Haskell` while having fun working on chapter exercises as the authors made me think,
+   connect the dots and perform [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram)         
 
 ### Notes about my journey in working through chapter exercises
 
- - Functional programming is a function of data transformation and composition. This concept helps me in a big way, reminding me to get back
-   to this simple pattern `f x = y` every time I get lost where to apply the function on layers of functorial structures, i. e. structure within
-   structure, of `Functor`, `Applicative` and `Monad`. 
-   - `f x = y`
-     - `f` - function
-     - `x` - input such as Integer, String or an [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type) such as Product, Employee etc
-     - `y` - output such as Integer, String or an [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type) such as Product, Employee etc
+ - Functional programming is a function of data transformation and composition.
 
  - Functions are evaluated and eventually reduced into a value called [Beta reduction](https://wiki.haskell.org/Beta_reduction) 
 
  - Function, by default, is curried meaning it only accepts 1-argument and returns either
    - the reduced value
-   - OR another function that will be further applied, and so on, that will eventually reduced into a value   
+   - OR another function that will be further applied, and so on, which will eventually reduced into a value   
 
  - Functions are data because they will eventually get evaluated, and reduced into a value. See [Chapter 22 - Reader](https://github.com/giocosmiano/haskell-programming#chapter-22---reader)  
 
  - Always helpful to use **_`:t`_** for type, **_`:k`_** for kind or **_`:i`_** info to get more details   
+  
+ - **Reminder to myself** to always come back to this simple pattern `f x = y` every time I get lost
+   - on where to apply the function to a value
+   - or how many times I have to `lift` the function over a multi-layered structures of `Functor`, `Applicative`, `Monad`
+     and `Monad Transformers`. See [Chapter 25 - Composing Types](https://github.com/giocosmiano/haskell-programming/tree/master/ch25-composing-types)
+     and [Chapter 26 - Monad Transformers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)  
+   - `f x = y`
+     - `f` - function
+     - `x` - input such as Integer, String or an [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type) such as Product, Employee etc
+     - `y` - output such as Integer, String or an [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type) such as Product, Employee etc
 
 #### Chapter 1 - All You Need is Lambda
  - My background is primarily OOP, and have a very good understanding of FP working with [Scala](https://www.scala-lang.org/) and
@@ -303,10 +308,11 @@ monad laws:
 ```
 
  - After finishing [Chapter 25 - Composing types](https://github.com/giocosmiano/haskell-programming#chapter-25---composing-types), it is
-   mentioned in the book that it's **NOT** possible to compose `monad` but rather create a `monad transformer`.
+   **NOT** possible to compose `monad` but rather create a `monad transformer`.
 
    - I've updated [SkiFreeExercises](https://github.com/giocosmiano/haskell-programming/blob/master/ch21-traversable/SkiFreeExercises.hs)
-     implementing `ST monad transformer` but still don't know how to make `ST` into `S` structure. I'll see some more on `Chapter 26 - Monad Transfomers`     
+     implementing `ST monad transformer` but still figuring out how to make `ST` monadic structure into `S` structure. I'll come back to this once I'm finished
+     with [Chapter 26 - Monad Transfomers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)     
 
 ```haskell
 data S fa a = S (fa a) a deriving (Eq, Show)
@@ -365,7 +371,7 @@ Haskell λ > (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >>
 #### [Chapter 25 - Composing types](https://github.com/giocosmiano/haskell-programming/tree/master/ch25-composing-types)
  - Composing types
 
-   - Essentially, a structure that has layer(s) of structure in it
+   - Essentially, a structure that has multi-layered structures in it
 
    - `Functors` and `Applicatives` are both closed under composition, which means we can compose two `functors`
      (or two `applicatives`) and return another `functor` (or `applicative`, as the case may be). This is not true
