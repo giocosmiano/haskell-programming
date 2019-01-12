@@ -1,6 +1,6 @@
 {-# LANGUAGE InstanceSigs #-}
 
-module MaybeTSample where
+module MaybeTExercises where
 
 -----------------------------------------------------------------------------------
 
