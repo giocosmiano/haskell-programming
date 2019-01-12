@@ -1,4 +1,12 @@
-### This is my personal repository learning `Haskell` from this excellent book [Haskell Programming, by Christopher Allen And Julie Moronuki](http://haskellbook.com/)
+### This is my personal repository learning `Haskell` from [Haskell Programming](http://haskellbook.com/)
+
+ - I came to this `Haskell` journey because of my curiosity in FP that began mid-2016 when I was working on a UI story/task in
+   [Angular](https://angular.io/) and used these JS libraries, [RamdaJS](https://ramdajs.com/), [RxJS](http://reactivex.io/) and
+   [ReduxJS](https://redux.js.org/), that are primarily developed with FP concepts in mind, such as immutability, composition, high-order
+   function etc.
+
+   Not until mid-2018 that I picked up this book to learn. I can say that the authors did an excellent job writing this, shout-out to them.
+   I'm having fun doing the chapter exercises as they force me to think, connect the dots and perform [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram)         
 
 ### Notes about my journey in working through chapter exercises
 
@@ -7,10 +15,8 @@
    structure, of `Functor`, `Applicative` and `Monad`. 
    - `f x = y`
      - `f` - function
-     - `x` - input such as Integer, String or even complex [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type)
-       such as Product, Employee etc
-     - `y` - output such as Integer, String or even complex [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type)
-       such as Product, Employee etc
+     - `x` - input such as Integer, String or an [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type) such as Product, Employee etc
+     - `y` - output such as Integer, String or an [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type) such as Product, Employee etc
 
  - Functions are evaluated and eventually reduced into a value called [Beta reduction](https://wiki.haskell.org/Beta_reduction) 
 
@@ -34,7 +40,7 @@ Haskell λ > addAndMultiply 3 5 7
 38
 ```
 
-#### Chapter 2 - Hello, Haskell!
+#### [Chapter 2 - Hello, Haskell!](https://github.com/giocosmiano/haskell-programming/tree/master/ch02-hello-haskell)
  - Introduction to the following `Haskell` subjects
    - Function and evaluation
    - Infix operators
@@ -45,18 +51,18 @@ Haskell λ > addAndMultiply 3 5 7
  - Printing strings
  - Concatenation functions
 
-#### Chapter 4 - Basic data types
+#### [Chapter 4 - Basic data types](https://github.com/giocosmiano/haskell-programming/tree/master/ch04-basic-datatypes)
  - Built-in data types
  - Integral vs Int, Integer and Word
  - Bool and comparing values
  - Tuples and Lists
 
-#### Chapter 5 - Types
+#### [Chapter 5 - Types](https://github.com/giocosmiano/haskell-programming/tree/master/ch05-types)
  - [Currying](https://wiki.haskell.org/Currying)
  - Polymorphism
  - Type inference
 
-#### Chapter 6 - Type classes
+#### [Chapter 6 - Type classes](https://github.com/giocosmiano/haskell-programming/tree/master/ch06-typeclasses)
  - In OOP such as Java, this is similar to defining `interface`. `Haskell` data types doesn't have any function
    associated with it unlike Java wherein functions are automatically inherited from
    [Object](https://docs.oracle.com/javase/7/docs/api/java/lang/Object.html).
@@ -64,7 +70,7 @@ Haskell λ > addAndMultiply 3 5 7
  - Type classes Eq, Num, Ord, Enum, Show, Read
  - Type class inheritance
 
-#### Chapter 7 - More functional patterns
+#### [Chapter 7 - More functional patterns](https://github.com/giocosmiano/haskell-programming/tree/master/ch07-more-functional-patterns)
  - Anonymous functions
  - Pattern matching
  - Case expressions
@@ -72,23 +78,23 @@ Haskell λ > addAndMultiply 3 5 7
  - Function composition
  - Point-free style
 
-#### Chapter 8 - Recursion
+#### [Chapter 8 - Recursion](https://github.com/giocosmiano/haskell-programming/tree/master/ch08-recursion)
  - [Bottom](https://en.wikipedia.org/wiki/Bottom_type)
  - Factorial! and Fibonacci numbers
 
-#### Chapter 9 - Lists
+#### [Chapter 9 - Lists](https://github.com/giocosmiano/haskell-programming/tree/master/ch09-lists)
  - Pattern matching on lists
  - List comprehensions
  - Spines and non-strict evaluation
  - Zipping lists
 
-#### Chapter 10 - Folding lists
+#### [Chapter 10 - Folding lists](https://github.com/giocosmiano/haskell-programming/tree/master/ch10-folding-lists)
  - Recursive patterns
  - [foldr vs foldl](https://wiki.haskell.org/Fold)
    - This chapter helped a lot as it preps me for [Chapter 20 - Foldable](https://github.com/giocosmiano/haskell-programming#chapter-20---foldable)
      and [Chapter 21 - Traversable](https://github.com/giocosmiano/haskell-programming#chapter-21---traversable)
 
-#### Chapter 11 - Algebraic data types
+#### [Chapter 11 - Algebraic data types](https://github.com/giocosmiano/haskell-programming/tree/master/ch11-algebraic-datatypes)
  - Data and type constructors
  - Type constructors and kinds
  - Data constructors and values
@@ -97,21 +103,21 @@ Haskell λ > addAndMultiply 3 5 7
  - Function type is exponential
  - Higher-kinded data types
 
-#### Chapter 12 - Signaling adversity
+#### [Chapter 12 - Signaling adversity](https://github.com/giocosmiano/haskell-programming/tree/master/ch12-signaling-adversity)
  - Nothing, or Just Maybe
  - Either left or right, but not both
  - higher-kindedness
 
-#### Chapter 13 - Building projects
+#### [Chapter 13 - Building projects](https://github.com/giocosmiano/haskell-programming/tree/master/ch13-building-projects)
  - Modules
  - Making packages with [Stack](https://docs.haskellstack.org)
  - Building a project
 
-#### Chapter 14 - Testing
+#### [Chapter 14 - Testing](https://github.com/giocosmiano/haskell-programming/tree/master/ch14-testing)
  - [QuickCheck](http://hackage.haskell.org/package/QuickCheck)
  - Arbitrary instances
 
-#### Chapter 15 - Monoid, Semigroup
+#### [Chapter 15 - Monoid, Semigroup](https://github.com/giocosmiano/haskell-programming/tree/master/ch15-monoid-semigroup)
  - Algebra and Laws
 
  - use of `newtype`
@@ -135,7 +141,7 @@ Haskell λ > Product 3 <> Product 5 <> Product 7
 Product {getProduct = 105}
 ```
 
-#### Chapter 16 - Functor
+#### [Chapter 16 - Functor](https://github.com/giocosmiano/haskell-programming/tree/master/ch16-functor)
  - Laws
 
  - IO Functor
@@ -153,7 +159,7 @@ Haskell λ > MyName <$> Just "gio"
 Just (MyName {getMyName = "gio"})
 ```
 
-#### Chapter 17 - Applicative
+#### [Chapter 17 - Applicative](https://github.com/giocosmiano/haskell-programming/tree/master/ch17-applicative)
  - Laws
 
  - Functor vs Applicative
@@ -174,7 +180,7 @@ Haskell λ > Just (*3) <*> Just 5
 Just 15
 ```
 
-#### Chapter 18 - Monad
+#### [Chapter 18 - Monad](https://github.com/giocosmiano/haskell-programming/tree/master/ch18-monad)
  - Laws
 
  - `do` syntax and monads
@@ -221,13 +227,13 @@ Haskell λ > :t join $ putStrLn <$> getLine
 join $ putStrLn <$> getLine :: IO ()
 ```
 
-#### Chapter 19 - Applying structure
+#### [Chapter 19 - Applying structure](https://github.com/giocosmiano/haskell-programming/tree/master/ch19-applying-structure)
  - Monoid
  - Functor
  - Applicative
  - Monad
 
-#### Chapter 20 - Foldable
+#### [Chapter 20 - Foldable](https://github.com/giocosmiano/haskell-programming/tree/master/ch20-foldable)
  - Revenge of the monoids
 
  - Foldable is a type class of data structures that can be folded to a summary value.
@@ -242,7 +248,7 @@ Haskell λ > foldr (*) 1 [1,2,3,4,5]
 120
 ```
 
-#### Chapter 21 - Traversable
+#### [Chapter 21 - Traversable](https://github.com/giocosmiano/haskell-programming/tree/master/ch21-traversable)
  - Laws
 
  - traverse, sequenceA
@@ -308,7 +314,7 @@ data S fa a = S (fa a) a deriving (Eq, Show)
 newtype ST fa a = ST { runST :: fa a } deriving (Eq, Show)
 ```
 
-#### Chapter 22 - Reader
+#### [Chapter 22 - Reader](https://github.com/giocosmiano/haskell-programming/tree/master/ch22-reader)
  - Breaking down the Functor of functions
 
  - Functions have an Applicative too
@@ -329,7 +335,7 @@ Haskell λ > (+) <$> (runReader $ Reader (+3)) <*> (runReader $ Reader (*5)) $ 7
 45
 ```
 
-#### Chapter 23 - State
+#### [Chapter 23 - State](https://github.com/giocosmiano/haskell-programming/tree/master/ch23-state)
  - `State` newtype
 
  - Random numbers
@@ -345,7 +351,7 @@ Haskell λ > (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >>
 (9001,40)
 ```
 
-#### Chapter 24 - Parser combinators
+#### [Chapter 24 - Parser combinators](https://github.com/giocosmiano/haskell-programming/tree/master/ch24-parser-combinators)
  - Parser
 
  - Parser combinator
@@ -356,7 +362,7 @@ Haskell λ > (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >>
 
  - The exercises on this chapter has a very substantial resources that really jogged my brain. 
 
-#### Chapter 25 - Composing types
+#### [Chapter 25 - Composing types](https://github.com/giocosmiano/haskell-programming/tree/master/ch25-composing-types)
  - Composing types
 
    - Essentially, a structure that has layer(s) of structure in it
@@ -381,6 +387,21 @@ newtype SomeType f g a = SomeType { getSomeType :: f (g a) } deriving (Eq, Show)
      [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram#Diagram_chasing) because it is covered in
      great details. Great job by the authors explaining and going thru it step-by-step.
 
+#### [Chapter 26 - Monad transformers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)
+
+ - MaybeT, EitherT, ReaderT, StateT
+
+### For further reading
+ - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
+ - [Haskell for all - by Gabriel Gonzalez](http://www.haskellforall.com/)
+ - [How to desugar Haskell code - by Gabriel Gonzalez](http://www.haskellforall.com/2014/10/how-to-desugar-haskell-code.html)
+ - [What a Monad is not](https://wiki.haskell.org/What_a_Monad_is_not)
+ - [Real World Haskell - by Bryan O'Sullivan](http://book.realworldhaskell.org/read/)
+ - [School of Haskel](https://www.schoolofhaskell.com/)
+ - Lenses
+   - [Lenses - by Gabriel Gonzalez](http://www.haskellforall.com/2012/01/haskell-for-mainstream-programmers_28.html)
+   - [A Little Lens Starter Tutorial](https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/a-little-lens-starter-tutorial)
+   - [Taking a Close look at Lenses](https://mmhaskell.com/blog/2017/6/12/taking-a-close-look-at-lenses)
 
 
 
