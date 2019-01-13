@@ -66,8 +66,8 @@ instance (Monad m) => Monad (MaybeT m) where
 
   - Because the result of applying function `f` is `(MaybeT m b)`, see the signature of `(>>=)`
 
-    - We can't return the result back to `MaybeT $ do` as it will result to `MaybeT (MaybeT m b)`
+    - We can't return the result back to `MaybeT $` as it will result to `MaybeT (MaybeT m b)`
 
-    - Therefore, we need to perform `runMaybeT` to extract `(m b)` out of `(MaybeT m b)` and return it as argument to `MaybeT $ do`
+    - Therefore, we need to perform `runMaybeT` to extract `(m b)` out of `(MaybeT m b)` and return it as argument to `MaybeT $`
 
 
