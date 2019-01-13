@@ -6,11 +6,17 @@ module MaybeTExercises where
 
 newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 
+-----------------------------------------------------------------------------------
+
 instance (Functor m) => Functor (MaybeT m) where
+
   fmap :: (a -> b) -> MaybeT m a -> MaybeT m b
   fmap f (MaybeT ma) = MaybeT $ (fmap . fmap) f ma
 
+-----------------------------------------------------------------------------------
+
 instance (Applicative m) => Applicative (MaybeT m) where
+
   pure ma = MaybeT $ (pure . pure) ma
 
   (<*>) :: MaybeT m (a -> b) -> MaybeT m a -> MaybeT m b
