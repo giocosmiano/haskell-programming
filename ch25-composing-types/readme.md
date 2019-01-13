@@ -94,6 +94,7 @@ instance (Functor m) => Functor (IdentityT m) where
 ```haskell
 instance (Applicative m) => Applicative (IdentityT m) where
 
+  pure :: Applicative m => a -> IdentityT m a
   pure = IdentityT . pure
 
   (<*>) :: IdentityT m (a -> b) -> IdentityT m a -> IdentityT m b
