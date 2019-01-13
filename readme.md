@@ -6,8 +6,8 @@
    function etc.
 
    Not until the fall season of 2018 that I picked up this book to learn. I can say that the authors did an excellent job writing this,
-   shout-out to them. I'm now able to demystify `Haskell` while having fun working on chapter exercises as the authors made me think,
-   connect the dots and perform [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram)         
+   shout-out to them. I'm now able to demystify `Haskell`, bit by bit, while having fun working on chapter exercises as the authors
+   made me think, connect the dots and perform [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram)         
 
 ### Notes about my journey in working through chapter exercises
 
@@ -19,14 +19,14 @@
    - the reduced value
    - OR another function that will be further applied, and so on, which will eventually reduced into a value   
 
- - Functions are data because they will eventually get evaluated, and reduced into a value. See [Chapter 22 - Reader](https://github.com/giocosmiano/haskell-programming#chapter-22---reader)  
+ - Functions are data because they will eventually get evaluated, and reduced into a value. Read [Chapter 22 - Reader](https://github.com/giocosmiano/haskell-programming#chapter-22---reader)  
 
  - Always helpful to use **_`:t`_** for type, **_`:k`_** for kind or **_`:i`_** info to get more details   
   
- - **Reminder to myself** to always come back to this simple pattern `f x = y` every time I get lost
+ - **Reminder to myself** to always come back to this simple pattern `f x = y` when I get lost
    - on where to apply the function to a value
    - or how many times I have to `lift` the function over a multi-layered structures of `Functor`, `Applicative`, `Monad`
-     and `Monad Transformers`. See [Chapter 25 - Composing Types](https://github.com/giocosmiano/haskell-programming/tree/master/ch25-composing-types)
+     and `Monad Transformers`. Read [Chapter 25 - Composing Types](https://github.com/giocosmiano/haskell-programming/tree/master/ch25-composing-types)
      and [Chapter 26 - Monad Transformers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)  
    - `f x = y`
      - `f` - function
@@ -34,7 +34,7 @@
      - `y` - output such as Integer, String or an [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type) such as Product, Employee etc
 
 #### Chapter 1 - All You Need is Lambda
- - My background is primarily OOP, and have a very good understanding of FP working with [Scala](https://www.scala-lang.org/) and
+ - My background is primarily OOP, and have a very good understanding of FP working in [Scala](https://www.scala-lang.org/) and
    [ES6 high order functions](https://eloquentjavascript.net/05_higher_order.html) but this chapter provides
    a good foundational details on [lambda calculus](https://en.wikipedia.org/wiki/Lambda_calculus)
 
@@ -311,8 +311,8 @@ monad laws:
    **NOT** possible to compose `monad` but rather create a `monad transformer`.
 
    - I've updated [SkiFreeExercises](https://github.com/giocosmiano/haskell-programming/blob/master/ch21-traversable/SkiFreeExercises.hs)
-     implementing `ST monad transformer` but still figuring out how to make `ST` monadic structure into `S` structure. I'll come back to this once I'm finished
-     with [Chapter 26 - Monad Transfomers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)     
+     implementing `ST monad transformer` but still figuring out how to make `ST` monadic structure into `S` structure. I'll come back to this
+     once I'm finished with [Chapter 26 - Monad Transfomers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)     
 
 ```haskell
 data S fa a = S (fa a) a deriving (Eq, Show)
@@ -404,10 +404,6 @@ newtype SomeType f g a = SomeType { getSomeType :: f (g a) } deriving (Eq, Show)
  - [What a Monad is not](https://wiki.haskell.org/What_a_Monad_is_not)
  - [Real World Haskell - by Bryan O'Sullivan](http://book.realworldhaskell.org/read/)
  - [School of Haskel](https://www.schoolofhaskell.com/)
- - Lenses
-   - [Lenses - by Gabriel Gonzalez](http://www.haskellforall.com/2012/01/haskell-for-mainstream-programmers_28.html)
-   - [A Little Lens Starter Tutorial](https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/a-little-lens-starter-tutorial)
-   - [Taking a Close look at Lenses](https://mmhaskell.com/blog/2017/6/12/taking-a-close-look-at-lenses)
 
 
 
