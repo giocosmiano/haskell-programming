@@ -17,6 +17,7 @@ instance (Functor m) => Functor (EitherT e m) where
 
 instance (Applicative m) => Applicative (EitherT e m) where
 
+  pure :: Applicative m => a -> EitherT e m a
   pure ma = EitherT $ (pure . pure) ma
 
   (<*>) :: EitherT e m (a -> b) -> EitherT e m a -> EitherT e m b
