@@ -88,7 +88,7 @@ instance (Functor m) => Functor (IdentityT m) where
 ```
   - The `ma` in argument `(IdentityT ma)` has a structure of `m a`
   
-  - Need to `lift` function `f` over because value `a` is 1-layer deep, inside `m` in structure `m a` of type `IdentityT m a`
+  - `lift` function `f` over because value `a`, in `ma`, is 1-layer deep, inside `m` of structure `IdentityT m a`
 
 #### IdentityT Applicative
 ```haskell
@@ -99,34 +99,23 @@ instance (Applicative m) => Applicative (IdentityT m) where
   (<*>) :: IdentityT m (a -> b) -> IdentityT m a -> IdentityT m b
   (IdentityT maf) <*> (IdentityT ma) = IdentityT (maf <*> ma)
 ```
-  - The function `(a -> b)` is inside `maf` structure lift` the applicative function `(<*>)` from `maf` over to get the function `(a -> b)` inside `IdentityT m (a -> b)`
-
-  - Apply `<*>` the function `(a -> b)` to `ma` which has a structure of `m (Maybe a)`
+  - Apply the applicative function `(<*>)` from `maf` over because value `a`, in `ma`, is 1-layer deep,
+    inside `m` of structure `IdentityT m a`
 
 #### IdentityT Monad
 ```haskell
 instance (Monad m) => Monad (IdentityT m) where
-
   return = pure
 
   (>>=) :: IdentityT m a -> (a -> IdentityT m b) -> IdentityT m b
   (IdentityT ma) >>= f =
-    IdentityT $ do
-      v <- ma
-      case v of
-        Nothing -> return Nothing
-        Just x  -> runIdentityT (f x)
+    IdentityT $ ma >>= runIdentityT . f
 ```
-  - Again, `ma` in argument `(IdentityT ma)` has a structure of `m (Maybe a)` therefore we need to extract `(Maybe a)` from
-   `m (Maybe a)` via `v <- ma`
+  - Because the result of applying function `f` to `ma` is `(IdentityT m b)`, see the signature of `(>>=)`
 
-  - Perform case analysis on `Maybe a` before applying function `f`, which will result to `(IdentityT m b)`
+    - We can't return the result back to `IdentityT $` as it will result to `IdentityT (IdentityT m b)`
 
-  - Because the result of applying function `f` is `(IdentityT m b)`, see the signature of `(>>=)`
-
-    - We can't return the result back to `IdentityT $ do` as it will result to `IdentityT (IdentityT m b)`
-
-    - Therefore, we need to perform `runIdentityT` to extract `(m b)` out of `(IdentityT m b)` and return it as argument to `IdentityT $ do`
+    - Therefore, we need to perform `runIdentityT` to extract `(m b)` out of `(IdentityT m b)` and return it as argument to `IdentityT $`
 
 ### For further reading
  - [All About Monads](https://wiki.haskell.org/All_About_Monads)
