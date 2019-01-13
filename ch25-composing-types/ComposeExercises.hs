@@ -48,7 +48,7 @@ instance (Foldable f) => Foldable (One f) where
 -- import Data.Functor.Identity
 -- traverse (Identity . (*5)) $ One [3,5,7] -> Identity (One [15,25,35])
 instance (Traversable f) => Traversable (One f) where
-  traverse :: Applicative f1 => (a -> f1 b) -> One f a -> f1 (One f b)
+  traverse :: Applicative fa => (a -> fa b) -> One f a -> fa (One f b)
   traverse f (One fa) = One <$> traverse f fa
 
 instance (Eq (fa a)) => EqProp (One fa a) where (=-=) = eq
@@ -111,7 +111,7 @@ instance (Foldable f, Foldable g, Foldable h) => Foldable (Three f g h) where
 -- import Data.Functor.Identity
 -- traverse (Identity . (*5)) $ Three (Just (Just [3,5,7])) -> Identity (Three (Just (Just [15,25,35])))
 instance (Traversable f, Traversable g, Traversable h) => Traversable (Three f g h) where
-  traverse :: Applicative f1 => (a -> f1 b) -> Three f g h a -> f1 (Three f g h b)
+  traverse :: Applicative fa => (a -> fa b) -> Three f g h a -> fa (Three f g h b)
   traverse f (Three fgha) = Three <$> (traverse . traverse . traverse) f fgha
 
 -- | OR ***
@@ -178,7 +178,7 @@ instance (Foldable f, Foldable g) => Foldable (Compose f g) where
 -- import Data.Functor.Identity
 -- traverse (Identity . (*7)) $ Compose (Just [3,5,7]) -> Identity (Compose {getCompose = Just [21,35,49]})
 instance (Traversable f, Traversable g) => Traversable (Compose f g) where
-  traverse :: Applicative f1 => (a -> f1 b) -> Compose f g a -> f1 (Compose f g b)
+  traverse :: Applicative fa => (a -> fa b) -> Compose f g a -> fa (Compose f g b)
   traverse f (Compose fga) = Compose <$> (traverse . traverse) f fga
 
 -- | OR ***
