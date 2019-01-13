@@ -17,6 +17,7 @@ instance (Functor m) => Functor (ReaderT r m) where
 
 instance (Applicative m) => Applicative (ReaderT r m) where
 
+  pure :: Applicative m => a -> ReaderT r m a
   pure ma = ReaderT $ (pure . pure) ma
 
   (<*>) :: ReaderT r m (a -> b) -> ReaderT r m a -> ReaderT r m b
