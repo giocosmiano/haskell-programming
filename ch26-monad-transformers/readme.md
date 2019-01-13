@@ -43,7 +43,7 @@ instance (Applicative m) => Applicative (MaybeT m) where
     - `lift` the applicative function `(<*>)` from `maf` over because value `a`, in `ma`, is 2-layers deep,
       inside `m` then inside `Maybe` of structure `MaybeT m (Maybe a)`
 
-    - Then apply function `<*>` to `ma`
+    - Then apply the result of that lifted applicative `<*>` function, with `<*>` to `ma`
 
 #### MaybeT Monad
 ```haskell
