@@ -22,7 +22,6 @@ newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 instance (Functor m) => Functor (MaybeT m) where
 
   fmap :: (a -> b) -> MaybeT m a -> MaybeT m b
-
   fmap f (MaybeT ma) = MaybeT $ (fmap . fmap) f ma
 ```
   - The `ma` in argument `(MaybeT ma)` has a structure of `m (Maybe a)`
@@ -37,14 +36,13 @@ instance (Applicative m) => Applicative (MaybeT m) where
   pure ma = MaybeT $ (pure . pure) ma
 
   (<*>) :: MaybeT m (a -> b) -> MaybeT m a -> MaybeT m b
-
   (MaybeT maf) <*> (MaybeT ma) = MaybeT $ (fmap (<*>) maf) <*> ma
 ```
   - Same as `Functor`
 
     - `lift` the applicative function `(<*>)` from `maf` over to get the function `(a -> b)` inside `MaybeT m (a -> b)`
 
-    - then apply `<*>` the function `(a -> b)` to value `a` which is inside the `ma` that has a structure of `m (Maybe a)`
+    - then apply `<*>` the function `(a -> b)` to `ma` which has a structure of `m (Maybe a)`
 
 #### MaybeT Monad
 ```haskell
@@ -60,3 +58,15 @@ instance (Monad m) => Monad (MaybeT m) where
         Nothing -> return Nothing
         Just x  -> runMaybeT (f x)
 ```
+  - Again, `ma` in argument `(MaybeT ma)` has a structure of `m (Maybe a)` therefore we need to extract `(Maybe a)` from
+   `m (Maybe a)` via `v <- ma`
+
+  - Then perform case analysis on `Maybe a` before applying function `f` to `Maybe a` which will result to `(MaybeT m b)`
+
+  - Because the result of applying function `f` is `(MaybeT m b)`, see the signature of `(>>=)`
+
+    - We can't return the result back to `MaybeT $ do` as it will result to `MaybeT (MaybeT m b)`
+
+    - So we need to perform `runMaybeT` to extract `(m b)` out of `(MaybeT m b)` and return it as argument to `MaybeT $ do`
+
+
