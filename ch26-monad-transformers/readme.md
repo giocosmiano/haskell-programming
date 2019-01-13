@@ -26,8 +26,8 @@ instance (Functor m) => Functor (MaybeT m) where
 ```
   - The `ma` in argument `(MaybeT ma)` has a structure of `m (Maybe a)`
   
-  - Need to `lift` function `f` twice over because value `a` is 2-layers deep, inside `m` then inside `Maybe`
-    in structure `m (Maybe a)` of type `MaybeT m a`
+  - `lift` function `f` twice over because value `a`, in `ma`, is 2-layers deep, inside `m` then inside
+    `Maybe` in structure `m (Maybe a)`
 
 #### MaybeT Applicative
 ```haskell
@@ -38,9 +38,12 @@ instance (Applicative m) => Applicative (MaybeT m) where
   (<*>) :: MaybeT m (a -> b) -> MaybeT m a -> MaybeT m b
   (MaybeT maf) <*> (MaybeT ma) = MaybeT $ (fmap (<*>) maf) <*> ma
 ```
-  - `lift` the applicative function `(<*>)` from `maf` over to get the function `(a -> b)` inside `MaybeT m (a -> b)`
+  - Same as `Functor`,
+  
+    - `lift` the applicative function `(<*>)` from `maf` over because value `a`, in `ma`, is 2-layers deep,
+      inside `m` then inside `Maybe` in structure `m (Maybe a)`
 
-  - Then apply `<*>` the function `(a -> b)` to `ma` which has a structure of `m (Maybe a)`
+    - Then apply `<*>` the function `(a -> b)` to `ma`
 
 #### MaybeT Monad
 ```haskell
