@@ -6,12 +6,20 @@ module EitherTExercises where
 
 newtype EitherT e m a = EitherT { runEitherT :: m (Either e a) }
 
+-----------------------------------------------------------------------------------
+
 instance (Functor m) => Functor (EitherT e m) where
+
+  fmap :: (a -> b) -> EitherT e m a -> EitherT e m b
   fmap f (EitherT ma) = EitherT $ (fmap . fmap) f ma
 
+-----------------------------------------------------------------------------------
+
 instance (Applicative m) => Applicative (EitherT e m) where
+
   pure ma = EitherT $ (pure . pure) ma
 
+  (<*>) :: EitherT e m (a -> b) -> EitherT e m a -> EitherT e m b
   (EitherT maf) <*> (EitherT ma) = EitherT $ (fmap (<*>) maf) <*> ma
 
 -----------------------------------------------------------------------------------
