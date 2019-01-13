@@ -38,11 +38,9 @@ instance (Applicative m) => Applicative (MaybeT m) where
   (<*>) :: MaybeT m (a -> b) -> MaybeT m a -> MaybeT m b
   (MaybeT maf) <*> (MaybeT ma) = MaybeT $ (fmap (<*>) maf) <*> ma
 ```
-  - Same as `Functor`
+  - `lift` the applicative function `(<*>)` from `maf` over to get the function `(a -> b)` inside `MaybeT m (a -> b)`
 
-    - `lift` the applicative function `(<*>)` from `maf` over to get the function `(a -> b)` inside `MaybeT m (a -> b)`
-
-    - then apply `<*>` the function `(a -> b)` to `ma` which has a structure of `m (Maybe a)`
+  - Then apply `<*>` the function `(a -> b)` to `ma` which has a structure of `m (Maybe a)`
 
 #### MaybeT Monad
 ```haskell
