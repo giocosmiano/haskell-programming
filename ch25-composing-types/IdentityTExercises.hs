@@ -39,12 +39,16 @@ instance (Functor m) => Functor (IdentityT m) where
 -----------------------------------------------------------------------------------
 
 instance Applicative Identity where
+
+  pure :: a -> Identity a
   pure = Identity
 
   (<*>) :: Identity (a -> b) -> Identity a -> Identity b
   (Identity f) <*> (Identity a) = Identity (f a)
 
 instance (Applicative m) => Applicative (IdentityT m) where
+
+  pure :: Applicative m => a -> IdentityT m a
   pure = IdentityT . pure
 
   (<*>) :: IdentityT m (a -> b) -> IdentityT m a -> IdentityT m b
