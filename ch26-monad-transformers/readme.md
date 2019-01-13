@@ -33,6 +33,7 @@ instance (Functor m) => Functor (MaybeT m) where
 ```haskell
 instance (Applicative m) => Applicative (MaybeT m) where
 
+  pure :: Applicative m => a -> MaybeT m a
   pure ma = MaybeT $ (pure . pure) ma
 
   (<*>) :: MaybeT m (a -> b) -> MaybeT m a -> MaybeT m b
