@@ -9,7 +9,7 @@
    by the `Maybe monad`.
 
  - A `monad transformer` is a variant of an ordinary type that takes an additional type argument which is assumed
-   to have a `Monad` instance. For example, `MaybeT` is the transformer variant of the `Maybe` type. The transformer
+   to have a `Monad` instance. For example, `IdentityT` is the transformer variant of the `Maybe` type. The transformer
    variant of a type gives us a `Monad` instance that binds over both bits of structure. This allows us to compose
    `monads` and combine their effects.
 
@@ -73,6 +73,60 @@ Monad g => g a -> (a -> g b) -> g b
    a `>>=` operation over `𝑓` and `𝑔` of different types (but both have `Monad` instances). We have to create
    new types called `monad transformers` and write `Monad` instances for those types to have a way of dealing with the
    extra structure generated.
+
+### IdentityT Monad Transformer
+```haskell
+newtype IdentityT m a = IdentityT { runIdentityT :: m a } deriving (Eq, Show)
+```
+
+#### IdentityT Functor
+```haskell
+instance (Functor m) => Functor (IdentityT m) where
+
+  fmap :: (a -> b) -> IdentityT m a -> IdentityT m b
+  fmap f (IdentityT ma) = IdentityT (fmap f ma)
+```
+  - The `ma` in argument `(IdentityT ma)` has a structure of `m a`
+  
+  - Need to `lift` function `f` over because value `a` is 1-layer deep, inside `m` in structure `m a` of type `IdentityT m a`
+
+#### IdentityT Applicative
+```haskell
+instance (Applicative m) => Applicative (IdentityT m) where
+
+  pure = IdentityT . pure
+
+  (<*>) :: IdentityT m (a -> b) -> IdentityT m a -> IdentityT m b
+  (IdentityT maf) <*> (IdentityT ma) = IdentityT (maf <*> ma)
+```
+  - The function `(a -> b)` is inside `maf` structure lift` the applicative function `(<*>)` from `maf` over to get the function `(a -> b)` inside `IdentityT m (a -> b)`
+
+  - Apply `<*>` the function `(a -> b)` to `ma` which has a structure of `m (Maybe a)`
+
+#### IdentityT Monad
+```haskell
+instance (Monad m) => Monad (IdentityT m) where
+
+  return = pure
+
+  (>>=) :: IdentityT m a -> (a -> IdentityT m b) -> IdentityT m b
+  (IdentityT ma) >>= f =
+    IdentityT $ do
+      v <- ma
+      case v of
+        Nothing -> return Nothing
+        Just x  -> runIdentityT (f x)
+```
+  - Again, `ma` in argument `(IdentityT ma)` has a structure of `m (Maybe a)` therefore we need to extract `(Maybe a)` from
+   `m (Maybe a)` via `v <- ma`
+
+  - Perform case analysis on `Maybe a` before applying function `f`, which will result to `(IdentityT m b)`
+
+  - Because the result of applying function `f` is `(IdentityT m b)`, see the signature of `(>>=)`
+
+    - We can't return the result back to `IdentityT $ do` as it will result to `IdentityT (IdentityT m b)`
+
+    - Therefore, we need to perform `runIdentityT` to extract `(m b)` out of `(IdentityT m b)` and return it as argument to `IdentityT $ do`
 
 ### For further reading
  - [All About Monads](https://wiki.haskell.org/All_About_Monads)
