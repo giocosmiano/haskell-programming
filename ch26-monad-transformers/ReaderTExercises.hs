@@ -20,7 +20,7 @@ instance (Applicative m) => Applicative (ReaderT r m) where
   pure ma = ReaderT $ (pure . pure) ma
 
   (<*>) :: ReaderT r m (a -> b) -> ReaderT r m a -> ReaderT r m b
-  (ReaderT mab) <*> (ReaderT ma) = ReaderT $ (fmap (<*>) mab) <*> ma
+  (ReaderT maf) <*> (ReaderT ma) = ReaderT $ (fmap (<*>) maf) <*> ma
 
 -----------------------------------------------------------------------------------
 
