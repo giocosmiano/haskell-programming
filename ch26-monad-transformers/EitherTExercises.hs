@@ -16,7 +16,6 @@ instance (Applicative m) => Applicative (EitherT e m) where
 
 -----------------------------------------------------------------------------------
 
-{-
 instance (Monad m) => Monad (EitherT e m) where
   return = pure
 
@@ -25,9 +24,8 @@ instance (Monad m) => Monad (EitherT e m) where
     EitherT $ do
       v <- ma
       case v of
-        Nothing -> return Nothing
-        Just x  -> runEitherT (f x)
--}
+        (Left  e) -> return $ Left e
+        (Right x) -> runEitherT (f x)
 
 -----------------------------------------------------------------------------------
 
@@ -48,4 +46,10 @@ swapEitherT :: (Functor m) => EitherT e m a -> EitherT a m e
 swapEitherT (EitherT ma) = EitherT $ fmap swapEither $ runEitherT (EitherT ma)
 
 eitherT :: Monad m => (a -> m c) -> (b -> m c) -> EitherT a m b -> m c
-eitherT = undefined
+eitherT f g (EitherT ma) =
+  ma >>= \x ->
+    case x of
+      Left  e -> f e
+      Right x -> g x
+
+-----------------------------------------------------------------------------------
