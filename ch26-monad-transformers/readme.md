@@ -61,12 +61,12 @@ instance (Monad m) => Monad (MaybeT m) where
   - Again, `ma` in argument `(MaybeT ma)` has a structure of `m (Maybe a)` therefore we need to extract `(Maybe a)` from
    `m (Maybe a)` via `v <- ma`
 
-  - Then perform case analysis on `Maybe a` before applying function `f` to `Maybe a` which will result to `(MaybeT m b)`
+  - Perform case analysis on `Maybe a` before applying function `f`, which will result to `(MaybeT m b)`
 
   - Because the result of applying function `f` is `(MaybeT m b)`, see the signature of `(>>=)`
 
     - We can't return the result back to `MaybeT $ do` as it will result to `MaybeT (MaybeT m b)`
 
-    - So we need to perform `runMaybeT` to extract `(m b)` out of `(MaybeT m b)` and return it as argument to `MaybeT $ do`
+    - Therefore, we need to perform `runMaybeT` to extract `(m b)` out of `(MaybeT m b)` and return it as argument to `MaybeT $ do`
 
 
