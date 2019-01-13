@@ -25,9 +25,13 @@ newtype IdentityT m a = IdentityT { runIdentityT :: m a } deriving (Eq, Show)
 -----------------------------------------------------------------------------------
 
 instance Functor Identity where
+
+  fmap :: (a -> b) -> Identity a -> Identity b
   fmap f (Identity a) = Identity (f a)
 
 instance (Functor m) => Functor (IdentityT m) where
+
+  fmap :: (a -> b) -> IdentityT m a -> IdentityT m b
   fmap f (IdentityT ma) = IdentityT (fmap f ma)
 
 -----------------------------------------------------------------------------------
@@ -36,10 +40,14 @@ instance (Functor m) => Functor (IdentityT m) where
 
 instance Applicative Identity where
   pure = Identity
+
+  (<*>) :: Identity (a -> b) -> Identity a -> Identity b
   (Identity f) <*> (Identity a) = Identity (f a)
 
 instance (Applicative m) => Applicative (IdentityT m) where
   pure = IdentityT . pure
+
+  (<*>) :: IdentityT m (a -> b) -> IdentityT m a -> IdentityT m b
   (IdentityT maf) <*> (IdentityT ma) = IdentityT (maf <*> ma)
 
 -----------------------------------------------------------------------------------
@@ -49,6 +57,7 @@ instance (Applicative m) => Applicative (IdentityT m) where
 instance Monad Identity where
   return = pure
 
+  (>>=) :: Identity a -> (a -> Identity b) -> Identity b
   (Identity a) >>= f = f a
 
 instance (Monad m) => Monad (IdentityT m) where
