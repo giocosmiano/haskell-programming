@@ -39,6 +39,7 @@ instance (Monad m) => Monad (EitherT e m) where
 -----------------------------------------------------------------------------------
 
 instance (Foldable m) => Foldable (EitherT e m) where
+  foldMap :: (Monoid mn, Foldable m) => (a -> mn) -> EitherT e m a -> mn
   foldMap f (EitherT ma) = (foldMap . foldMap) f ma
 
 instance (Traversable m) => Traversable (EitherT e m) where
