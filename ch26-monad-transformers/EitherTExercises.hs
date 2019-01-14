@@ -8,6 +8,8 @@ newtype EitherT e m a = EitherT { runEitherT :: m (Either e a) }
 
 -----------------------------------------------------------------------------------
 
+-- e.g.
+-- runEitherT $ (*3) <$> EitherT [Right 3, Left 5, Right 7] -> [Right 9,Left 5,Right 21]
 instance (Functor m) => Functor (EitherT e m) where
 
   fmap :: (a -> b) -> EitherT e m a -> EitherT e m b
@@ -15,6 +17,9 @@ instance (Functor m) => Functor (EitherT e m) where
 
 -----------------------------------------------------------------------------------
 
+-- e.g.
+-- runEitherT $ EitherT [Right (*3)] <*> EitherT [Right 5, Left 7]              -> [Right 15,Left 7]
+-- runEitherT $ (*) <$> EitherT [Right 2, Left 3] <*> EitherT [Right 5, Left 7] -> [Right 10,Left 7,Left 3,Left 3]
 instance (Applicative m) => Applicative (EitherT e m) where
 
   pure :: Applicative m => a -> EitherT e m a
@@ -25,6 +30,9 @@ instance (Applicative m) => Applicative (EitherT e m) where
 
 -----------------------------------------------------------------------------------
 
+-- e.g.
+-- runEitherT $ EitherT [Right 5, Left 7] >>= return . (*3)               -> [Right 15,Left 7]
+-- runEitherT $ EitherT [Right 5, Left 7] >>= return . \x -> [(x*5, x+3)] -> [Right [(25,8)],Left 7]
 instance (Monad m) => Monad (EitherT e m) where
   return = pure
 
