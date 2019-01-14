@@ -15,6 +15,7 @@ newtype StateT s m a = StateT { runStateT :: s -> m (a, s) }
 -- 4) Finally, lift the function `\(a, s') -> (f a, s')` and apply to `m (a, s)`
 
 -- e.g.
+-- import Data.Functor.Identity
 -- runStateT ((+3) <$> (StateT $ \s -> Just (5, s))) 7     -> Just (8,7)
 -- runStateT ((*3) <$> (StateT $ \s -> Identity (5, s))) 7 -> Identity (15,7)
 instance (Functor m) => Functor (StateT s m) where
@@ -30,7 +31,8 @@ instance (Functor m) => Functor (StateT s m) where
 -- https://stackoverflow.com/questions/18673525/is-it-possible-to-implement-applicative-m-applicative-statet-s-m
 
 -- e.g.
--- runStateT ((+) <$> (StateT $ \s -> Just(3, s))     <*> (StateT $ \s -> Just(5, s))) 7     -> Just (8,7)
+-- import Data.Functor.Identity
+-- runStateT ((StateT $ \s -> Just((+3), s)) <*> (StateT $ \s -> Just(5, s))) 7              -> Just (8,7)
 -- runStateT ((*) <$> (StateT $ \s -> Identity(3, s)) <*> (StateT $ \s -> Identity(5, s))) 7 -> Identity (15,7)
 instance (Monad m) => Applicative (StateT s m) where
 
@@ -55,6 +57,7 @@ instance (Monad m) => Applicative (StateT s m) where
 --    which will become the argument to `StateT $`
 
 -- e.g.
+-- import Data.Functor.Identity
 -- runStateT ((StateT $ \s -> Just (5, s)) >>= return . (+3)) 7     -> Just (8,7)
 -- runStateT ((StateT $ \s -> Identity (5, s)) >>= return . (*3)) 7 -> Identity (15,7)
 instance (Monad m) => Monad (StateT s m) where
