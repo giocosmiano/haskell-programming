@@ -46,9 +46,14 @@ instance (Monad m) => Monad (EitherT e m) where
 
 -----------------------------------------------------------------------------------
 
+-- e.g.
+-- foldMap Product (EitherT [Right 5, Left 6, Right 7])                                           -> Product {getProduct = 35}
+-- foldMap (*3) (EitherT [Right (5::Sum Integer), Left (6::Sum Integer), Right (7::Sum Integer)]) -> Sum {getSum = 36}
 instance (Foldable m) => Foldable (EitherT e m) where
   foldMap :: (Monoid mn, Foldable m) => (a -> mn) -> EitherT e m a -> mn
   foldMap f (EitherT ma) = (foldMap . foldMap) f ma
+
+-----------------------------------------------------------------------------------
 
 instance (Traversable m) => Traversable (EitherT e m) where
   traverse :: Applicative fa => (a -> fa b) -> EitherT e m a -> fa (EitherT e m b)
