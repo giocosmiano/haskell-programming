@@ -9,6 +9,7 @@ newtype ReaderT r m a = ReaderT { runReaderT :: r -> m a }
 -----------------------------------------------------------------------------------
 
 -- e.g.
+-- import Data.Functor.Identity
 -- fmap (runReaderT $ ReaderT (+3)) (runReaderT $ ReaderT (*5)) (Identity 7) -> Identity 38
 instance (Functor m) => Functor (ReaderT r m) where
 
@@ -18,6 +19,7 @@ instance (Functor m) => Functor (ReaderT r m) where
 -----------------------------------------------------------------------------------
 
 -- e.g.
+-- import Data.Functor.Identity
 -- (+) <$> (runReaderT $ ReaderT (*3)) <*> (runReaderT $ ReaderT (+5)) $ (Identity 7) -> Identity 33
 -- (*) <$> (runReaderT $ ReaderT (+3)) <*> (runReaderT $ ReaderT (*5)) $ (Identity 7) -> Identity 350
 instance (Applicative m) => Applicative (ReaderT r m) where
@@ -31,6 +33,7 @@ instance (Applicative m) => Applicative (ReaderT r m) where
 -----------------------------------------------------------------------------------
 
 -- e.g.
+-- import Data.Functor.Identity
 -- (runReaderT $ ReaderT (+3)) >>= return . (runReaderT $ ReaderT (*5)) $ (Identity 7) -> Identity 50
 -- (runReaderT $ ReaderT (*3)) >>= return . (runReaderT $ ReaderT (+5)) $ (Identity 7) -> Identity 26
 instance (Monad m) => Monad (ReaderT r m) where
