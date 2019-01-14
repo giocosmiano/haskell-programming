@@ -114,10 +114,12 @@ instance (Monad m) => Monad (IdentityT m) where
 -----------------------------------------------------------------------------------
 
 instance Foldable Identity where
+  foldMap :: (a -> m) -> Identity a -> m
   foldMap f (Identity a) = f a
   foldr f z (Identity a) = f a z
 
 instance (Foldable fa) => Foldable (IdentityT fa) where
+  foldMap :: (Monoid mn, Foldable m) => (a -> mn) -> IdentityT m a -> mn
   foldMap f (IdentityT fa) = foldMap f fa
   foldr f z (IdentityT fa) = foldr f z fa
 
@@ -126,6 +128,7 @@ instance (Foldable fa) => Foldable (IdentityT fa) where
 -----------------------------------------------------------------------------------
 
 instance Traversable Identity where
+  traverse :: (Applicative fa) => (a -> fa b) -> Identity a -> fa (Identity b)
   traverse f (Identity a) = Identity <$> f a
 
 instance (Traversable fa) => Traversable (IdentityT fa) where
