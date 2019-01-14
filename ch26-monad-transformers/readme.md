@@ -71,4 +71,13 @@ instance (Monad m) => Monad (MaybeT m) where
 
     - Therefore, we need to perform `runMaybeT` to extract `(m b)` out of `(MaybeT m b)` and return it as argument to `MaybeT $`
 
+ - Referenced frameworks/libraries in the chapter
+   - [Haskell web framework inspired by Ruby's Sinatra, using WAI and Warp](https://hackage.haskell.org/package/scotty)
+   - [Compositional pipelines](https://hackage.haskell.org/package/pipes)
+   - [Streaming data processing library](https://hackage.haskell.org/package/conduit)
+
+### For further reading
+ - [Streaming logging - by Gabriel Gonzalez](http://www.haskellforall.com/2014/02/streaming-logging.html)
+ - [Amb](https://wiki.haskell.org/Amb)
+   - [McCarthy's Ambiguous Operator](http://www.randomhacks.net.s3-website-us-east-1.amazonaws.com/2005/10/11/amb-operator/)
 
