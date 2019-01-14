@@ -43,6 +43,7 @@ instance (Foldable m) => Foldable (MaybeT m) where
   foldMap f (MaybeT ma) = (foldMap . foldMap) f ma
 
 instance (Traversable m) => Traversable (MaybeT m) where
+  traverse :: Applicative fa => (a -> fa b) -> MaybeT m a -> fa (MaybeT m b)
   traverse f (MaybeT ma) = MaybeT <$> (traverse . traverse) f ma
 
 -----------------------------------------------------------------------------------
