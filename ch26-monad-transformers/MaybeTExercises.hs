@@ -39,6 +39,7 @@ instance (Monad m) => Monad (MaybeT m) where
 -----------------------------------------------------------------------------------
 
 instance (Foldable m) => Foldable (MaybeT m) where
+  foldMap :: (Monoid mn, Foldable m) => (a -> mn) -> MaybeT m a -> mn
   foldMap f (MaybeT ma) = (foldMap . foldMap) f ma
 
 instance (Traversable m) => Traversable (MaybeT m) where
