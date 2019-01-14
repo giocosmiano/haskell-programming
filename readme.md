@@ -5,9 +5,9 @@
    [ReduxJS](https://redux.js.org/), that are primarily developed with FP concepts in mind, such as immutability, composition, high-order
    function etc.
 
-   Not until the fall season of 2018 that I picked up this book to learn. I can say that the authors did an excellent job writing this,
-   shout-out to them. I'm now able to demystify `Haskell`, bit by bit, while having fun working on chapter exercises as the authors
-   made me think, connect the dots and perform [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram)         
+   Since then my `Haskell` journey has been on-and-off, until the fall season of 2018 that I picked up this book to learn. I can say that
+   the authors did an excellent job writing this, shout-out to them. I'm now able to demystify `Haskell`, bit by bit, while having fun
+   working on chapter exercises as the authors made me think, connect the dots and perform [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram)         
 
 ### Notes about my journey in working through chapter exercises
 
@@ -21,17 +21,40 @@
 
  - Functions are data because they will eventually get evaluated, and reduced into a value. Read [Chapter 22 - Reader](https://github.com/giocosmiano/haskell-programming#chapter-22---reader)  
 
- - Always helpful to use **_`:t`_** for type, **_`:k`_** for kind or **_`:i`_** info to get more details   
-  
- - **Reminder to myself** to always come back to this simple pattern `f x = y` when I get lost
-   - on where to apply the function to a value
-   - or how many times I have to `lift` the function over a multi-layered structures of `Functor`, `Applicative`, `Monad`
-     and `Monad Transformers`. Read [Chapter 25 - Composing Types](https://github.com/giocosmiano/haskell-programming/tree/master/ch25-composing-types)
-     and [Chapter 26 - Monad Transformers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)  
-   - `f x = y`
-     - `f` - function
-     - `x` - input such as Integer, String or an [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type) such as Product, Employee etc
-     - `y` - output such as Integer, String or an [algebraic data structure](https://en.wikipedia.org/wiki/Algebraic_data_type) such as Product, Employee etc
+ - **Couple of reminders to myself**
+
+   - Always come back to this simple pattern `f x = y` when you get lost
+
+     - on where to apply the function to a value
+
+     - or how many times you have to `lift` the function over a multi-layered structures of `Functor`, `Applicative`, `Monad`
+       and `Monad Transformers`. Read [Chapter 25 - Composing Types](https://github.com/giocosmiano/haskell-programming/tree/master/ch25-composing-types)
+       and [Chapter 26 - Monad Transformers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)  
+
+   - Always helpful to use **_`:t`_** for type, **_`:k`_** for kind or **_`:i`_** info to get more details   
+
+   - When in doubt, use language pragma [`{-# LANGUAGE InstanceSigs #-}`](https://downloads.haskell.org/~ghc/8.0.2/docs/html/users_guide/glasgow_exts.html#ghc-flag--XInstanceSigs)
+     to have a clear vision of type signatures. i.e.
+
+```haskell
+newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
+
+instance (Functor m) => Functor (MaybeT m) where
+  fmap :: (a -> b) -> MaybeT m a -> MaybeT m b
+
+instance (Applicative m) => Applicative (MaybeT m) where
+  pure :: Applicative m => a -> MaybeT m a
+  (<*>) :: MaybeT m (a -> b) -> MaybeT m a -> MaybeT m b
+
+instance (Monad m) => Monad (MaybeT m) where
+  (>>=) :: MaybeT m a -> (a -> MaybeT m b) -> MaybeT m b
+
+instance (Foldable m) => Foldable (MaybeT m) where
+  foldMap :: (Monoid mn, Foldable m) => (a -> mn) -> MaybeT m a -> mn
+
+instance (Traversable m) => Traversable (MaybeT m) where
+  traverse :: Applicative fa => (a -> fa b) -> MaybeT m a -> fa (MaybeT m b)
+```
 
 #### Chapter 1 - All You Need is Lambda
  - My background is primarily OOP, and have a very good understanding of FP working in [Scala](https://www.scala-lang.org/) and
@@ -100,6 +123,7 @@ Haskell λ > addAndMultiply 3 5 7
      and [Chapter 21 - Traversable](https://github.com/giocosmiano/haskell-programming#chapter-21---traversable)
 
 #### [Chapter 11 - Algebraic data types](https://github.com/giocosmiano/haskell-programming/tree/master/ch11-algebraic-datatypes)
+ - [Algebraic datatypes](https://en.wikipedia.org/wiki/Algebraic_data_type)
  - Data and type constructors
  - Type constructors and kinds
  - Data constructors and values
@@ -389,9 +413,8 @@ newtype SomeType f g a = SomeType { getSomeType :: f (g a) } deriving (Eq, Show)
 
  - IdentityT
 
-   - Reminder to myself - come back to this chapter when you get lost in `Monad Transformer`
-     [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram#Diagram_chasing) because it is covered in
-     great details. Great job by the authors explaining and going thru it step-by-step.
+   - **Reminder to myself** - come back to this chapter when you get lost in [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram#Diagram_chasing)
+     `Monad Transformer` because it is covered in great details. Great job by the authors explaining and going thru it step-by-step.
 
 #### [Chapter 26 - Monad transformers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)
 
@@ -404,6 +427,7 @@ newtype SomeType f g a = SomeType { getSomeType :: f (g a) } deriving (Eq, Show)
  - [What a Monad is not](https://wiki.haskell.org/What_a_Monad_is_not)
  - [Real World Haskell - by Bryan O'Sullivan](http://book.realworldhaskell.org/read/)
  - [School of Haskel](https://www.schoolofhaskell.com/)
+ - [Glasgow Haskell Compiler User's Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/index.html)
 
 
 
