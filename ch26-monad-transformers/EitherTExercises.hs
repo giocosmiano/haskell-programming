@@ -43,6 +43,7 @@ instance (Foldable m) => Foldable (EitherT e m) where
   foldMap f (EitherT ma) = (foldMap . foldMap) f ma
 
 instance (Traversable m) => Traversable (EitherT e m) where
+  traverse :: Applicative fa => (a -> fa b) -> EitherT e m a -> fa (EitherT e m b)
   traverse f (EitherT ma) = EitherT <$> (traverse . traverse) f ma
 
 -----------------------------------------------------------------------------------
