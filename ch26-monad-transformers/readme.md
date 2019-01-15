@@ -71,6 +71,34 @@ instance (Monad m) => Monad (MaybeT m) where
 
     - Therefore, we need to perform `runMaybeT` to extract `(m b)` out of `(MaybeT m b)` and return it as argument to `MaybeT $`
 
+### Ordinary Type from a Transformer
+
+  - `Identity` works fine recovering the non-transformer variant of each type as the `Identity` type is acting as a bit
+    of do-nothing structural paste for filling in the gap
+
+  - However, this is less common because the type is already there. If you’re writing something with, say, `scotty`,
+    where a `ReaderT` is part of the environment, you can’t easily retrieve the `Reader` type out of that because
+    `Reader` is not a type that exists on its own and you can’t modify that `ReaderT` without essentially rewriting
+    all of `scotty`. You might then have a situation where what you’re doing only needs a `Reader`, not a `ReaderT`,
+    so you could use `(ReaderT Identity)` to be compatible with `scotty` without having to rewrite everything but
+    still being able to keep your own code a bit tighter and simpler.
+  
+```haskell
+type MyIdentity a = IdentityT Identity a
+type Maybe      a = MaybeT    Identity a
+type Either   e a = EitherT e Identity a
+type Reader   r a = ReaderT e Identity a
+type State    s a = StateT  s Identity a
+```
+
+```haskell
+Prelude> runMaybeT $ (+1) <$> MaybeT (Identity (Just 1))
+Identity {runIdentity = Just 2}
+
+Prelude> runMaybeT $ (+1) <$> MaybeT (Identity Nothing)
+Identity {runIdentity = Nothing}
+```    
+
 ### Referenced frameworks/libraries in the chapter
  - [scotty - Haskell web framework inspired by Ruby's Sinatra, using WAI and Warp](https://hackage.haskell.org/package/scotty)
  - [pipes - Compositional pipelines](https://hackage.haskell.org/package/pipes)
