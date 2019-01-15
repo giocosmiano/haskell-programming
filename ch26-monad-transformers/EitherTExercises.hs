@@ -47,6 +47,7 @@ instance (Monad m) => Monad (EitherT e m) where
 -----------------------------------------------------------------------------------
 
 -- e.g.
+-- import Data.Monoid
 -- foldMap Product (EitherT [Right 5, Left 6, Right 7])                                           -> Product {getProduct = 35}
 -- foldMap (*3) (EitherT [Right (5::Sum Integer), Left (6::Sum Integer), Right (7::Sum Integer)]) -> Sum {getSum = 36}
 instance (Foldable m) => Foldable (EitherT e m) where
