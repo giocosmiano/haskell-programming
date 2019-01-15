@@ -1,3 +1,5 @@
+{-# LANGUAGE InstanceSigs #-}
+
 module MyStateExercise where
 
 import Test.QuickCheck
@@ -8,24 +10,52 @@ import Test.QuickCheck.Classes
 
 newtype Moi s a = Moi { runMoi :: s -> (a, s) }
 
+-----------------------------------------------------------------------------------
+
+-- |
+-- 1) Apply the prior computation `g` to argument `s` to get a new state `(a, s')`
+-- 2) Then, apply the current computation/function `f` to value `a`, resulting to `(b, s')`,
+--    which will become the argument to `Moi $ \s ->`
+
 -- e.g.
 -- runMoi ((+3) <$> (Moi $ \s -> (5, s))) 7 -> (8,7)
 -- runMoi ((*3) <$> (Moi $ \s -> (5, s))) 7 -> (15,7)
 instance Functor (Moi s) where
+
+  fmap :: (a -> b) -> Moi s a -> Moi s  b
   fmap f (Moi g) = Moi $ \s ->
     let (a, s') = g s
     in  (f a, s')
 
+-----------------------------------------------------------------------------------
+
+-- |
+-- 1) Apply the prior computation/function `f` to argument `s` to get a new computation and state `(f', s')`
+-- 2) Then, apply the current computation/function `g` to state `s'` from prior computation, resulting to new state `(a', s'')`
+-- 3) Finally, apply the new computation `f'` to value `a'`, resulting to `(b', s'')`,
+--    which will become the argument to `Moi $ \s ->`
+
 -- e.g.
--- runMoi ((+) <$> (Moi $ \s -> (3, s)) <*> (Moi $ \s -> (5, s))) 7 -> (8,7)
+-- runMoi ((Moi $ \s -> ((+3), s)) <*> (Moi $ \s -> (5, s))) 7      -> (8,7)
 -- runMoi ((*) <$> (Moi $ \s -> (3, s)) <*> (Moi $ \s -> (5, s))) 7 -> (15,7)
 instance Applicative (Moi s) where
+
+  pure :: a -> Moi s a
   pure a = Moi $ \s -> (a, s)
 
+  (<*>) :: Moi s (a -> b) -> Moi s a -> Moi s b
   (Moi f) <*> (Moi g) = Moi $ \s ->
     let (f', s')  = f s
         (a', s'') = g s'
     in  (f' a', s'')
+
+-----------------------------------------------------------------------------------
+
+-- |
+-- 1) Apply prior computation/function `f` to argument `s` to get a new state `(a, newState)`
+-- 2) Then, apply the current computation/function `g` to value `a`, resulting to `Moi s b` -- see (>>=) signature
+-- 3) Finally, unpack/extract function `s -> (b, s)` from `Moi s b` and apply to `newState`, resulting to `(b, newState)`,
+--    which will become the argument to `Moi $ \s ->`
 
 -- e.g.
 -- runMoi ((Moi $ \s -> (5, s)) >>= return . (+3)) 7 -> (8,7)
@@ -33,9 +63,10 @@ instance Applicative (Moi s) where
 instance Monad (Moi s) where
   return = pure
 
+  (>>=) :: Moi s a -> (a -> Moi s b) -> Moi s b
   (Moi f) >>= g = Moi $ \s ->
-    let (a, newState) = f s -- apply first/previous stateful computation `f` to `s` creating tuple with `newState`
-    in  runMoi (g a) newState -- apply function `g` to output value `a ` creating new Moi stateful, feeding `newState`
+    let (a, newState) = f s
+    in  (runMoi (g a)) newState
 
 -- OR
 --  (Moi f) >>= g = Moi $ \s ->
