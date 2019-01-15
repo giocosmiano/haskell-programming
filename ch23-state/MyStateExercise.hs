@@ -13,7 +13,7 @@ newtype Moi s a = Moi { runMoi :: s -> (a, s) }
 -----------------------------------------------------------------------------------
 
 -- |
--- 1) Apply the prior computation `g` to argument `s` to get a new state `(a, s')`
+-- 1) Apply the prior computation/function `g` to argument `s` to get a new state `(a, s')`
 -- 2) Then, apply the current computation/function `f` to value `a`, resulting to `(b, s')`,
 --    which will become the argument to `Moi $`
 
@@ -32,7 +32,7 @@ instance Functor (Moi s) where
 -- |
 -- 1) Apply the prior computation/function `f` to argument `s` to get a new computation and state `(f', s')`
 -- 2) Then, apply the current computation/function `g` to state `s'` from prior computation, resulting to new state `(a', s'')`
--- 3) Finally, apply the new computation `f'` to value `a'`, resulting to `(b', s'')`,
+-- 3) Finally, apply the new computation/function `f'` to value `a'`, resulting to `(b', s'')`,
 --    which will become the argument to `Moi $`
 
 -- e.g.
