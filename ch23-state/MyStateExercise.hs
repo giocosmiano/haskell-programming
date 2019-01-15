@@ -15,7 +15,7 @@ newtype Moi s a = Moi { runMoi :: s -> (a, s) }
 -- |
 -- 1) Apply the prior computation `g` to argument `s` to get a new state `(a, s')`
 -- 2) Then, apply the current computation/function `f` to value `a`, resulting to `(b, s')`,
---    which will become the argument to `Moi $ \s ->`
+--    which will become the argument to `Moi $`
 
 -- e.g.
 -- runMoi ((+3) <$> (Moi $ \s -> (5, s))) 7 -> (8,7)
@@ -33,7 +33,7 @@ instance Functor (Moi s) where
 -- 1) Apply the prior computation/function `f` to argument `s` to get a new computation and state `(f', s')`
 -- 2) Then, apply the current computation/function `g` to state `s'` from prior computation, resulting to new state `(a', s'')`
 -- 3) Finally, apply the new computation `f'` to value `a'`, resulting to `(b', s'')`,
---    which will become the argument to `Moi $ \s ->`
+--    which will become the argument to `Moi $`
 
 -- e.g.
 -- runMoi ((Moi $ \s -> ((+3), s)) <*> (Moi $ \s -> (5, s))) 7      -> (8,7)
@@ -55,7 +55,7 @@ instance Applicative (Moi s) where
 -- 1) Apply prior computation/function `f` to argument `s` to get a new state `(a, newState)`
 -- 2) Then, apply the current computation/function `g` to value `a`, resulting to `Moi s b` -- see (>>=) signature
 -- 3) Finally, unpack/extract function `s -> (b, s)` from `Moi s b` and apply to `newState`, resulting to `(b, newState)`,
---    which will become the argument to `Moi $ \s ->`
+--    which will become the argument to `Moi $`
 
 -- e.g.
 -- runMoi ((Moi $ \s -> (5, s)) >>= return . (+3)) 7 -> (8,7)
