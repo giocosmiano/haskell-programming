@@ -8,11 +8,11 @@ newtype StateT s m a = StateT { runStateT :: s -> m (a, s) }
 
 -----------------------------------------------------------------------------------
 
--- |
--- 1) Note that the monadic structure is inside the function `s -> m (a, s)` so we need to unpack things first
--- 2) Extract the function `s -> m (a, s)` from `StateT ma` via `runStateT`
--- 3) Then, apply the extracted function to argument `s` to get the monadic structure `m (a, s)`
--- 4) Finally, lift the function `\(a, s') -> (f a, s')` and apply to `m (a, s)`
+-- | *** Note *** The monadic structure is inside the function `s -> m (a, s)` so we need to unpack things first
+-- 1) Unpack/extract the prior computation/function `s -> m (a, s)` from `StateT ma` via `runStateT`
+-- 2) Then, apply the unpacked prior computation/function to argument `s` to get the monadic structure `m (a, s)`
+-- 3) Finally, lift the function `\(a, s') -> (f a, s')` and apply to `m (a, s)`,
+--    resulting to monadic structure `m (b, s')`, which will become the argument to `StateT $`
 
 -- e.g.
 -- import Data.Functor.Identity
@@ -29,6 +29,13 @@ instance (Functor m) => Functor (StateT s m) where
 -- | See these threads on --> Why does `Applicative (StateT s f)` instance require `Monad f` bound?
 -- https://github.com/data61/fp-course/issues/134
 -- https://stackoverflow.com/questions/18673525/is-it-possible-to-implement-applicative-m-applicative-statet-s-m
+
+-- |
+-- 1) Apply the prior computation/function `g` to argument `s` to get a new computation/function and state `(f, s')`
+-- 2) Then, apply the current computation/function `h` to state `s'` from prior computation, resulting to new state `(x, s'')`
+-- 3) Then, apply the new computation/function `f` to value `x`, resulting to `(b, s'')`
+-- 4) Finally, wrap the result `(b, s'')` with `return`, resulting to monadic structure `m (b, s'')`
+--    which will become the argument to `StateT $`
 
 -- e.g.
 -- import Data.Functor.Identity
@@ -49,12 +56,12 @@ instance (Monad m) => Applicative (StateT s m) where
 -----------------------------------------------------------------------------------
 
 -- |
--- 1) First, extract the function `s -> m (a, s)` from `StateT ma` via `runStateT`
--- 2) Apply the extracted function to argument `s` to get the monadic structure `m (a, s)`
+-- 1) First, unpack/extract the prior computation/function `s -> m (a, s)` from `StateT ma` via `runStateT`
+-- 2) Apply the unpacked prior computation/function to argument `s` to get the monadic structure `m (a, s)`
 -- 3) Use `<-` to extract the value `(a, s)` from monadic structure `m (a, s)`
--- 3) Apply the function `f` to value `a` which will result to `StateT s m b` -- see (>>=) signature
--- 4) Finally, extract the function `s -> m (b, s)` from `StateT s m b` and apply to `s'`
---    which will become the argument to `StateT $`
+-- 4) Apply the current computation/function `f` to value `a` resulting to `StateT s m b` -- see (>>=) signature
+-- 5) Finally, unpack/extract the function `s -> m (b, s)` from `StateT s m b` and apply to `s'`,
+--    resulting to monadic structure `m (b, s')`, which will become the argument to `StateT $`
 
 -- e.g.
 -- import Data.Functor.Identity
