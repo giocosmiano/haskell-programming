@@ -47,6 +47,7 @@ instance (Monad m) => Monad (MaybeT m) where
 -----------------------------------------------------------------------------------
 
 -- e.g.
+-- import Data.Monoid
 -- foldMap Product (MaybeT [Just 5, Nothing, Just 7])                            -> Product {getProduct = 35}
 -- foldMap (*3) (MaybeT [Just (5::Sum Integer), Nothing, Just (7::Sum Integer)]) -> Sum {getSum = 36}
 instance (Foldable m) => Foldable (MaybeT m) where
