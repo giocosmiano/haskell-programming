@@ -4,6 +4,13 @@ module MaybeTExercises where
 
 -----------------------------------------------------------------------------------
 
+-- e.g.
+-- import Data.Monoid
+-- runMaybeT $ return 1                   -> Just 1
+-- runMaybeT $ MaybeT $ [Just 1]          -> [Just 1]
+-- runMaybeT $ MaybeT $ Just $ Just 1     -> Just (Just 1)
+-- runMaybeT $ MaybeT $ Identity $ Just 1 -> Identity (Just 1)
+
 newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 
 -----------------------------------------------------------------------------------
