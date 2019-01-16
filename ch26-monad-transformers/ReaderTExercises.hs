@@ -4,6 +4,15 @@ module ReaderTExercises where
 
 -----------------------------------------------------------------------------------
 
+-- e.g.
+-- import Data.Monoid
+-- (runReaderT $ ReaderT (\x -> return x)) (Identity 1) -> Identity 1
+-- (runReaderT $ ReaderT (\x -> Just x)) (Identity 1)   -> Just (Identity 1)
+-- (runReaderT $ ReaderT (\x -> [x])) (Identity 1)      -> [Identity 1]
+--
+-- (runReaderT $ ReaderT (\x -> Just x)) [1]            -> Just [1]
+-- (runReaderT $ ReaderT (\x -> [x])) $ Just 1          -> [Just 1]
+
 newtype ReaderT r m a = ReaderT { runReaderT :: r -> m a }
 
 -----------------------------------------------------------------------------------
