@@ -419,6 +419,21 @@ newtype SomeType f g a = SomeType { getSomeType :: f (g a) } deriving (Eq, Show)
 #### [Chapter 26 - Monad transformers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)
 
  - MaybeT, EitherT, ReaderT, StateT
+ 
+ - [Lexically Inner is Structurally Outer](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#lexically-inner-is-structurally-outer)
+
+### Referenced frameworks/libraries
+ - [wreq - An easy-to-use HTTP client library](https://hackage.haskell.org/package/wreq)
+ - [scotty - Haskell web framework inspired by Ruby's Sinatra, using WAI and Warp](https://hackage.haskell.org/package/scotty)
+ - [hspec - A Testing Framework for Haskell](https://hackage.haskell.org/package/hspec)
+ - [checkers - Check properties on standard classes and data structures](https://hackage.haskell.org/package/checkers)
+ - [pandoc - Conversion between markup formats](https://hackage.haskell.org/package/pandoc)
+ - [aeson - Fast JSON parsing and encoding](https://hackage.haskell.org/package/aeson)
+ - [cassava - A CSV parsing and encoding library](https://hackage.haskell.org/package/cassava)
+ - [parsers - Parsing combinators](https://hackage.haskell.org/package/parsers)
+ - [trifecta - modern parser combinator library with convenient diagnostics](https://hackage.haskell.org/package/trifecta-1.5.2)
+ - [raw-strings-qq - Raw string literals for Haskell](https://hackage.haskell.org/package/raw-strings-qq)
+ - [hindent - Extensible Haskell pretty printer](https://hackage.haskell.org/package/hindent)
 
 ### For further reading
  - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
@@ -426,7 +441,7 @@ newtype SomeType f g a = SomeType { getSomeType :: f (g a) } deriving (Eq, Show)
  - [How to desugar Haskell code - by Gabriel Gonzalez](http://www.haskellforall.com/2014/10/how-to-desugar-haskell-code.html)
  - [What a Monad is not](https://wiki.haskell.org/What_a_Monad_is_not)
  - [Real World Haskell - by Bryan O'Sullivan](http://book.realworldhaskell.org/read/)
- - [School of Haskel](https://www.schoolofhaskell.com/)
+ - [School of Haskell](https://www.schoolofhaskell.com/)
  - [Glasgow Haskell Compiler User's Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/index.html)
 
 
