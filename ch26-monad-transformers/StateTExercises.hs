@@ -7,6 +7,7 @@ module StateTExercises where
 -- |
 -- e.g.
 -- import Data.Monoid
+-- (runStateT $ StateT (\s -> return (1, s))) 7            -> (1,7)
 -- (runStateT $ StateT (\s -> Just (1, s))) 7              -> Just (1,7)
 -- (runStateT $ StateT (\s -> Just (1, s))) $ Identity 7   -> Just (1,Identity 7)
 --
