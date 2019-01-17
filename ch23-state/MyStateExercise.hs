@@ -15,6 +15,7 @@ import Test.QuickCheck.Classes
 -- (runMoi $ Moi (\s -> (1, s))) $ [7]          -> (1,[7])
 -- (runMoi $ Moi (\s -> (1, s))) $ Just 7       -> (1,Just 7)
 -- (runMoi $ Moi (\s -> (1, s))) $ Identity 7   -> (1,Identity 7)
+-- (runMoi $ Moi (\s -> (1, s))) Nothing        -> (1,Nothing)
 
 newtype Moi s a = Moi { runMoi :: s -> (a, s) }
 
@@ -33,6 +34,7 @@ newtype Moi s a = Moi { runMoi :: s -> (a, s) }
 -- runMoi ((+3) <$> (Moi $ \s -> (5, s))) $ Nothing    -> (8,Nothing)
 -- runMoi ((+3) <$> (Moi $ \s -> (5, s))) $ Just 7     -> (8,Just 7)
 -- runMoi ((*3) <$> (Moi $ \s -> (5, s))) $ Identity 7 -> (15,Identity 7)
+-- runMoi ((*3) <$> (Moi $ \s -> (5, s))) Nothing      -> (15,Nothing)
 instance Functor (Moi s) where
 
   fmap :: (a -> b) -> Moi s a -> Moi s  b
@@ -56,6 +58,7 @@ instance Functor (Moi s) where
 -- runMoi ((Moi $ \s -> ((+3), s)) <*> (Moi $ \s -> (5, s))) $ Nothing    -> (8,Nothing)
 -- runMoi ((Moi $ \s -> ((+3), s)) <*> (Moi $ \s -> (5, s))) $ Just 7     -> (8,Just 7)
 -- runMoi ((Moi $ \s -> ((*3), s)) <*> (Moi $ \s -> (5, s))) $ Identity 7 -> (15,Identity 7)
+-- runMoi ((Moi $ \s -> ((*3), s)) <*> (Moi $ \s -> (5, s))) Nothing      -> (15,Nothing)
 instance Applicative (Moi s) where
 
   pure :: a -> Moi s a
@@ -82,6 +85,7 @@ instance Applicative (Moi s) where
 -- runMoi ((Moi $ \s -> (5, s)) >>= return . (+3)) $ Nothing    -> (8,Nothing)
 -- runMoi ((Moi $ \s -> (5, s)) >>= return . (+3)) $ Just 7     -> (8,Just 7)
 -- runMoi ((Moi $ \s -> (5, s)) >>= return . (*3)) $ Identity 7 -> (15,Identity 7)
+-- runMoi ((Moi $ \s -> (5, s)) >>= return . (*3)) Nothing      -> (15,Nothing)
 instance Monad (Moi s) where
   return = pure
 
