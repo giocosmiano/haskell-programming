@@ -87,8 +87,8 @@ Haskell λ > addAndMultiply 3 5 7
 
 #### [Chapter 5 - Types](https://github.com/giocosmiano/haskell-programming/tree/master/ch05-types)
  - [Currying](https://wiki.haskell.org/Currying)
- - Polymorphism
- - Type inference
+ - [Polymorphism](https://wiki.haskell.org/Polymorphism)
+ - [Type inference](https://wiki.haskell.org/Type_inference)
 
 #### [Chapter 6 - Type classes](https://github.com/giocosmiano/haskell-programming/tree/master/ch06-typeclasses)
  - In OOP such as Java, this is similar to defining `interface`. `Haskell` data types doesn't have any function
@@ -99,12 +99,12 @@ Haskell λ > addAndMultiply 3 5 7
  - Type class inheritance
 
 #### [Chapter 7 - More functional patterns](https://github.com/giocosmiano/haskell-programming/tree/master/ch07-more-functional-patterns)
- - Anonymous functions
- - Pattern matching
- - Case expressions
- - Guards
- - Function composition
- - Point-free style
+ - [Anonymous functions](https://wiki.haskell.org/Anonymous_function)
+ - [Pattern matching](https://en.wikibooks.org/wiki/Haskell/Pattern_matching)
+ - [Case expressions](https://en.wikibooks.org/wiki/Haskell/Control_structures)
+ - [Guards](https://www.haskell.org/tutorial/patterns.html)
+ - [Function composition](https://wiki.haskell.org/Function_composition)
+ - [Point-free style](https://wiki.haskell.org/Pointfree)
 
 #### [Chapter 8 - Recursion](https://github.com/giocosmiano/haskell-programming/tree/master/ch08-recursion)
  - [Bottom](https://en.wikipedia.org/wiki/Bottom_type)
@@ -112,7 +112,7 @@ Haskell λ > addAndMultiply 3 5 7
 
 #### [Chapter 9 - Lists](https://github.com/giocosmiano/haskell-programming/tree/master/ch09-lists)
  - Pattern matching on lists
- - List comprehensions
+ - [List comprehensions](https://wiki.haskell.org/List_comprehension)
  - Spines and non-strict evaluation
  - Zipping lists
 
