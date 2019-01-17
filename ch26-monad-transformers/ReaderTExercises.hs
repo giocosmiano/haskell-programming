@@ -7,6 +7,7 @@ module ReaderTExercises where
 -- |
 -- e.g.
 -- import Data.Monoid
+-- (runReaderT $ ReaderT (\x -> return x)) 1            -> 1
 -- (runReaderT $ ReaderT (\x -> return x)) (Identity 1) -> Identity 1
 -- (runReaderT $ ReaderT (\x -> Just x)) (Identity 1)   -> Just (Identity 1)
 -- (runReaderT $ ReaderT (\x -> [x])) (Identity 1)      -> [Identity 1]
