@@ -87,17 +87,58 @@ instance (Monad m) => Monad (MaybeT m) where
 type MyIdentity a = IdentityT Identity a
 type Maybe      a = MaybeT    Identity a
 type Either   e a = EitherT e Identity a
-type Reader   r a = ReaderT e Identity a
+type Reader   r a = ReaderT r Identity a
 type State    s a = StateT  s Identity a
 ```
 
 ```haskell
-Prelude> runMaybeT $ (+1) <$> MaybeT (Identity (Just 1))
+Haskell λ > runMaybeT $ (+1) <$> MaybeT (Identity (Just 1))
 Identity {runIdentity = Just 2}
 
-Prelude> runMaybeT $ (+1) <$> MaybeT (Identity Nothing)
+Haskell λ > runMaybeT $ (+1) <$> MaybeT (Identity Nothing)
 Identity {runIdentity = Nothing}
 ```    
+
+### Lexically Inner is Structurally Outer
+  - One of the trickier parts of `monad transformers` is that the lexical representation of the types will violate
+    the intuitions with respect to the relationship it has with the structure of our values.
+
+  - A necessary byproduct of how transformers work is that the additional structure `m` is always wrapped around
+    our value. One thing to note is that it’s only wrapped around things we can have, not things we need, such
+    as with `ReaderT`. The consequence of this is that a series of `monad transformers` in a type will begin with
+    the `innermost type` structurally speaking.
+
+```haskell
+import Control.Monad.Trans.Except
+import Control.Monad.Trans.Maybe
+import Control.Monad.Trans.Reader
+import Control.Monad.Trans.State
+
+outerInner :: MaybeT (ExceptT String (StateT String (ReaderT () IO))) Int
+outerInner = return 1
+
+Haskell λ > (runReaderT $ ((runStateT . runExceptT . runMaybeT $ outerInner) "abc")) ()
+(Right (Just 1),"abc")
+
+Haskell λ > (runReaderT $ ((runStateT . runExceptT . runMaybeT $ return 1) "xyz")) ()
+(Right (Just 1),"xyz")
+```
+
+```haskell
+import Control.Monad.Trans.Except
+import Control.Monad.Trans.Maybe
+import Control.Monad.Trans.Reader
+import Control.Monad.Trans.State
+
+outerInner' :: MaybeT (ExceptT String (ReaderT String (StateT String IO))) Int
+outerInner' = return 1
+
+Haskell λ > (runStateT $ ((runReaderT . runExceptT . runMaybeT $ outerInner') "hello")) "world"
+(Right (Just 1),"world")
+
+Haskell λ > (runStateT $ ((runReaderT . runExceptT . runMaybeT $ return 1) "hello")) "world"
+(Right (Just 1),"world")
+```
 
 ### Referenced frameworks/libraries in the chapter
  - [scotty - Haskell web framework inspired by Ruby's Sinatra, using WAI and Warp](https://hackage.haskell.org/package/scotty)
