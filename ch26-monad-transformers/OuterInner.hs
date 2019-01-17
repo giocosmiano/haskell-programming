@@ -5,6 +5,7 @@ module OuterInner where
 import Control.Monad.Trans.Except
 import Control.Monad.Trans.Maybe
 import Control.Monad.Trans.Reader
+import Control.Monad.Trans.State
 
 -----------------------------------------------------------------------------------
 
@@ -70,7 +71,7 @@ readerUnwrap = runReaderT eitherUnwrap
 -- Right (Just 1)
 
 -----------------------------------------------------------------------------------
--- Lexically inner is structurally outer` samples
+-- `Lexically inner is structurally outer` samples
 -----------------------------------------------------------------------------------
 
 -- |
@@ -112,6 +113,33 @@ embedded''' = return 1
 
 embedded'''' :: ExceptT String (MaybeT IO) Int
 embedded'''' = return 1
+
+-- |
+-- Prelude> (runStateT . runExceptT . runMaybeT $ embeddedSt) "abc"
+-- (Right (Just 1),"abc")
+--
+-- Prelude> (runStateT . runExceptT . runMaybeT $ return 1) "xyz"
+-- (Right (Just 1),"xyz")
+embeddedSt :: MaybeT (ExceptT String (StateT String IO)) Int
+embeddedSt = return 1
+
+-- |
+-- Prelude> (runReaderT $ ((runStateT . runExceptT . runMaybeT $ embeddedRdSt) "abc")) ()
+-- (Right (Just 1),"abc")
+--
+-- Prelude> (runReaderT $ ((runStateT . runExceptT . runMaybeT $ return 1) "xyz")) ()
+-- (Right (Just 1),"xyz")
+embeddedRdSt :: MaybeT (ExceptT String (StateT String (ReaderT () IO))) Int
+embeddedRdSt = return 1
+
+-- |
+-- Prelude> (runStateT $ ((runReaderT . runExceptT . runMaybeT $ embeddedStRd) "hello")) "world"
+-- (Right (Just 1),"world")
+--
+-- Prelude> (runStateT $ ((runReaderT . runExceptT . runMaybeT $ return 1) "hello")) "world"
+-- (Right (Just 1),"world")
+embeddedStRd :: MaybeT (ExceptT String (ReaderT String (StateT String IO))) Int
+embeddedStRd = return 1
 
 -----------------------------------------------------------------------------------
 
