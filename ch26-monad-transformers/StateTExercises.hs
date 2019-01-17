@@ -4,6 +4,18 @@ module StateTExercises where
 
 -----------------------------------------------------------------------------------
 
+-- |
+-- e.g.
+-- import Data.Monoid
+-- (runStateT $ StateT (\s -> Just (1, s))) 7              -> Just (1,7)
+-- (runStateT $ StateT (\s -> Just (1, s))) $ Identity 7   -> Just (1,Identity 7)
+--
+-- (runStateT $ StateT (\s -> return (1, s))) $ Identity 7 -> (1,Identity 7)
+-- (runStateT $ StateT (\s -> [(1, s)])) $ Identity 7      -> [(1,Identity 7)]
+--
+-- (runStateT $ StateT (\s -> Just (1,s))) [7]             -> Just (1,[7])
+-- (runStateT $ StateT (\s -> [(1,s)])) $ Just 7           -> [(1,Just 7)]
+
 newtype StateT s m a = StateT { runStateT :: s -> m (a, s) }
 
 -----------------------------------------------------------------------------------
@@ -14,6 +26,7 @@ newtype StateT s m a = StateT { runStateT :: s -> m (a, s) }
 -- 3) Finally, lift the function `\(a, s') -> (f a, s')` and apply to `m (a, s)`,
 --    resulting to monadic structure `m (b, s')`, which will become the argument to `StateT $`
 
+-- |
 -- e.g.
 -- import Data.Functor.Identity
 -- runStateT ((+3) <$> (StateT $ \s -> Just (5, s))) 7     -> Just (8,7)
@@ -37,6 +50,7 @@ instance (Functor m) => Functor (StateT s m) where
 -- 4) Finally, wrap the result `(b, s'')` with `return`, resulting to monadic structure `m (b, s'')`
 --    which will become the argument to `StateT $`
 
+-- |
 -- e.g.
 -- import Data.Functor.Identity
 -- runStateT ((StateT $ \s -> Just((+3), s)) <*> (StateT $ \s -> Just(5, s))) 7              -> Just (8,7)
@@ -63,6 +77,7 @@ instance (Monad m) => Applicative (StateT s m) where
 -- 5) Finally, unpack/extract the function `s -> m (b, s)` from `StateT s m b` and apply to `s'`,
 --    resulting to monadic structure `m (b, s')`, which will become the argument to `StateT $`
 
+-- |
 -- e.g.
 -- import Data.Functor.Identity
 -- runStateT ((StateT $ \s -> Just (5, s)) >>= return . (+3)) 7     -> Just (8,7)
