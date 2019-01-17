@@ -4,6 +4,7 @@ module MaybeTExercises where
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- e.g.
 -- import Data.Monoid
 -- runMaybeT $ return 1                   -> Just 1
@@ -15,6 +16,7 @@ newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- e.g.
 -- runMaybeT $ (*3) <$> MaybeT [Just 3, Just 5, Just 7] -> [Just 9,Just 15,Just 21]
 instance (Functor m) => Functor (MaybeT m) where
@@ -24,6 +26,7 @@ instance (Functor m) => Functor (MaybeT m) where
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- e.g.
 -- runMaybeT $ MaybeT [Just (*3), Just (+5)] <*> MaybeT [Just 5, Just 7]   -> [Just 15,Just 21,Just 10,Just 12]
 -- runMaybeT $ (*) <$> MaybeT [Just 2, Just 3] <*> MaybeT [Just 5, Just 7] -> [Just 10,Just 14,Just 15,Just 21]
@@ -37,6 +40,7 @@ instance (Applicative m) => Applicative (MaybeT m) where
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- e.g.
 -- runMaybeT $ MaybeT [Just 5, Nothing, Just 7] >>= return . (*3)               -> [Just 15,Nothing,Just 21]
 -- runMaybeT $ MaybeT [Just 5, Nothing, Just 7] >>= return . \x -> [(x*5, x+3)] -> [Just [(25,8)],Nothing,Just [(35,10)]]
@@ -53,6 +57,7 @@ instance (Monad m) => Monad (MaybeT m) where
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- e.g.
 -- import Data.Monoid
 -- foldMap Product (MaybeT [Just 5, Nothing, Just 7])                            -> Product {getProduct = 35}
