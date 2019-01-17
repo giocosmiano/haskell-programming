@@ -58,16 +58,60 @@ readerUnwrap = runReaderT eitherUnwrap
 -----------------------------------------------------------------------------------
 
 -- |
--- `readerUnwrapWithUnit` - Manually passing-in the `unit` type to `eitherUnwrap` as
---                         `ReaderT` awaits for `()` on its argument to produce a function
---                          that when applied will result a monadic structure of
---                         `IO (Either String (Maybe Int))`
+-- ReaderT awaits a `unit` as its argument and will throw an error running without it
 --
--- The question is
--- How does the `unit`, ReaderT's argument, propagated from `eitherUnwrap` to `maybeUnwrap`
--- and finally to `embedded` function's most inner monadic structure of `ReaderT () IO`???
-readerUnwrapWithUnit :: IO (Either String (Maybe Int))
-readerUnwrapWithUnit = runReaderT eitherUnwrap ()
+-- Prelude> (runReaderT . runExceptT . runMaybeT $ embedded)
+-- No instance for (Show (() -> IO (Either String (Maybe Int))))
+--
+-- Prelude> (runReaderT . runExceptT . runMaybeT $ embedded) ()
+-- Right (Just 1)
+--
+-- Prelude> (runReaderT . runExceptT . runMaybeT $ return 1) ()
+-- Right (Just 1)
+
+-----------------------------------------------------------------------------------
+-- Lexically inner is structurally outer` samples
+-----------------------------------------------------------------------------------
+
+-- |
+-- Prelude> (runReaderT . runMaybeT $ embedded') ()
+-- Just 1
+--
+-- Prelude> (runReaderT . runMaybeT $ return 1) ()
+-- Just 1
+
+embedded' :: MaybeT (ReaderT () IO) Int
+embedded' = return 1
+
+-- |
+-- Prelude> (runExceptT . runMaybeT $ embedded'')
+-- Right (Just 1)
+--
+-- Prelude> (runExceptT . runMaybeT $ return 1)
+-- Right (Just 1)
+
+embedded'' :: MaybeT (ExceptT String IO) Int
+embedded'' = return 1
+
+-- |
+-- Prelude> (runReaderT . runExceptT $ embedded''') ()
+-- Right 1
+--
+-- Prelude> (runReaderT . runExceptT $ return 1) ()
+-- Right 1
+
+embedded''' :: ExceptT String (ReaderT () IO) Int
+embedded''' = return 1
+
+-- |
+-- Prelude> (runMaybeT . runExceptT $ embedded'''')
+-- Just (Right 1)
+--
+-- Prelude> (runMaybeT . runExceptT $ return 1)
+-- Just (Right 1)
+
+embedded'''' :: ExceptT String (MaybeT IO) Int
+embedded'''' = return 1
 
 -----------------------------------------------------------------------------------
 
@@ -121,17 +165,17 @@ instance Monad Maybe where
 
 -----------------------------------------------------------------------------------
 
-embedded' :: MaybeT (ExceptT String (ReaderT () IO)) Int
-embedded' = MaybeT $ ExceptT $ ReaderT $ return <$> const (Right (Just 1))
+embeddedX :: MaybeT (ExceptT String (ReaderT () IO)) Int
+embeddedX = MaybeT $ ExceptT $ ReaderT $ return <$> const (Right (Just 1))
 
-maybeUnwrap' :: ExceptT String (ReaderT () IO) (Maybe Int)
-maybeUnwrap' = runMaybeT embedded'
+maybeUnwrapX :: ExceptT String (ReaderT () IO) (Maybe Int)
+maybeUnwrapX = runMaybeT embeddedX
 
-eitherUnwrap' :: ReaderT () IO (Either String (Maybe Int))
-eitherUnwrap' = runExceptT maybeUnwrap'
+eitherUnwrapX :: ReaderT () IO (Either String (Maybe Int))
+eitherUnwrapX = runExceptT maybeUnwrapX
 
-readerUnwrap' :: IO (Either String (Maybe Int))
-readerUnwrap' = runReaderT eitherUnwrap' ()
+readerUnwrapX :: IO (Either String (Maybe Int))
+readerUnwrapX = runReaderT eitherUnwrapX ()
 
 -----------------------------------------------------------------------------------
 
