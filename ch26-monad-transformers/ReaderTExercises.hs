@@ -4,6 +4,7 @@ module ReaderTExercises where
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- e.g.
 -- import Data.Monoid
 -- (runReaderT $ ReaderT (\x -> return x)) (Identity 1) -> Identity 1
@@ -17,6 +18,7 @@ newtype ReaderT r m a = ReaderT { runReaderT :: r -> m a }
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- e.g.
 -- import Data.Monoid
 -- import Data.Functor.Identity
@@ -29,6 +31,7 @@ instance (Functor m) => Functor (ReaderT r m) where
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- e.g.
 -- import Data.Monoid
 -- import Data.Functor.Identity
@@ -51,6 +54,7 @@ instance (Applicative m) => Applicative (ReaderT r m) where
 -- 4) Finally, unpack/extract the function `r -> m b` from `ReaderT r m b` and apply to `r`,
 --    resulting to monadic structure `m b`, which will become the argument to `ReaderT $`
 
+-- |
 -- e.g.
 -- import Data.Monoid
 -- import Data.Functor.Identity
