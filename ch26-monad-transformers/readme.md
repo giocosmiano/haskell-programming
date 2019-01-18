@@ -100,6 +100,7 @@ Identity {runIdentity = Nothing}
 ```    
 
 ### Lexically Inner is Structurally Outer
+
   - One of the trickier parts of `monad transformers` is that the lexical representation of the types will violate
     the intuitions with respect to the relationship it has with the structure of our values.
 
@@ -139,6 +140,61 @@ Haskell λ > (runStateT $ ((runReaderT . runExceptT . runMaybeT $ outerInner') "
 Haskell λ > (runStateT $ ((runReaderT . runExceptT . runMaybeT $ return 1) "hello")) "world"
 (Right (Just 1),"world")
 ```
+
+### MonadTrans
+
+  - We often want to lift functions into a larger context. We’ve been doing this for a while with `Functor`, which lifts a function
+    into a context and applies it to the value inside. The facility to do this also undergirds `Applicative`, `Monad`, and `Traversable`.
+
+```haskell
+fmap  :: Functor f     => (a -> b) -> f a -> f b
+liftA :: Applicative f => (a -> b) -> f a -> f b
+liftM :: Monad m       => (a -> r) -> m a -> m r
+```
+
+  - `liftA` and `liftM` are lifting, just as `fmap` does, a function into some larger context. The underlying structure of the
+    bind function from `Monad` is also a lifting function — `fmap` again! — composed with the crucial `join` function.
+    
+  - The idea, in some cases, is we want something that does as much lifting as is necessary to reach some `(structurally)` **outermost**
+    position in a stack of `monad transformers`. `Monad transformers` can be nested in order to compose various effects into one monster
+    function, but to manage those stacks, we need to `lift` more.
+
+  - `MonadTrans` is a type class with one core method: `lift`. Speaking generally, it is about lifting actions in some `Monad`
+    over a transformer type which wraps itself in the original `Monad`.
+
+```haskell
+class MonadTrans t where
+  lift :: (Monad m) => m a -> t m a
+```
+
+  - Lift a computation from the argument monad to the constructed monad. Here the 𝑡 is a (constructed) monad transformer type that has
+   an instance of MonadTrans defined.
+
+### MonadIO
+
+  - `MonadIO` is a different design than `MonadTrans` because rather than lifting through one layer at a time, `MonadIO` is intended
+    to keep lifting your `IO action` until it is lifted over all structure embedded in the **outermost** `IO type`.
+    
+  - We don’t have to `lift` multiple times trying to reach a **base (outermost)** `Monad` that happens to be `IO`, because we have `liftIO`.
+
+```haskell
+class (Monad m) => MonadIO m where
+  liftIO :: IO a -> m a
+```
+
+```haskell
+liftIO :: IO a -> ExceptT e IO a
+liftIO :: IO a -> ReaderT r IO a
+liftIO :: IO a -> StateT  s IO a
+liftIO :: IO a -> StateT  s (ReaderT r IO) a
+liftIO :: IO a -> ExceptT e (StateT s (ReaderT r IO)) a
+```
+    
+  - 2 laws that `liftIO` instances should satisfy
+
+    1. liftIO . return = return
+
+    2. liftIO (m >>= f) = liftIO m >>= (liftIO . f)
 
 ### Referenced frameworks/libraries in the chapter
  - [scotty - Haskell web framework inspired by Ruby's Sinatra, using WAI and Warp](https://hackage.haskell.org/package/scotty)
