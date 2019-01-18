@@ -50,6 +50,8 @@ instance MonadTrans MaybeT where
 -----------------------------------------------------------------------------------
 -- |
 -- e.g.
+-- See MaybeTExercises how to run these `runMaybeT` samples
+-- because these won't run as it conflicts with Control.Monad.Trans.Maybe
 -- runMaybeT $ return 1                   -> Just 1
 -- runMaybeT $ MaybeT $ Just $ return 1   -> Just (Just 1)
 -- runMaybeT $ MaybeT [Just 1]            -> [Just 1]
