@@ -19,12 +19,12 @@ import Data.Monoid (mconcat)
 
 -----------------------------------------------------------------------------------
 -- |
--- class MonadTrans t where
---   lift :: (Monad m) => m a -> t m a
---
 -- Lift a computation from the argument monad to the constructed monad.
 --
 -- Here the `t` is a (constructed) monad transformer type that has an instance of MonadTrans defined.
+--
+-- class MonadTrans t where
+--   lift :: (Monad m) => m a -> t m a
 
 -----------------------------------------------------------------------------------
 -- |
@@ -78,8 +78,6 @@ import Data.Monoid (mconcat)
 --
 -- Prelude> :t lift (putStrLn "hello")
 -- lift (putStrLn "hello") :: MonadTrans t => t IO ()
---
------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------
 -- |
@@ -93,8 +91,6 @@ import Data.Monoid (mconcat)
 --
 -- The reason for this type error is that putStrLn has the type IO (), but it is inside a do block inside
 -- our get, and the monad that code is in is therefore ActionM/ActionT
---
------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------
 -- |
@@ -236,7 +232,13 @@ mainLiftIO''' = scotty 3000 $ do
       , " me up!</h1>" ]
 
 -----------------------------------------------------------------------------------
-
+-- |
+-- Typically a MonadTrans instance lifts over only one layer at a time, but scotty abstracts
+-- away the underlying structure so that you don’t have to care. That’s why it goes ahead
+-- and does the next three lifts for you. The critical thing to realize here is that lifting
+-- means you’re embedding an expression in a larger
+--
+-----------------------------------------------------------------------------------
 
 
 
