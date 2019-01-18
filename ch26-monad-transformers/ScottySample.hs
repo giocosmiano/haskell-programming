@@ -6,14 +6,12 @@ module ScottySample where
 import Web.Scotty
 import Data.Monoid (mconcat)
 
-import Control.Monad.Trans.Except
-import Control.Monad.Trans.Maybe
-import Control.Monad.Trans.Reader
-import Control.Monad.Trans.State
+import Control.Monad.Trans.Class
 
 -----------------------------------------------------------------------------------
 
 {-
+
 newtype ScottyT e m a =
   ScottyT
   { runS
@@ -30,6 +28,7 @@ newtype ActionT e m a =
 
 type ScottyM = ScottyT Text IO
 type ActionM = ActionT Text IO
+
 -}
 
 -----------------------------------------------------------------------------------
@@ -37,6 +36,7 @@ type ActionM = ActionT Text IO
 main = scotty 3000 $ do
   get "/:word" $ do
     beam <- param "word"
+    lift $ putStrLn "hello"
     html $ mconcat
       [ "<h1>Scotty, "
       , beam
