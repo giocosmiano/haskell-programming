@@ -5,6 +5,7 @@ module LiftEitherTExercises where
 import Data.Functor.Identity
 import Control.Monad
 import Control.Monad.Trans.Class
+import Control.Monad.Trans.Except
 
 -----------------------------------------------------------------------------------
 -- Using `lift` from Control.Monad.Trans.Class
@@ -49,7 +50,6 @@ instance MonadTrans (EitherT e) where
 
 -- |
 -- e.g.
--- import Control.Monad.Trans.Except
 -- runExceptT . lift $ return 1           -> Right 1
 -- runExceptT . lift $ Right 1            -> Right (Right 1)
 -- runExceptT . lift $ [Right 1]          -> [Right (Right 1)]
