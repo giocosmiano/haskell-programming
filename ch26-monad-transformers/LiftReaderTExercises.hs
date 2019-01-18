@@ -35,6 +35,16 @@ instance MonadTrans (ReaderT r) where
 -- (runReaderT $ ReaderT (\x -> Just x)) [1]            -> Just [1]
 -- (runReaderT $ ReaderT (\x -> [x])) $ Just 1          -> [Just 1]
 
+-- |
+-- e.g.
+-- (runReaderT . lift $ return 1) 7            -> 1
+-- (runReaderT . lift $ return 1) (Identity 7) -> Identity 1
+-- (runReaderT . lift $ Just 1) (Identity 7)   -> Just 1
+-- (runReaderT . lift $ [1]) (Identity 7)      -> [1]
+--
+-- (runReaderT . lift $ Just 1) [7]            -> Just 1
+-- (runReaderT . lift $ [1]) $ Just 1          -> [1]
+
 -----------------------------------------------------------------------------------
 
 
