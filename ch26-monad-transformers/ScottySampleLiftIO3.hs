@@ -15,8 +15,11 @@ import Data.Text.Lazy (Text)
 -----------------------------------------------------------------------------------
 -- |
 -- e.g.
--- curl -X GET http://localhost:3000/beam/         -> Nothing
--- curl -X GET http://localhost:3000/beam?num=123  -> Just 123
+-- curl -X GET http://localhost:3000/beam/?1=1             -> Nothing
+-- curl -X GET http://localhost:3000/beam?1=1&2=2&3=3&4=4  -> Just (1,2,3,4)
+--
+-- Prelude> :t get
+-- get :: RoutePattern -> ActionM () -> ScottyM ()
 --
 -- Prelude> :t param
 -- param :: Parsable a => Data.Text.Internal.Lazy.Text -> ActionM a
@@ -36,7 +39,9 @@ param' k = MaybeT $
 main :: IO ()
 main = scotty 3000 $ do
   get "/:word" $ do
-    beam' <- param "word"
+-- intentional `issue` and one of the tricks from the authors
+-- to see if we're paying attention to details
+    beam' <- runMaybeT $ param' "word"
     let beam = fromMaybe "" beam'
     reco <- runMaybeT $ do
       a <- param' "1"
