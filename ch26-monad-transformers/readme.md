@@ -159,16 +159,22 @@ liftM :: Monad m       => (a -> r) -> m a -> m r
     position in a stack of `monad transformers`. `Monad transformers` can be nested in order to compose various effects into one monster
     function, but to manage those stacks, we need to `lift` more.
 
-  - `MonadTrans` is a type class with one core method: `lift`. Speaking generally, it is about lifting actions in some `Monad`
-    over a transformer type which wraps itself in the original `Monad`.
+  - `MonadTrans` is about lifting actions in some `Monad` over a transformer type which wraps itself in the original `Monad`.
 
 ```haskell
 class MonadTrans t where
   lift :: (Monad m) => m a -> t m a
 ```
 
-  - Lift a computation from the argument monad to the constructed monad. Here the 𝑡 is a (constructed) monad transformer type that has
+  - `Lift` a computation from the argument monad to the constructed monad. Here the 𝑡 is a (constructed) monad transformer type that has
    an instance of MonadTrans defined.
+
+```haskell
+newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
+
+instance MonadTrans MaybeT where
+  lift = MaybeT . liftM Just
+```
 
 ### MonadIO
 
@@ -189,12 +195,6 @@ liftIO :: IO a -> StateT  s IO a
 liftIO :: IO a -> StateT  s (ReaderT r IO) a
 liftIO :: IO a -> ExceptT e (StateT s (ReaderT r IO)) a
 ```
-    
-  - 2 laws that `liftIO` instances should satisfy
-
-    1. liftIO . return = return
-
-    2. liftIO (m >>= f) = liftIO m >>= (liftIO . f)
 
 ### Referenced frameworks/libraries in the chapter
  - [scotty - Haskell web framework inspired by Ruby's Sinatra, using WAI and Warp](https://hackage.haskell.org/package/scotty)
