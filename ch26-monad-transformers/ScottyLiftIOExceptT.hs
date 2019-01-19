@@ -1,7 +1,7 @@
 {-# LANGUAGE InstanceSigs      #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module ScottySampleLiftExceptT where
+module ScottyLiftIOExceptT where
 
 import Web.Scotty
 
