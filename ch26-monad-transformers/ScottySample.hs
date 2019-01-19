@@ -75,22 +75,44 @@ import Data.Monoid (mconcat)
 --
 -- Prelude> :t lift
 -- lift :: (Monad m, MonadTrans t) => m a -> t m a
---
--- Prelude> :t lift (putStrLn "hello")
--- lift (putStrLn "hello") :: MonadTrans t => t IO ()
 
 -----------------------------------------------------------------------------------
 -- |
 -- *** See `get` and `putStrLn` type signatures above ***
 --
--- *** Error we're trying to solve, if putStrLn "hello" isn't lifted under the get $ do below ***
+-- *** Error we're trying to solve, if `putStrLn` "hello" isn't lifted under the `get` $ do below ***
 --     * Couldn't match type `IO'
 --                      with `ActionT Data.Text.Internal.Lazy.Text IO'
 --       Expected type: ActionT Data.Text.Internal.Lazy.Text IO ()
 --         Actual type: IO ()
 --
--- The reason for this type error is that putStrLn has the type IO (), but it is inside a do block inside
--- our get, and the monad that code is in is therefore ActionM/ActionT
+-- The reason for this type error is that `putStrLn` has the type `IO ()`, but it is inside a `do` block inside
+-- our `get`, and the monad that code is in is therefore ActionM/ActionT
+
+-----------------------------------------------------------------------------------
+-- |
+-- Resolving the issue by lifting `IO ()` to `ActionM ()`
+--
+-- Prelude> :t (lift:: IO a -> ActionM a) (putStrLn "hello")
+-- (lift:: IO a -> ActionM a) (putStrLn "hello") :: ActionM ()
+--
+-- OR
+-- Prelude> let hello = putStrLn "hello"
+--
+-- Prelude> :t (lift :: IO a -> ActionM a) hello
+-- (lift :: IO a -> ActionM a) hello :: ActionM ()
+--
+-- instance MonadTrans (ActionT e) where
+--   lift = ActionT . lift . lift . lift
+--
+-- Prelude> :t lift
+-- lift :: (Monad m, MonadTrans t) => m  a -> t m  a
+--
+-- lift :: (Monad m, MonadTrans t) => m  a -> t m  a
+-- lift :: (MonadTrans t)          => IO a -> t IO a
+--
+-- lift :: IO a  -> ActionM a
+-- lift :: IO () -> ActionM ()
 
 -----------------------------------------------------------------------------------
 -- |
