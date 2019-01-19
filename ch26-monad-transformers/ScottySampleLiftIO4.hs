@@ -18,6 +18,9 @@ import Data.Text.Lazy (Text)
 -- curl -X GET http://localhost:3000/beam?1=1  -> Right 1
 -- curl -X GET http://localhost:3000/beam?2=1  -> Left "The key: \"1\" was missing!"
 --
+-- Prelude> :t get
+-- get :: RoutePattern -> ActionM () -> ScottyM ()
+--
 -- Prelude> :t param
 -- param :: Parsable a => Data.Text.Internal.Lazy.Text -> ActionM a
 --
