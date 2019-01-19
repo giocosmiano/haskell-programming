@@ -12,7 +12,16 @@ import Data.Monoid (mconcat)
 -- |
 -- e.g.
 -- curl -X GET http://localhost:3000/beam/
+--
+-- Prelude> :t param
+-- param :: Parsable a => Data.Text.Internal.Lazy.Text -> ActionM a
+--
+-- Prelude> :t rescue
+-- rescue
+--   :: ActionM a
+--      -> (Data.Text.Internal.Lazy.Text -> ActionM a) -> ActionM a
 
+main :: IO ()
 main = scotty 3000 $ do
   get "/:word" $ do
     beam <- param "word"
