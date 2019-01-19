@@ -40,7 +40,8 @@ main :: IO ()
 main = scotty 3000 $ do
   get "/:word" $ do
 -- intentional `issue` and one of the tricks from the authors
--- to see if we're paying attention to details
+-- to see if I'm paying attention to details
+--    beam' <- param "word"
     beam' <- runMaybeT $ param' "word"
     let beam = fromMaybe "" beam'
     reco <- runMaybeT $ do
