@@ -3,7 +3,8 @@
 module LiftEitherTExercises where
 
 import Data.Functor.Identity
-import Control.Monad
+import Control.Monad (liftM)
+import Control.Monad.IO.Class
 import Control.Monad.Trans.Class
 import Control.Monad.Trans.Except
 
@@ -24,6 +25,21 @@ newtype EitherT e m a = EitherT { runEitherT :: m (Either e a) }
 
 instance MonadTrans (EitherT e) where
   lift = EitherT . liftM Right
+
+-----------------------------------------------------------------------------------
+
+--instance (MonadIO m) => MonadIO (EitherT e m) where
+--  liftIO = lift . liftIO
+
+-- |
+-- *** Getting an error compiling with MonadIO instance ***
+--
+--    • Could not deduce (Monad (EitherT e m))
+--        arising from the superclasses of an instance declaration
+--      from the context: MonadIO m
+--        bound by the instance declaration
+--
+--    • In the instance declaration for ‘MonadIO (EitherT e m)’
 
 -----------------------------------------------------------------------------------
 -- |
