@@ -1,7 +1,7 @@
 {-# LANGUAGE InstanceSigs      #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module ScottySampleLiftIO3 where
+module ScottySampleLiftMaybeT where
 
 import Web.Scotty
 
