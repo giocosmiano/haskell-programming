@@ -18,6 +18,9 @@ import qualified Data.Text.Lazy as TL
 -- curl -X GET http://localhost:3000/                 -> The key: "1" was missing!
 -- curl -X GET http://localhost:3000/?1=1&2=2&3=3&4=4 -> Success! Reco was: (1,2,3,4)
 --
+-- Prelude> :t get
+-- get :: RoutePattern -> ActionM () -> ScottyM ()
+--
 -- Prelude> :t param
 -- param :: Parsable a => Data.Text.Internal.Lazy.Text -> ActionM a
 --
