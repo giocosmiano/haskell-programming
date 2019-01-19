@@ -16,6 +16,9 @@ import Data.Text.Lazy (Text)
 -- curl -X GET http://localhost:3000/beam/         -> Nothing
 -- curl -X GET http://localhost:3000/beam?num=123  -> Just 123
 --
+-- Prelude> :t get
+-- get :: RoutePattern -> ActionM () -> ScottyM ()
+--
 -- Prelude> :t param
 -- param :: Parsable a => Data.Text.Internal.Lazy.Text -> ActionM a
 --
