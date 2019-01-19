@@ -13,6 +13,9 @@ import Data.Monoid (mconcat)
 -- e.g.
 -- curl -X GET http://localhost:3000/beam/
 --
+-- Prelude> :t get
+-- get :: RoutePattern -> ActionM () -> ScottyM ()
+--
 -- Prelude> :t param
 -- param :: Parsable a => Data.Text.Internal.Lazy.Text -> ActionM a
 --
