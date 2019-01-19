@@ -3,7 +3,8 @@
 module LiftStateTExercises where
 
 import Data.Functor.Identity
-import Control.Monad
+import Control.Monad (liftM)
+import Control.Monad.IO.Class
 import Control.Monad.Trans.Class
 
 -----------------------------------------------------------------------------------
@@ -29,6 +30,25 @@ instance MonadTrans (StateT r) where
     StateT $ \s -> do
               a <- ma
               return (a, s)
+
+-----------------------------------------------------------------------------------
+
+--instance (MonadIO m) => MonadIO (StateT s m) where
+--  liftIO = lift . liftIO
+
+-- |
+-- *** Getting an error compiling with MonadIO instance ***
+--
+--    • Could not deduce (Monad (StateT s m))
+--        arising from the superclasses of an instance declaration
+--      from the context: MonadIO m
+--        bound by the instance declaration
+--
+--      There are instances for similar types:
+--        instance [safe] Monad m =>
+--                        Monad (Control.Monad.Trans.State.Lazy.StateT s m)
+--          -- Defined in ‘Control.Monad.Trans.State.Lazy’
+--    • In the instance declaration for ‘MonadIO (StateT s m)’
 
 -----------------------------------------------------------------------------------
 -- |
