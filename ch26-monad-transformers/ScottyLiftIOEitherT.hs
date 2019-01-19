@@ -1,7 +1,7 @@
 {-# LANGUAGE InstanceSigs      #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module ScottySampleLiftEitherT where
+module ScottyLiftIOEitherT where
 
 import Web.Scotty
 
