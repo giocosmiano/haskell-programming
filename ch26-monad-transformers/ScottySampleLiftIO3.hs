@@ -1,0 +1,55 @@
+{-# LANGUAGE InstanceSigs      #-}
+{-# LANGUAGE OverloadedStrings #-}
+
+module ScottySampleLiftIO3 where
+
+import Web.Scotty
+
+import Control.Monad.IO.Class
+import Control.Monad.Trans.Class
+import Control.Monad.Trans.Maybe
+import Data.Maybe (fromMaybe)
+import Data.Monoid (mconcat)
+import Data.Text.Lazy (Text)
+
+-----------------------------------------------------------------------------------
+-- |
+-- e.g.
+-- curl -X GET http://localhost:3000/beam/         -> Nothing
+-- curl -X GET http://localhost:3000/beam?num=123  -> Just 123
+--
+-- Prelude> :t param
+-- param :: Parsable a => Data.Text.Internal.Lazy.Text -> ActionM a
+--
+-- Prelude> :t rescue
+-- rescue
+--   :: ActionM a
+--      -> (Data.Text.Internal.Lazy.Text -> ActionM a) -> ActionM a
+
+type Reco = (Integer, Integer, Integer, Integer)
+
+param' :: Parsable a => Text -> MaybeT ActionM a
+param' k = MaybeT $
+  rescue (Just <$> param k)
+         (const (return Nothing))
+
+main :: IO ()
+main = scotty 3000 $ do
+  get "/:word" $ do
+    beam' <- param "word"
+    let beam = fromMaybe "" beam'
+    reco <- runMaybeT $ do
+      a <- param' "1"
+      liftIO $ print a
+      b <- param' "2"
+      c <- param' "3"
+      d <- param' "4"
+      (lift . lift) $ print b
+      return ((a, b, c, d) :: Reco)
+    liftIO $ print reco
+    html $ mconcat
+      [ "<h1>Scotty, "
+      , beam
+      , " me up!</h1>" ]
+
+-----------------------------------------------------------------------------------
