@@ -3,7 +3,8 @@
 module LiftReaderTExercises where
 
 import Data.Functor.Identity
-import Control.Monad
+import Control.Monad (liftM)
+import Control.Monad.IO.Class
 import Control.Monad.Trans.Class
 
 -----------------------------------------------------------------------------------
@@ -23,6 +24,25 @@ newtype ReaderT r m a = ReaderT { runReaderT :: r -> m a }
 
 instance MonadTrans (ReaderT r) where
   lift = ReaderT . const
+
+-----------------------------------------------------------------------------------
+
+--instance (MonadIO m) => MonadIO (ReaderT r m) where
+--  liftIO = lift . liftIO
+
+-- |
+-- *** Getting an error compiling with MonadIO instance ***
+--
+--    • Could not deduce (Monad (ReaderT r m))
+--        arising from the superclasses of an instance declaration
+--      from the context: MonadIO m
+--        bound by the instance declaration
+----
+--      There are instances for similar types:
+--        instance [safe] Monad m =>
+--                        Monad (Control.Monad.Trans.Reader.ReaderT r m)
+--          -- Defined in ‘Control.Monad.Trans.Reader’
+--    • In the instance declaration for ‘MonadIO (ReaderT r m)’
 
 -----------------------------------------------------------------------------------
 -- |
