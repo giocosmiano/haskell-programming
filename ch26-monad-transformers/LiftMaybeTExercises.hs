@@ -3,7 +3,8 @@
 module LiftMaybeTExercises where
 
 import Data.Functor.Identity
-import Control.Monad
+import Control.Monad (liftM)
+import Control.Monad.IO.Class
 import Control.Monad.Trans.Class
 
 -----------------------------------------------------------------------------------
@@ -23,6 +24,24 @@ newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 
 instance MonadTrans MaybeT where
   lift = MaybeT . liftM Just
+
+-----------------------------------------------------------------------------------
+
+--instance (MonadIO m) => MonadIO (MaybeT m) where
+--  liftIO = lift . liftIO
+
+-- |
+-- *** Getting an error compiling with MonadIO instance ***
+--
+--    • Could not deduce (Monad (MaybeT m))
+--        arising from the superclasses of an instance declaration
+--      from the context: MonadIO m
+--
+--      There are instances for similar types:
+--        instance [safe] Monad m =>
+--                        Monad (Control.Monad.Trans.Maybe.MaybeT m)
+--          -- Defined in ‘Control.Monad.Trans.Maybe’
+--    • In the instance declaration for ‘MonadIO (MaybeT m)’
 
 -----------------------------------------------------------------------------------
 -- |
