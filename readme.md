@@ -29,8 +29,9 @@
 
      - on where to apply the function to a value
 
-     - or how many times to `lift` the function over multi-layered structure in stack of `monads`. e.g. `outerInner` and
-       [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
+     - or how many times to `lift` the function over multi-layered structure in stack of `monads`.
+
+       - e.g. `outerInner` and [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
 
 ```haskell
 outerInner :: MaybeT (ExceptT String (ReaderT String (StateT String IO))) Int
