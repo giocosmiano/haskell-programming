@@ -424,7 +424,7 @@ Haskell λ > (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >>
      of `monads`, however; when we compose two `monads`, the result is **`NOT`** necessarily another `monad`.
 
 ```haskell
-newtype SomeType f g a = SomeType { getSomeType :: f (g a) } deriving (Eq, Show)
+newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq, Show)
 ```
 
  - Monad Transformers
