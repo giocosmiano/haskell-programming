@@ -1,6 +1,8 @@
 ### This is my personal repository learning `Haskell` from [Haskell Programming](http://haskellbook.com/)
 
- - I came to this `Haskell` journey because of my curiosity in FP that began mid-2016 when I was working on a UI story/task in
+ - First of all, this is my personal journey learning `Haskell` therefore any mistakes on concepts and/or chapter exercises are my own.
+
+ - Second, I came to this `Haskell` journey because of my curiosity in FP that began mid-2016 when I was working on a UI story/task in
    [Angular](https://angular.io/) and used these JS libraries, [RamdaJS](https://ramdajs.com/), [RxJS](http://reactivex.io/) and
    [ReduxJS](https://redux.js.org/), that are primarily developed with FP concepts in mind, such as immutability, composition, high-order
    function etc.
@@ -413,14 +415,21 @@ newtype SomeType f g a = SomeType { getSomeType :: f (g a) } deriving (Eq, Show)
 
  - IdentityT
 
-   - **Reminder to myself** - come back to this chapter when you get lost in [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram#Diagram_chasing)
-     `Monad Transformer` because it is covered in great details. Great job by the authors explaining and going thru it step-by-step.
+ - **Reminder to myself** - come back to this chapter when you get lost in [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram#Diagram_chasing)
+   `Monad Transformer` because it is covered in great details. 
 
 #### [Chapter 26 - Monad transformers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)
 
- - MaybeT, EitherT, ReaderT, StateT
+ - MaybeT, EitherT/ExceptT, ReaderT, StateT
  
  - [Lexically Inner is Structurally Outer](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#lexically-inner-is-structurally-outer)
+ 
+ - [MonadTrans](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadtrans)
+ 
+ - [MonadIO](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadio)
+
+ - Whoa!!! This chapter is loaded with great materials. **Another reminder to myself** - you need to revisit this chapter again
+   when you have time. Great job by the authors explaining and going thru it step-by-step.
 
 ### Referenced frameworks/libraries
  - [wreq - An easy-to-use HTTP client library](https://hackage.haskell.org/package/wreq)
