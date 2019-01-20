@@ -34,9 +34,7 @@
 
 ```haskell
 outerInner :: MaybeT (ExceptT String (ReaderT String (StateT String IO))) Int
-```
 
-```haskell
 newtype ActionT e m a =
   ActionT
   { runAM
