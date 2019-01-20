@@ -31,9 +31,11 @@
 
      - or how many times to `lift` the function over multi-layered structure in stack of `monads`.
 
-       - e.g. `outerInner` and [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
+       - e.g. `SomeType`, `outerInner` and [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
 
 ```haskell
+newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq, Show)
+
 outerInner :: MaybeT (ExceptT String (ReaderT String (StateT String IO))) Int
 
 newtype ActionT e m a =
