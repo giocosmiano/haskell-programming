@@ -1,6 +1,6 @@
 ### This is my personal repository learning `Haskell` from [Haskell Programming](http://haskellbook.com/)
 
- - First of all, this is my personal journey learning `Haskell` therefore any mistakes on concepts and/or chapter exercises are my own.
+ - First, this is my personal journey learning `Haskell` therefore any mistakes on concepts and/or chapter exercises are my own.
 
  - Second, I came to this `Haskell` journey because of my curiosity in FP that began mid-2016 when I was working on a UI story/task in
    [Angular](https://angular.io/) and used these JS libraries, [RamdaJS](https://ramdajs.com/), [RxJS](http://reactivex.io/) and
@@ -21,17 +21,36 @@
    - the reduced value
    - OR another function that will be further applied, and so on, which will eventually reduced into a value   
 
- - Functions are data because they will eventually get evaluated, and reduced into a value. Read [Chapter 22 - Reader](https://github.com/giocosmiano/haskell-programming#chapter-22---reader)  
+ - Functions are data because they will eventually get evaluated, and reduced into a value.  
 
  - **Couple of reminders to myself**
 
-   - Always come back to this simple pattern `f x = y` when you get lost
+   - Always come back to this simple pattern `f x = y` when you're lost
 
      - on where to apply the function to a value
 
-     - or how many times you have to `lift` the function over a multi-layered structures of `Functor`, `Applicative`, `Monad`
-       and `Monad Transformers`. Read [Chapter 25 - Composing Types](https://github.com/giocosmiano/haskell-programming/tree/master/ch25-composing-types)
-       and [Chapter 26 - Monad Transformers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)  
+     - or how many times to `lift` the function over multi-layered structure in stack of `monads`. e.g. `outerInner` and
+       [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
+
+```haskell
+outerInner :: MaybeT (ExceptT String (ReaderT String (StateT String IO))) Int
+```
+
+```haskell
+newtype ActionT e m a =
+  ActionT
+  { runAM
+    :: ExceptT
+         (ActionError e)
+         (ReaderT ActionEnv
+           (StateT ScottyResponse m))
+         a
+  }
+  deriving ( Functor, Applicative, MonadIO )
+```
+
+   - Lifting the `function` to the base/outermost `IO` monad via [liftIO](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadio)
+     **or** [lift, lift, lift](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadtrans)
 
    - Always helpful to use **_`:t`_** for type, **_`:k`_** for kind or **_`:i`_** info to get more details   
 
@@ -415,8 +434,7 @@ newtype SomeType f g a = SomeType { getSomeType :: f (g a) } deriving (Eq, Show)
 
  - IdentityT
 
- - **Reminder to myself** - come back to this chapter when you get lost in [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram#Diagram_chasing)
-   `Monad Transformer` because it is covered in great details. 
+ - Good chapter in preparation for `Monad Transformer`. 
 
 #### [Chapter 26 - Monad transformers](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers)
 
@@ -428,8 +446,7 @@ newtype SomeType f g a = SomeType { getSomeType :: f (g a) } deriving (Eq, Show)
  
  - [MonadIO](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadio)
 
- - Whoa!!! This chapter is loaded with great materials. **Another reminder to myself** - you need to revisit this chapter again
-   when you have time. Great job by the authors explaining and going thru it step-by-step.
+ - Whoa!!! This chapter is loaded with great materials. Great job by the authors explaining and going thru it step-by-step.
 
 ### Referenced frameworks/libraries
  - [wreq - An easy-to-use HTTP client library](https://hackage.haskell.org/package/wreq)
