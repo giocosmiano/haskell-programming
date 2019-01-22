@@ -469,6 +469,8 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
  - [What a Monad is not](https://wiki.haskell.org/What_a_Monad_is_not)
  - [Real World Haskell - by Bryan O'Sullivan](http://book.realworldhaskell.org/read/)
  - [Glasgow Haskell Compiler User's Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/index.html)
+ - [Write You a Haskell - by Stephen Diehl](http://dev.stephendiehl.com/fun/index.html)
+ - [Haskell Basics - by Stephen Diehl](http://dev.stephendiehl.com/fun/001_basics.html)
  - [School of Haskell](https://www.schoolofhaskell.com/)
  - [School of Haskell - Starting with Haskell](https://www.schoolofhaskell.com/school/starting-with-haskell)
  - [School of Haskell - To Infinity and Beyond](https://www.schoolofhaskell.com/user/school/to-infinity-and-beyond)
