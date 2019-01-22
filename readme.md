@@ -449,6 +449,8 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
 
  - Whoa!!! This chapter is loaded with great materials. Great job by the authors explaining and going thru it step-by-step.
 
+#### [Chapter 27 - Non-Strictness](https://github.com/giocosmiano/haskell-programming/tree/master/ch27-non-strictness)
+
 ### Referenced frameworks/libraries
  - [wreq - An easy-to-use HTTP client library](https://hackage.haskell.org/package/wreq)
  - [scotty - Haskell web framework inspired by Ruby's Sinatra, using WAI and Warp](https://hackage.haskell.org/package/scotty)
