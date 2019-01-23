@@ -19,6 +19,21 @@ fib x = fib' x 0 1
              | otherwise = fib' (y-1) b (a+b)
 
 {-
+ - factorials in many ways
+ -}
+fact :: Integer -> Integer
+fact n = product [1..n]
+
+-- |
+-- OR
+--fact n = foldr (*) 1 [1..n]
+--
+-- OR
+--fact n
+--  | n <= 1    = 1
+--  | otherwise = n * fact (n-1)
+
+{-
  - Functor fmap for Pair (a, b)
  -}
 
