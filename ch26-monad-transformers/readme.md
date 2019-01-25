@@ -205,4 +205,7 @@ liftIO :: IO a -> ExceptT e (StateT s (ReaderT r IO)) a
  - [Streaming logging - by Gabriel Gonzalez](http://www.haskellforall.com/2014/02/streaming-logging.html)
  - [Amb](https://wiki.haskell.org/Amb)
    - [McCarthy's Ambiguous Operator](http://www.randomhacks.net.s3-website-us-east-1.amazonaws.com/2005/10/11/amb-operator/)
+ - [A Simple Reader Monad Example](https://blog.ssanj.net/posts/2014-09-23-A-Simple-Reader-Monad-Example.html)
+ - [Reader Monad Transformer - by Carlo Hamalainen](https://carlo-hamalainen.net/2014/03/05/note-to-self-reader-monad-transformer/)
+ - [The ReaderT Design Pattern - by FPComplete](https://www.fpcomplete.com/blog/2017/06/readert-design-pattern)
 
