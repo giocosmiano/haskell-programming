@@ -10,6 +10,7 @@ import Control.Monad.State
 
 -- |
 -- Further reading
+-- https://carlo-hamalainen.net/2014/03/05/note-to-self-reader-monad-transformer
 -- https://blog.ssanj.net/posts/2014-09-23-A-Simple-Reader-Monad-Example.html
 --
 -- Prelude> :t ask
