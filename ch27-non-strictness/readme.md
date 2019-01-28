@@ -41,15 +41,29 @@ myList3 = [1,2,_]
 Haskell λ > let myList4 = myList3 ++ undefined
 myList4 :: [Integer]
 
-Haskell λ > :sprint myList3
+Haskell λ > :sprint myList4
 myList4 = _
 ``` 
 
-### For further reading
- - [Streaming logging - by Gabriel Gonzalez](http://www.haskellforall.com/2014/02/streaming-logging.html)
- - [Amb](https://wiki.haskell.org/Amb)
-   - [McCarthy's Ambiguous Operator](http://www.randomhacks.net.s3-website-us-east-1.amazonaws.com/2005/10/11/amb-operator/)
- - [A Simple Reader Monad Example](https://blog.ssanj.net/posts/2014-09-23-A-Simple-Reader-Monad-Example.html)
- - [Reader Monad Transformer - by Carlo Hamalainen](https://carlo-hamalainen.net/2014/03/05/note-to-self-reader-monad-transformer/)
- - [The ReaderT Design Pattern - by FPComplete](https://www.fpcomplete.com/blog/2017/06/readert-design-pattern)
+### Forcing Sharing
+ - We can force sharing by giving the expression a name. The most common way of doing this is with `let`. 
 
+ - Why the `let` expression? We want sharing here so that running a monadic action indefinitely doesn’t leak memory.
+   The sharing here causes GHC to overwrite the thunk as it runs each step in the evaluation, which is quite handy. Otherwise,
+   it would keep constructing new thunks indefinitely and that would be very unfortunate.
+
+```haskell
+Haskell λ > import Control.Monad
+
+Haskell λ > :t forever
+forever :: Monad m => m a -> m b
+forever a = let a' = a >> a' in a'
+```
+
+### For further reading
+ - [Chapter 2. Basic Parallelism: Parallel and Concurrent Programming in Haskell - by Simon Marlow](https://www.oreilly.com/library/view/parallel-and-concurrent/9781449335939/)
+ - [The Incomplete Guide to Lazy Evaluation in Haskell](https://hackhands.com/guide-lazy-evaluation-haskell/)
+ - [Lazy evaluation illustrated for Haskell divers - by Takenobu Tani](https://github.com/takenobu-hs/lazy_evaluation)
+ - [Core Type - Glasgow Haskell Compiler](https://ghc.haskell.org/trac/ghc/wiki/Commentary/Compiler/CoreSynType#Caseexpressions)
+ - [Laziness - Haskell Wiki](https://en.wikibooks.org/wiki/Haskell/Laziness#Thunks_and_Weak_head_normal_form)
+ - [Weak Head Normal Form](https://stackoverflow.com/questions/6872898/haskell-what-is-weak-head-normal-form)
