@@ -38,6 +38,9 @@ import Criterion.Main
 -- (!?) don’t return a data constructor until they’ve done the work already
 --
 -- Our goal with this example is to equalize the performance difference between (!?), (!?!) and (!!).
+--
+-- In general when deciding between whnf and nf, ask yourself, “when I have reached the first data
+-- constructor, have I done most or all of the work that matters?”
 
 -----------------------------------------------------------------------------------
 
