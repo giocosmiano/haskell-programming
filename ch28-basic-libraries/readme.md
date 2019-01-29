@@ -3,7 +3,7 @@
    it’s only going to evaluate enough to find out if it’s a `Nothing` or a `Just` — if there is a `Just a`, it won’t count the cost
    of evaluating the `a` value.
 
- - Using `nf` would mean you wanted to include the cost of fully evaluating the `a` as well as the first data constructor.
+ - Using `nf` would mean we wanted to include the cost of fully evaluating the `a` as well as the first data constructor.
 
  - The key when determining whether we want `whnf` or `nf` is to think about what we’re trying to benchmark and if reaching the first
    data constructor will do all the work we’re trying to measure or not. In general, ask yourself, “when I have reached the first data
