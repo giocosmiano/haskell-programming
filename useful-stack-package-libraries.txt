@@ -66,6 +66,12 @@
 -- Prelude> stack install criterion
 
 -----------------------------------------------------------------------------------
+-- Assorted concrete container types
+-- https://github.com/haskell/containers
+-- https://hackage.haskell.org/package/containers
+-- Prelude> stack install containers
+
+-----------------------------------------------------------------------------------
 -- Cabal: Common Architecture for Building Applications and Libraries
 -- https://www.haskell.org/cabal/
 -- Prelude> stack install cabal
