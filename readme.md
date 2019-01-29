@@ -487,6 +487,9 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
  - [hindent - Extensible Haskell pretty printer](https://hackage.haskell.org/package/hindent)
  - [criterion - Robust, reliable performance measurement and analysis](https://hackage.haskell.org/package/criterion)
  - [containers - Assorted concrete container types](https://hackage.haskell.org/package/containers)
+ - [vector - Efficient Arrays](https://hackage.haskell.org/package/vector)
+ - [array - Mutable and immutable arrays](http://hackage.haskell.org/package/array)
+ - [text - An efficient packed Unicode text type](http://hackage.haskell.org/package/text)
 
 ### For further reading
  - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
