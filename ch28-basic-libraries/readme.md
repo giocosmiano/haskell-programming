@@ -1,0 +1,15 @@
+### Benchmarking with Criterion
+ - `Weak head normal form` evaluates to the first data constructor. That means that if our outermost data constructor is a Maybe,
+   it’s only going to evaluate enough to find out if it’s a `Nothing` or a `Just` — if there is a `Just a`, it won’t count the cost
+   of evaluating the `a` value.
+
+ - Using `nf` would mean you wanted to include the cost of fully evaluating the `a` as well as the first data constructor.
+
+ - The key when determining whether we want `whnf` or `nf` is to think about what we’re trying to benchmark and if reaching the first
+   data constructor will do all the work we’re trying to measure or not. In general, ask yourself, “when I have reached the first data
+   constructor, have I done most or all of the work that matters?”
+
+### For further reading
+ - [Criterion Library - by Bryan O'Sullivan](http://www.serpentine.com/criterion/)   
+   - [Criterion Tutorial](http://www.serpentine.com/criterion/tutorial.html)   
+ - [Profiling - Glasgow Haskell Compiler User's Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html)
