@@ -467,7 +467,11 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
 
 #### [Chapter 28 - Basic Libraries](https://github.com/giocosmiano/haskell-programming/tree/master/ch28-basic-libraries)
  
- - Benchmarking using [criterion](https://hackage.haskell.org/package/criterion)
+ - Benchmarking with [criterion](https://hackage.haskell.org/package/criterion)
+
+ - [Profiling - Glasgow Haskell Compiler User's Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html)
+
+ - Map, Set Sequence, Vector, String types
 
 ### Referenced frameworks/libraries
  - [wreq - An easy-to-use HTTP client library](https://hackage.haskell.org/package/wreq)
