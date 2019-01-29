@@ -9,9 +9,15 @@
    data constructor will do all the work we’re trying to measure or not. In general, ask yourself, “when I have reached the first data
    constructor, have I done most or all of the work that matters?”
 
+### Referenced frameworks/libraries
+ - [criterion - Robust, reliable performance measurement and analysis](https://hackage.haskell.org/package/criterion)
+ - [containers - Assorted concrete container types](https://hackage.haskell.org/package/containers)
+   - [containers - Introduction and Tutorial](https://haskell-containers.readthedocs.io/en/latest/)
+ - [vector - Efficient Arrays](https://hackage.haskell.org/package/vector)
+ - [array - Mutable and immutable arrays](http://hackage.haskell.org/package/array)
+ - [text - An efficient packed Unicode text type](http://hackage.haskell.org/package/text)
+
 ### For further reading
  - [Criterion Library - by Bryan O'Sullivan](http://www.serpentine.com/criterion/)   
    - [Criterion Tutorial](http://www.serpentine.com/criterion/tutorial.html)   
  - [Profiling - Glasgow Haskell Compiler User's Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html)
- - [containers - Assorted concrete container types](https://hackage.haskell.org/package/containers)
-   - [containers - Introduction and Tutorial](https://haskell-containers.readthedocs.io/en/latest/)
