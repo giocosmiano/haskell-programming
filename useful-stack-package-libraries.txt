@@ -60,6 +60,12 @@
 -- Prelude> stack install aeson
 
 -----------------------------------------------------------------------------------
+-- Robust, reliable performance measurement and analysis
+-- http://www.serpentine.com/criterion
+-- https://hackage.haskell.org/package/criterion
+-- Prelude> stack install criterion
+
+-----------------------------------------------------------------------------------
 -- Cabal: Common Architecture for Building Applications and Libraries
 -- https://www.haskell.org/cabal/
 -- Prelude> stack install cabal
