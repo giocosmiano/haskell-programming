@@ -15,13 +15,17 @@
 
  - Functional programming is a function of data transformation and composition.
 
- - Functions are evaluated and eventually reduced into a value called [Beta reduction](https://wiki.haskell.org/Beta_reduction) 
-
  - Function, by default, is curried meaning it only accepts 1-argument and returns either
+
    - the reduced value
+
    - OR another function that will be further applied, and so on, which will eventually reduced into a value   
 
- - Functions are data because they will eventually get evaluated, and reduced into a value.  
+ - Functions, [when needed](https://en.wikibooks.org/wiki/Haskell/Laziness#Thunks_and_Weak_head_normal_form), are evaluated and
+   eventually reduced into a value called [Beta reduction](https://wiki.haskell.org/Beta_reduction) 
+
+ - Functions are data because they will eventually get evaluated, [when needed](https://en.wikibooks.org/wiki/Haskell/Laziness#Thunks_and_Weak_head_normal_form),
+   and reduced into a value.  
 
  - **Couple of reminders to myself**
 
@@ -461,6 +465,10 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
  
  - Strict and StrictData
 
+#### [Chapter 28 - Basic Libraries](https://github.com/giocosmiano/haskell-programming/tree/master/ch28-basic-libraries)
+ 
+ - Benchmarking using [criterion](https://hackage.haskell.org/package/criterion)
+
 ### Referenced frameworks/libraries
  - [wreq - An easy-to-use HTTP client library](https://hackage.haskell.org/package/wreq)
  - [scotty - Haskell web framework inspired by Ruby's Sinatra, using WAI and Warp](https://hackage.haskell.org/package/scotty)
@@ -473,6 +481,7 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
  - [trifecta - modern parser combinator library with convenient diagnostics](https://hackage.haskell.org/package/trifecta-1.5.2)
  - [raw-strings-qq - Raw string literals for Haskell](https://hackage.haskell.org/package/raw-strings-qq)
  - [hindent - Extensible Haskell pretty printer](https://hackage.haskell.org/package/hindent)
+ - [criterion - Robust, reliable performance measurement and analysis](https://hackage.haskell.org/package/criterion)
 
 ### For further reading
  - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
