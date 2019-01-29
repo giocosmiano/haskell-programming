@@ -24,8 +24,8 @@
  - Functions, [when needed](https://en.wikibooks.org/wiki/Haskell/Laziness#Thunks_and_Weak_head_normal_form), are evaluated and
    eventually reduced into a value called [Beta reduction](https://wiki.haskell.org/Beta_reduction) 
 
- - Functions are data because they will eventually get evaluated, [when needed](https://en.wikibooks.org/wiki/Haskell/Laziness#Thunks_and_Weak_head_normal_form),
-   and reduced into a value.  
+ - Functions are data because [when needed](https://en.wikibooks.org/wiki/Haskell/Laziness#Thunks_and_Weak_head_normal_form) they will
+   eventually get evaluated and reduced into a value.  
 
  - **Couple of reminders to myself**
 
