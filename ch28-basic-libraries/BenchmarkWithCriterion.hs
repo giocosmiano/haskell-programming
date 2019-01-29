@@ -83,7 +83,7 @@ main = defaultMain
     , bench "index list maybe with !?  index 9999"
     $ whnf (myList !?) 9998
     , bench "index list maybe with !?! index 9999"
-    $ whnf (myList !?) 9998
+    $ whnf (myList !?!) 9998
   ]
 
 -----------------------------------------------------------------------------------
