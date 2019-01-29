@@ -13,3 +13,5 @@
  - [Criterion Library - by Bryan O'Sullivan](http://www.serpentine.com/criterion/)   
    - [Criterion Tutorial](http://www.serpentine.com/criterion/tutorial.html)   
  - [Profiling - Glasgow Haskell Compiler User's Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html)
+ - [containers - Assorted concrete container types](https://hackage.haskell.org/package/containers)
+   - [containers - Introduction and Tutorial](https://haskell-containers.readthedocs.io/en/latest/)
