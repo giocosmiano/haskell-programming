@@ -43,8 +43,8 @@ main = defaultMain
     whnf (lookup "doesntExist") pairList
   , bench "lookup one thing, map" $
     whnf (M.lookup "doesntExist") testMap
---  , bench "lookup one thing, hashMap" $
---    whnf (HM.lookup "doesntExist") testHashMap
+  , bench "lookup one thing, hashMap" $
+    whnf (HM.lookup "doesntExist") testHashMap
   ]
 
 -----------------------------------------------------------------------------------
@@ -59,11 +59,19 @@ main = defaultMain
 -- variance introduced by outliers: 23% (moderately inflated)
 --
 -- benchmarking lookup one thing, map
--- time                 316.5 ns   (315.5 ns .. 318.0 ns)
+-- time                 315.7 ns   (315.3 ns .. 316.2 ns)
 --                      1.000 R²   (1.000 R² .. 1.000 R²)
--- mean                 174.6 ns   (168.2 ns .. 179.2 ns)
--- std dev              7.012 ns   (0.0 s .. 8.017 ns)
--- variance introduced by outliers: 55% (severely inflated)
+-- mean                 170.4 ns   (163.7 ns .. 175.1 ns)
+-- std dev              6.964 ns   (0.0 s .. 8.026 ns)
+-- variance introduced by outliers: 56% (severely inflated)
+--
+-- benchmarking lookup one thing, hashMap
+-- time                 198.8 ns   (196.8 ns .. 203.2 ns)
+--                      0.998 R²   (0.995 R² .. 1.000 R²)
+-- mean                 108.4 ns   (104.8 ns .. 110.5 ns)
+-- std dev              3.267 ns   (0.0 s .. 3.689 ns)
+-- variance introduced by outliers: 42% (moderately inflated)
+
 
 
 -- |
