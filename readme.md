@@ -473,7 +473,9 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
 
  - Map, Set, Sequence, Vector, String types
 
- - [Difference lists](https://github.com/spl/dlist)   
+ - [Demystifying DList](http://h2.jaguarpaw.co.uk/posts/demystifying-dlist/)   
+
+ - [A Sort of Difference](https://archive.is/20140131124629/http://web.archive.org/web/20080918101635/comonad.com/reader/2008/a-sort-of-difference/)
 
 ### Referenced frameworks/libraries
  - [wreq - An easy-to-use HTTP client library](https://hackage.haskell.org/package/wreq)
