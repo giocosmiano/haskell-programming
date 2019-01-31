@@ -16,6 +16,7 @@
  - [vector - Efficient Arrays](https://hackage.haskell.org/package/vector)
  - [array - Mutable and immutable arrays](http://hackage.haskell.org/package/array)
  - [text - An efficient packed Unicode text type](http://hackage.haskell.org/package/text)
+ - [dlist - Difference lists](http://hackage.haskell.org/package/dlist)
 
 ### For further reading
  - [Criterion Library - by Bryan O'Sullivan](http://www.serpentine.com/criterion/)   
