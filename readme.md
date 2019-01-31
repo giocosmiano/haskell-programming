@@ -35,7 +35,7 @@
 
      - or how many times to `lift` the function over multi-layered structure in stack of `monads`.
 
-       - e.g. `SomeType`, `outerInner` and [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
+       - i.e. `SomeType`, `outerInner` and [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
 
 ```haskell
 newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq, Show)
@@ -57,7 +57,7 @@ newtype ActionT e m a =
    - Lifting the `function` to the base/outermost `IO` monad via [liftIO](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadio)
      **or** [lift, lift, lift](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadtrans)
 
-   - Always helpful to use **_`:t`_** for type, **_`:k`_** for kind or **_`:i`_** info to get more details   
+   - To get more details, use **_`:t`_**, **_`:k`_** or **_`:i`_**   
 
    - When in doubt, use language pragma [`{-# LANGUAGE InstanceSigs #-}`](https://downloads.haskell.org/~ghc/8.0.2/docs/html/users_guide/glasgow_exts.html#ghc-flag--XInstanceSigs)
      to have a clear vision of type signatures. i.e.
@@ -490,6 +490,7 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
  - [vector - Efficient Arrays](https://hackage.haskell.org/package/vector)
  - [array - Mutable and immutable arrays](http://hackage.haskell.org/package/array)
  - [text - An efficient packed Unicode text type](http://hackage.haskell.org/package/text)
+ - [dlist - Difference lists](http://hackage.haskell.org/package/dlist)
 
 ### For further reading
  - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
