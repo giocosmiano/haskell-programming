@@ -479,6 +479,13 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
 
 #### [Chapter 29 - IO](https://github.com/giocosmiano/haskell-programming/tree/master/ch29-io)
 
+ - MVar
+
+ - IO’s Functor, Applicative, and Monad
+
+ - [Brent Yorgey - IO actions are like recipes. "Recipe for a cake doesn't give us a cake but some instructions for how to make a
+  cake."](https://www.cis.upenn.edu/~cis194/spring13/lectures/08-IO.html)
+
 ### Referenced frameworks/libraries
  - [wreq - An easy-to-use HTTP client library](https://hackage.haskell.org/package/wreq)
  - [scotty - Haskell web framework inspired by Ruby's Sinatra, using WAI and Warp](https://hackage.haskell.org/package/scotty)
