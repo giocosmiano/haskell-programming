@@ -1,8 +1,22 @@
 module MVarBlockingSample where
 
 import Control.Concurrent
+import System.IO.Unsafe
 
 -----------------------------------------------------------------------------------
+
+-- |
+-- Prelude> :t newEmptyMVar
+-- newEmptyMVar :: IO (MVar a)
+--
+-- Prelude> :t putMVar
+-- putMVar :: MVar a -> a -> IO ()
+--
+-- Prelude> :t takeMVar
+-- takeMVar :: MVar a -> IO a
+--
+-- Prelude> :t unsafePerformIO
+-- unsafePerformIO :: IO a -> a
 
 myData :: IO (MVar Int)
 myData = newEmptyMVar
@@ -14,7 +28,6 @@ main = do
   mv' <- myData
   zero <- takeMVar mv'
   print zero
-
 
 -----------------------------------------------------------------------------------
 
@@ -37,6 +50,28 @@ main = do
 
 -----------------------------------------------------------------------------------
 
+myData' :: MVar Int
+myData' = unsafePerformIO newEmptyMVar
+
+main' :: IO ()
+main' = do
+  putMVar myData' 0
+  zero <- takeMVar myData'
+  print zero
+
+-----------------------------------------------------------------------------------
+
+-- |
+-- Prelude> main'
+-- 0
+
+-- |
+-- The type of unsafePerformIO is IO a -> a, which is seemingly impossible and not a
+-- good idea in general. In real code, we should pass references to MVars as an argument
+-- or via ReaderT, but the combination of MVar and unsafePerformIO gives us an opportunity
+-- to see in very stark terms what it means to use unsafePerformIO in our code. The new
+-- empty MVar can now be shared implicitly, as often as we want, instead of creating a
+-- new one each time.
 
 
 
