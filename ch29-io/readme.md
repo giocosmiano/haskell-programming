@@ -15,8 +15,8 @@
    Something of type `IO String` is not a computation that, if evaluated, will result in a `String`; it’s a description of how we might
    get that `String` from the “real world,” possibly performing effects along the way.
 
-   - [Per Brent Yorgey - IO actions are like recipes. Recipe for a cake doesn't give us a cake but some instructions for how to make a
-  cake.](https://www.cis.upenn.edu/~cis194/spring13/lectures/08-IO.html)
+   - [Brent Yorgey - IO actions are like recipes. "Recipe for a cake doesn't give us a cake but some instructions for how to make a
+  cake."](https://www.cis.upenn.edu/~cis194/spring13/lectures/08-IO.html)
  
 ### MVar
 
