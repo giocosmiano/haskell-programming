@@ -14,9 +14,6 @@ import System.IO.Unsafe
 --
 -- Prelude> :t takeMVar
 -- takeMVar :: MVar a -> IO a
---
--- Prelude> :t unsafePerformIO
--- unsafePerformIO :: IO a -> a
 
 myData :: IO (MVar Int)
 myData = newEmptyMVar
@@ -49,6 +46,10 @@ main = do
 -- empty `MVars`.
 
 -----------------------------------------------------------------------------------
+
+-- |
+-- Prelude> :t unsafePerformIO
+-- unsafePerformIO :: IO a -> a
 
 myData' :: MVar Int
 myData' = unsafePerformIO newEmptyMVar
