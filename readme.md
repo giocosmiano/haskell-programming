@@ -513,6 +513,7 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
  - [School of Haskell - Simple Examples](https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/Simple%20examples)
  - [School of Haskell - Pick of the Week](https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week)
  - [Typeclassopedia - by Brent Yorgey](https://wiki.haskell.org/Typeclassopedia)
+ - [CIS 194 Introduction to Haskell - by Brent Yorgey](http://www.cis.upenn.edu/~cis194/spring13/lectures.html)   
 
 
 
