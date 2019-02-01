@@ -38,6 +38,7 @@ join  :: IO (IO a)   -> IO a
 
 ```haskell
 Haskell λ > import System.Random
+
 Haskell λ > import Control.Monad
 
 Haskell λ > fmap (+1) (randomIO :: IO Int)
@@ -55,9 +56,9 @@ Haskell λ > let embedInIO = return :: a -> IO a
 
 Haskell λ > let str = "hello world"
 
-Haskell λ > embedInIO (print "hello world")
+Haskell λ > embedInIO (print str)
 
-Haskell λ > join $ embedInIO (print "hello world")
+Haskell λ > join $ embedInIO (print str)
 "hello world"
 ```
 
