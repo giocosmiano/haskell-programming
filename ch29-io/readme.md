@@ -16,4 +16,4 @@
  - [Evaluation Order and State Tokens - by Michael Snoyman](https://wiki.haskell.org/Evaluation_order_and_state_tokens)   
  - [Tackling the Awkward Squad - by Simon Peyton Jones](http://research.microsoft.com/en-us/um/people/simonpj/papers/marktoberdorf/mark.pdf)   
  - [Notions of computation and monads - by Eugenio Moggi](http://www.disi.unige.it/person/MoggiE/ftp/ic91.pdf)   
- - [IO Lecture - by Brent Yorgey](http://www.cis.upenn.edu/~cis194/spring13/lectures/08-IO.html)   
+ - [IO - Introduction to Haskell - by Brent Yorgey](http://www.cis.upenn.edu/~cis194/spring13/lectures/08-IO.html)   
