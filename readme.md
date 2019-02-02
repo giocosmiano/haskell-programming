@@ -117,10 +117,9 @@ Haskell λ > addAndMultiply 3 5 7
  - [Type inference](https://wiki.haskell.org/Type_inference)
 
 #### [Chapter 6 - Type classes](https://github.com/giocosmiano/haskell-programming/tree/master/ch06-typeclasses)
- - In OOP such as Java, this is similar to defining `interface`. `Haskell` data types doesn't have any function
-   associated with it unlike Java wherein functions are automatically inherited from
-   [Object](https://docs.oracle.com/javase/7/docs/api/java/lang/Object.html).
-   - e.g. Java Object class has toString, equals, hashCode, clone etc. 
+ - In OOP, such as Java, this is similar to defining `interface`. `Haskell` data types doesn't have any function
+   associated with it unlike Java wherein functions are automatically inherited from `java.lang.Object`.
+   - i.e. [java.lang.Object](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html) class has toString, equals, hashCode etc. 
  - Type classes Eq, Num, Ord, Enum, Show, Read
  - Type class inheritance
 
@@ -520,7 +519,10 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
  - [School of Haskell - Simple Examples](https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/Simple%20examples)
  - [School of Haskell - Pick of the Week](https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week)
  - [Typeclassopedia - by Brent Yorgey](https://wiki.haskell.org/Typeclassopedia)
- - [CIS 194 Introduction to Haskell - by Brent Yorgey](http://www.cis.upenn.edu/~cis194/spring13/lectures.html)   
+ - Introduction to Haskell - by Brent Yorgey    
+   - [Introduction to Haskell](https://www.schoolofhaskell.com/school/starting-with-haskell/introduction-to-haskell)   
+   - [CIS 194 Introduction to Haskell Fall 2016](http://www.cis.upenn.edu/~cis194/fall16/)   
+   - [CIS 194 Introduction to Haskell Spring 2013](http://www.cis.upenn.edu/~cis194/spring13/lectures.html)   
 
 
 
