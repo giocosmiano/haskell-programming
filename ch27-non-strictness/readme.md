@@ -65,5 +65,6 @@ forever a = let a' = a >> a' in a'
  - [The Incomplete Guide to Lazy Evaluation in Haskell](https://hackhands.com/guide-lazy-evaluation-haskell/)
  - [Lazy evaluation illustrated for Haskell divers - by Takenobu Tani](https://github.com/takenobu-hs/lazy_evaluation)
  - [Core Type - Glasgow Haskell Compiler](https://ghc.haskell.org/trac/ghc/wiki/Commentary/Compiler/CoreSynType#Caseexpressions)
+ - [Laziness - School of Haskell - by Brent Yorgey](https://www.schoolofhaskell.com/school/starting-with-haskell/introduction-to-haskell/6-laziness)
  - [Laziness - Haskell Wiki](https://en.wikibooks.org/wiki/Haskell/Laziness#Thunks_and_Weak_head_normal_form)
  - [Weak Head Normal Form](https://stackoverflow.com/questions/6872898/haskell-what-is-weak-head-normal-form)
