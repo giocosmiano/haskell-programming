@@ -43,6 +43,6 @@ main = do
 -- $ stack ParsingArgsSample.hs echo -c "hello world"
 -- HELLO WORLD
 --
--- $ stack DocOptParsingArgsSample.hs cat ./readme.md
+-- $ stack DocOptParsingArgsSample.hs cat ./DocOptParsingArgsSample.hs
 
 -----------------------------------------------------------------------------------
