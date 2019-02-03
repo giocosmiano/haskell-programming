@@ -62,6 +62,12 @@ Haskell λ > join $ embedInIO (print str)
 "hello world"
 ```
 
+### Referenced frameworks/libraries
+ - [docopt - A command-line interface parser that will make you smile](https://hackage.haskell.org/package/docopt)
+ - [cmdargs - Command line argument processing](http://hackage.haskell.org/package/cmdargs)
+ - [parseargs - Full-featured command-line argument parsing library](https://hackage.haskell.org/package/parseargs)
+ - [options - A powerful and easy-to-use command-line option parser](https://hackage.haskell.org/package/options)
+
 ### For further reading
  - [Referential Transparency - Haskell Wiki](https://wiki.haskell.org/Referential_transparency)   
  - [IO Inside - Haskell Wiki](https://wiki.haskell.org/IO_inside)
