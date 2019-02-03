@@ -27,6 +27,7 @@ main = getArgs >>= parse >>= putStr . tac
 -- |
 -- Command line argument handling
 -- https://wiki.haskell.org/Tutorials/Programming_Haskell/Argument_handling
+-- https://wiki.haskell.org/Command_line_option_parsers
 --
 -- $ stack SimpleGetArgsSample.hs -h
 -- Usage: tac [-vh] [file ..]
