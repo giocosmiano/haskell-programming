@@ -1,0 +1,6 @@
+Usage:
+  myprog cat <file>
+  myprog echo [--caps] <string>
+
+Options:
+  -c, --caps    Caps-lock the echoed argument
