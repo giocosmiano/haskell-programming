@@ -34,6 +34,6 @@ main = getArgs >>= parse >>= putStr . tac
 -- $ stack SimpleGetArgsSample.hs -v
 -- Haskell tac 0.1
 --
--- $ stack SimpleGetArgsSample.hs "readme.md"
+-- $ stack SimpleGetArgsSample.hs "SimpleGetArgsSample.hs"
 
 -----------------------------------------------------------------------------------
