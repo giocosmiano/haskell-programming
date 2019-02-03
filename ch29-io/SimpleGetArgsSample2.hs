@@ -24,6 +24,8 @@ withFile' s f = putStr . unlines . f . lines =<< open s
   where
     open f = if f == "-" then getContents else readFile f
 
+-----------------------------------------------------------------------------------
+
 cat [] f = withFile' f id
 cat as f = withFile' f (newline . number . visible as)
   where
@@ -32,6 +34,8 @@ cat as f = withFile' f (newline . number . visible as)
     visible as s = foldl' (flip render) s as
     ifset a f    = if a `elem` as then f else id
 
+-----------------------------------------------------------------------------------
+
 render Squeeze   = map head. groupBy (\x y -> all (all isSpace) [x,y])
 render Tabs      = map $ concatMap (\c -> if c == '\t' then "^I" else [c])
 render Invisible = map $ concatMap visible
@@ -39,6 +43,8 @@ render Invisible = map $ concatMap visible
     visible c | c == '\t' || isPrint c = [c]
               | otherwise              = init . tail . show $ c
 render _ = id
+
+-----------------------------------------------------------------------------------
 
 numberLine      = printf "%6d  %s"
 numberAll s     = zipWith numberLine [(1 :: Integer)..] s
