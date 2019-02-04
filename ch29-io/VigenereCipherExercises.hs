@@ -27,6 +27,8 @@ getDecOfA x
 charToDec :: Char -> Int
 charToDec x = ord x - getDecOfA x
 
+-----------------------------------------------------------------------------------
+
 shift :: Char -> Char -> Char
 shift key str
    | isLower str || isUpper str = chr $ newDec + getDecOfA str
@@ -34,6 +36,16 @@ shift key str
    where decKey = charToDec key
          decStr = charToDec str
          newDec = mod (decKey + decStr) 26
+
+unshift :: Char -> Char -> Char
+unshift key str
+   | isLower str || isUpper str = chr $ getDecOfA str - newDec
+   | otherwise  = str
+   where decKey = charToDec key
+         decStr = charToDec str
+         newDec = mod (decKey + decStr) 26
+
+-----------------------------------------------------------------------------------
 
 -- e.g. key       = "ALLY"
 --    , plainText = "MEET AT DAWN"
@@ -46,6 +58,8 @@ replaceKeyChar key@(x:xs) (y:ys)
    | isLower y || isUpper y = x : replaceKeyChar xs  ys
    | otherwise              = y : replaceKeyChar key ys
 
+-----------------------------------------------------------------------------------
+
 -- e.g.
 --    , key       = "ALLY"
 --    , plainText = "MEET AT DAWN"
@@ -57,6 +71,8 @@ mapKey key str   =
    let nbrCopies = quot (length str) (length key)
        dupedKeys = concat $ replicate (nbrCopies + 1) key
    in  replaceKeyChar dupedKeys str
+
+-----------------------------------------------------------------------------------
 
 -- Vigenere ciphering only the 26-letters of the alphabet
 -- see https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
@@ -79,6 +95,30 @@ cipher key str =
 --    , key        = "ALLY"
 --    , plainText  = "Meet At Dawn"
 --   -> cipherText = "Mppr Ae Oywy"
+
+-----------------------------------------------------------------------------------
+
+-- Vigenere ciphering only the 26-letters of the alphabet
+-- see https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
+-- decipher :: key -> cipherText -> plainText
+decipher :: String -> String -> String
+decipher  _ [] = []
+decipher []  _ = []
+decipher key str =
+   let keyStr    = mapKey key str
+       pairStr   = zip keyStr str
+   in  map (\(k, s) -> unshift k s) pairStr
+
+-- e.g.
+-- decipher "ALLY" "MPPR AE OYWY" -> "MEET AT DAWN"
+--    , key        = "ALLY"
+--    , cipherText = "MPPR AE OYWY"
+--   -> plainText  = "MEET AT DAWN"
+
+-- decipher "ALLY" "Mppr Ae Oywy" -> "Meet At Dawn"
+--    , key        = "ALLY"
+--    , cipherText = "Mppr Ae Oywy"
+--   -> plainText  = "Meet At Dawn"
 
 -----------------------------------------------------------------------------------
 
@@ -132,8 +172,8 @@ main = do
   putStrLn str
 
   case mode args of
-    "encrypt" -> putStrLn $ cipher (key args) str
-    "decrypt" -> putStrLn str
+    "encrypt" -> putStrLn $ cipher   (key args) str
+    "decrypt" -> putStrLn $ decipher (key args) str
 
 -- |
 -- $ stack VigenereCipherExercises.hs  "-e" "ALLY"
