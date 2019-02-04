@@ -1,7 +1,9 @@
 module VigenereCipherExercises where
 
+import Data.List
 import Data.Char (chr, ord, isUpper, isLower)
 import System.Environment
+import System.Exit
 import System.IO
 
 -- System.Environment.getArgs :: IO [String]
@@ -79,3 +81,56 @@ cipher key str =
 --   -> cipherText = "Mppr Ae Oywy"
 
 -----------------------------------------------------------------------------------
+
+data Args = Args {
+    mode :: String
+  , key  :: String
+  } deriving (Show, Eq)
+
+tac  = unlines . reverse . lines
+
+mapArgs :: [String] -> IO Args
+mapArgs (mode: key: _) =
+  case mode of
+    "-d" -> return $ Args "decrypt" key
+    "-e" -> return $ Args "encrypt" key
+    _    -> usage >> exit
+mapArgs _ = usage >> exit
+
+parse :: [String] -> IO Args
+parse ["-v"] = version >> exit
+parse ["-h"] = usage   >> exit
+parse []     = usage   >> exit
+parse args   = mapArgs args
+
+--parse fs     = concat `fmap` mapM readFile fs
+
+usage :: IO ()
+usage = do
+  putStrLn "Usage: VigenereCipherExercises [mode] [key]"
+  putStrLn "    mode --> -d to decrypt, -e to encrypt"
+  putStrLn "    key  --> key string to encrypt/decrypt"
+
+version :: IO ()
+version = putStrLn "Haskell VigenereCipherExercises 0.1"
+
+exit = exitWith ExitSuccess
+die  = exitWith (ExitFailure 1)
+
+main :: IO ()
+main = do
+  args <- getArgs >>= parse
+  str  <- getLine
+
+  putStrLn . show $ args
+  putStrLn str
+
+  case mode args of
+    "encrypt" -> putStrLn $ cipher (key args) str
+    "decrypt" -> putStrLn str
+
+-----------------------------------------------------------------------------------
+
+
+
+
