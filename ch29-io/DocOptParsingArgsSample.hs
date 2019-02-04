@@ -37,10 +37,10 @@ main = do
 --
 -- $ stack install doctopt
 --
--- $ stack ParsingArgsSample.hs echo "hello world"
+-- $ stack DocOptParsingArgsSample.hs echo "hello world"
 -- hello world
 --
--- $ stack ParsingArgsSample.hs echo -c "hello world"
+-- $ stack DocOptParsingArgsSample.hs echo -c "hello world"
 -- HELLO WORLD
 --
 -- $ stack DocOptParsingArgsSample.hs cat ./DocOptParsingArgsSample.hs
