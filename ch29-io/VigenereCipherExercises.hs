@@ -97,6 +97,8 @@ mapArgs (mode: key: _) =
     _    -> usage >> exit
 mapArgs _ = usage >> exit
 
+-----------------------------------------------------------------------------------
+
 parse :: [String] -> IO Args
 parse ["-v"] = version >> exit
 parse ["-h"] = usage   >> exit
@@ -104,6 +106,8 @@ parse []     = usage   >> exit
 parse args   = mapArgs args
 
 --parse fs     = concat `fmap` mapM readFile fs
+
+-----------------------------------------------------------------------------------
 
 usage :: IO ()
 usage = do
@@ -117,6 +121,8 @@ version = putStrLn "Haskell VigenereCipherExercises 0.1"
 exit = exitWith ExitSuccess
 die  = exitWith (ExitFailure 1)
 
+-----------------------------------------------------------------------------------
+
 main :: IO ()
 main = do
   args <- getArgs >>= parse
@@ -128,6 +134,13 @@ main = do
   case mode args of
     "encrypt" -> putStrLn $ cipher (key args) str
     "decrypt" -> putStrLn str
+
+-- |
+-- $ stack VigenereCipherExercises.hs  "-e" "ALLY"
+-- Meet At Dawn
+-- Args {mode = "encrypt", key = "ALLY"}
+-- Meet At Dawn
+-- Mppr Ae Oywy
 
 -----------------------------------------------------------------------------------
 
