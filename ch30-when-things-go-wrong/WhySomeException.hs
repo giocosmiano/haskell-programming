@@ -28,6 +28,10 @@ multiError n =
 
 -----------------------------------------------------------------------------------
 
+-- |
+-- Prelude> :t cast
+-- cast :: (Typeable b, Typeable a) => a -> Maybe b
+
 data SomeError =
     Arith ArithException
   | Async AsyncException
