@@ -16,6 +16,7 @@ import System.IO
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- get the decimal value of the character
 -- https://en.wikipedia.org/wiki/List_of_Unicode_characters
 getDecOfA :: Char -> Int
@@ -29,24 +30,37 @@ charToDec x = ord x - getDecOfA x
 
 -----------------------------------------------------------------------------------
 
-shift :: Char -> Char -> Char
-shift key str
+-- |
+-- Vigenere ciphering only the 26-letters of the alphabet
+-- https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
+shift :: (Int -> Int -> Int) -> Char -> Char -> Char
+shift f key str
    | isLower str || isUpper str = chr $ newDec + getDecOfA str
    | otherwise  = str
    where decKey = charToDec key
          decStr = charToDec str
-         newDec = mod (decKey + decStr) 26
+         newDec = mod (decStr `f` decKey) 26
 
-unshift :: Char -> Char -> Char
-unshift key str
-   | isLower str || isUpper str = chr $ getDecOfA str - newDec
-   | otherwise  = str
-   where decKey = charToDec key
-         decStr = charToDec str
-         newDec = mod (decKey + decStr) 26
+-- |
+-- shift :: Char -> Char -> Char
+-- shift key str
+--    | isLower str || isUpper str = chr $ newDec + getDecOfA str
+--    | otherwise  = str
+--    where decKey = charToDec key
+--          decStr = charToDec str
+--          newDec = mod (decStr + decKey) 26
+--
+-- unshift :: Char -> Char -> Char
+-- unshift key str
+--    | isLower str || isUpper str = chr $ newDec + getDecOfA str
+--    | otherwise  = str
+--    where decKey = charToDec key
+--          decStr = charToDec str
+--          newDec = mod (decStr - decKey) 26
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- e.g. key       = "ALLY"
 --    , plainText = "MEET AT DAWN"
 --   -> resultKey = "ALLY AL LYAL"
@@ -60,6 +74,7 @@ replaceKeyChar key@(x:xs) (y:ys)
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- e.g.
 --    , key       = "ALLY"
 --    , plainText = "MEET AT DAWN"
@@ -74,48 +89,37 @@ mapKey key str   =
 
 -----------------------------------------------------------------------------------
 
+-- |
 -- Vigenere ciphering only the 26-letters of the alphabet
--- see https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
--- cipher :: key -> plainText -> cipherText
-cipher :: String -> String -> String
-cipher  _ [] = []
-cipher []  _ = []
-cipher key str =
+-- https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
+-- cipher :: (+) -> key -> plainText  -> cipherText
+-- cipher :: (-) -> key -> cipherText -> plainText
+cipher :: (Int -> Int -> Int) -> String -> String -> String
+cipher f _ [] = []
+cipher f []  _ = []
+cipher f key str =
    let keyStr    = mapKey key str
        pairStr   = zip keyStr str
-   in  map (\(k, s) -> shift k s) pairStr
+   in  map (\(k, s) -> shift f k s) pairStr
 
+-- |
 -- e.g.
--- cipher "ALLY" "MEET AT DAWN" -> "MPPR AE OYWY"
+-- cipher (+) "ALLY" "MEET AT DAWN" -> "MPPR AE OYWY"
 --    , key        = "ALLY"
 --    , plainText  = "MEET AT DAWN"
 --   -> cipherText = "MPPR AE OYWY"
-
--- cipher "ALLY" "Meet At Dawn" -> "Mppr Ae Oywy"
+--
+-- cipher (+) "ALLY" "Meet At Dawn" -> "Mppr Ae Oywy"
 --    , key        = "ALLY"
 --    , plainText  = "Meet At Dawn"
 --   -> cipherText = "Mppr Ae Oywy"
-
------------------------------------------------------------------------------------
-
--- Vigenere ciphering only the 26-letters of the alphabet
--- see https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
--- decipher :: key -> cipherText -> plainText
-decipher :: String -> String -> String
-decipher  _ [] = []
-decipher []  _ = []
-decipher key str =
-   let keyStr    = mapKey key str
-       pairStr   = zip keyStr str
-   in  map (\(k, s) -> unshift k s) pairStr
-
--- e.g.
--- decipher "ALLY" "MPPR AE OYWY" -> "MEET AT DAWN"
+--
+-- cipher (-) "ALLY" "MPPR AE OYWY" -> "MEET AT DAWN"
 --    , key        = "ALLY"
 --    , cipherText = "MPPR AE OYWY"
 --   -> plainText  = "MEET AT DAWN"
-
--- decipher "ALLY" "Mppr Ae Oywy" -> "Meet At Dawn"
+--
+-- cipher (-) "ALLY" "Mppr Ae Oywy" -> "Meet At Dawn"
 --    , key        = "ALLY"
 --    , cipherText = "Mppr Ae Oywy"
 --   -> plainText  = "Meet At Dawn"
@@ -172,8 +176,8 @@ main = do
   putStrLn str
 
   case mode args of
-    "encrypt" -> putStrLn $ cipher   (key args) str
-    "decrypt" -> putStrLn $ decipher (key args) str
+    "encrypt" -> putStrLn $ cipher (+) (key args) str
+    "decrypt" -> putStrLn $ cipher (-) (key args) str
 
 -- |
 -- $ stack VigenereCipherExercises.hs  "-e" "ALLY"
@@ -181,6 +185,12 @@ main = do
 -- Args {mode = "encrypt", key = "ALLY"}
 -- Meet At Dawn
 -- Mppr Ae Oywy
+--
+-- $ stack VigenereCipherExercises.hs  "-d" "ALLY"
+-- Mppr Ae Oywy
+-- Args {mode = "decrypt", key = "ALLY"}
+-- Mppr Ae Oywy
+-- Meet At Dawn
 
 -----------------------------------------------------------------------------------
 
