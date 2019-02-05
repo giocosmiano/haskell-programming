@@ -483,7 +483,11 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
  - IO’s Functor, Applicative, and Monad
 
  - [Brent Yorgey - IO actions are like recipes. "Recipe for a cake doesn't give us a cake but some instructions for how to make a
-  cake."](https://www.cis.upenn.edu/~cis194/spring13/lectures/08-IO.html)
+  cake."](https://www.cis.upenn.edu/~cis194/fall16/lectures/06-io-and-monads.html)
+
+#### [Chapter 30 - When Things Go Wrong](https://github.com/giocosmiano/haskell-programming/tree/master/ch30-when-things-go-wrong)
+
+ - Exceptions
 
 ### Referenced frameworks/libraries
  - [wreq - An easy-to-use HTTP client library](https://hackage.haskell.org/package/wreq)
