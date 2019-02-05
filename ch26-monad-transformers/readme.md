@@ -208,4 +208,7 @@ liftIO :: IO a -> ExceptT e (StateT s (ReaderT r IO)) a
  - [A Simple Reader Monad Example](https://blog.ssanj.net/posts/2014-09-23-A-Simple-Reader-Monad-Example.html)
  - [Reader Monad Transformer - by Carlo Hamalainen](https://carlo-hamalainen.net/2014/03/05/note-to-self-reader-monad-transformer/)
  - [The ReaderT Design Pattern - by FPComplete](https://www.fpcomplete.com/blog/2017/06/readert-design-pattern)
+ - Further reading on Scotty
+   - [Building a JSON REST API in Haskell](https://taylor.fausak.me/2014/10/21/building-a-json-rest-api-in-haskell/)
+   - [Read you a Scotty](http://devanla.com/read-you-a-scotty.html)
 
