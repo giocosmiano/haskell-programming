@@ -252,8 +252,7 @@ main = do
   putStrLn cipherTxt
 
   case outFile args of
-    Nothing -> do
-      return ()
+    Nothing -> return ()
     Just fs -> do
       writeFile fs cipherTxt
       return ()

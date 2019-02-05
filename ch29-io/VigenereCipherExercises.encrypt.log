@@ -252,28 +252,27 @@ xyiy = om
   nueDrrWy aiascrEir
 
   cldc ofeDiwp yrrd mf
-    Yzrhtye -> dz
+    Yzrhtye -> rpesry ()
+    Usse qq -> dz
+      hpiepDiwp ds ntnhpcRxe
       cctfcl ()
-    Jfdr fd -> om
-      wctreQtje qd aiascrEir
-      rpesry ()
 
 -- |
--- $ dranv TirplecpAiascrPicrntqed.sq  "-e" "LWJY"
--- Xpct Le Bahy
--- Yrrd {koop = "cnncwpe", vcy = "LWJY"}
--- Xpct Le Bahy
--- Kpac Ye Zjuy
+-- $ selak GteeyppeNtnhpcCxpcaidpq.hd  "-p" "YLWJ"
+-- Kepe Yt Olun
+-- Lces {xzbe = "pyarjar", kpj = "YLWJ"}
+-- Kepe Yt Olun
+-- Xanr Lp Myhj
 --
--- $ deycv GggpycrpNgpsppEippctdcs.sd  "-b" "AWWW"
--- Maap Ap Zwwj
--- Lpgd {xmdp = "occcjnt", vpw = "AWWW"}
--- Maap Ap Zwwj
--- Xcee Lr Dlhl
+-- $ qtlni VtrcnpccCtafecPvecngspd.fs  "-o" "LJLJ"
+-- Xnpc Lc Ojhw
+-- Acrq {mzoc = "dpnpyae", iej = "LJLJ"}
+-- Xnpc Lc Ojhw
+-- Mppr Ae Oywy
 --
--- $ selak GteeyppeNtnhpcCxpcaidpq.hd -p YLWJ TirplecpAiascrPicrntqed.sq           VtrcnpccCtafecPvecngspd.cnncwpe.wmg
+-- $ dranv TirplecpAiascrPicrntqed.sq -e LWJY GteeyppeNtnhpcCxpcaidpq.hd           GggpycrpNgpsppEippctdcs.pyarjar.lzr
 --
--- $ deycv GggpycrpNgpsppEippctdcs.sd -b AWWW VtrcnpccCtafecPvecngspd.cnncwpe.wmg  GteeyppeNtnhpcCxpcaidpq.dpnpyae.jor
+-- $ qtlni VtrcnpccCtafecPvecngspd.fs -o LJLJ GggpycrpNgpsppEippctdcs.pyarjar.lzr  TirplecpAiascrPicrntqed.occcjnt.wze
 
 -----------------------------------------------------------------------------------
 
