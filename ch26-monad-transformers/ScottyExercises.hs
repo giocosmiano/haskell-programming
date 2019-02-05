@@ -73,7 +73,7 @@ app :: Scotty ()
 app =
   get "/:key" $ do
     unPrefixed <- param "key"
-    config <- lift ask
+    config <- lift ask -- retrieves the monad value from the environment
     let key' = mappend (prefix config) unPrefixed
         map' = readIORef . counts $ config
     (newMap, newInteger) <- liftIO (bumpBoomp key' <$> map')
@@ -117,7 +117,7 @@ main = do
 
 -- |
 -- e.g.
--- Prelude> main lol
+-- Prelude> :main lol
 -- Setting phasers to stun... (port 3000) (ctrl-c to quit)
 --
 -- $ curl localhost:3000/woot
