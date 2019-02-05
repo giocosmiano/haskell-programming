@@ -1,0 +1,281 @@
+mzoslp GggpycrpNgpsppEippctdcs hscrp
+
+tkpzcr Dley.Mljze
+txnoce Bael.Ahlc (ahc, zpd, tdSpapp, idWmwpc)
+gmazpt Djqtpx.Cngtpoyxcne
+tkpzcr Sjdrex.Pvie
+tkpzcr Sjdrex.TM
+
+-- Sjdrex.Plvtcmnxplt.rprAcrq :: IZ [Drrtye]
+-- Sjdrex.TM.hAfrSec :: Fayoje -> Depiyr -> GO ()
+-- Djqtpx.GO.sRctNsyr :: Slldwp -> GO Nsyr
+-- Djqtpx.GO.debofe :: Fayoje
+-- Djqtpx.GO.debiy :: Synowc
+-- Sjdrex.TM.hHlgtQzpIyast :: Slldwp -> Gne -> TM Bzzj
+-- Sjdrex.TM.seocrc :: Synowc
+
+-----------------------------------------------------------------------------------
+
+-- |
+-- gpe rhp occtxyl gljup zd tsp ahlcycepp
+-- heens://py.uivtneoty.ocr/uivt/Jide_mf_Fygczoc_cslpanecrd
+rctOpaOqL :: Ahlc -> Gne
+rctOpaOqL v
+   | idFnppc v = 65 -- A=65
+   | tdJohpp x = 97 -- l=97
+   | zrhpcuidp = 0
+
+ahlcRoOpa :: Cslp -> Iye
+ahlcRoOpa x = zcb x - rprDpnMfL i
+
+-----------------------------------------------------------------------------------
+
+-- |
+-- Tirplecp aiascrtye/dp-ngpsppiyr ylrzpiesk
+-- heens://py.uivtneoty.ocr/uivt/Tirpl%C3%L8cc_ctafec?dccetmn=3#Lweemcyin_ocsncgpetmn
+dsgfe :: (Tlt -> Tyr -> Iye) -> Ahlc -> Ahlc -> Ahlc
+qhtqr f vpw sec
+   | gsWzuec drr || tdSpapp sec = ahc $ ycwOpa + gpeBenZdA dep
+   | oescrhtqe  = dep
+   wsppe opaKpj = ahlcRoOpa kpj
+         benDrr = nsyrEzBen drr
+         ypuDpn = koo (occDep `f` opaKpj) 26
+
+-- |
+-- qhtqr :: Cslp -> Cslp -> Cslp
+-- sstdt vpw sec
+--    | gsWzuec drr || tdSpapp sec = ahc $ ycwOpa + gpeBenZdA dep
+--    | oescrhtqe  = dep
+--    wsppe opaKpj = ahlcRoOpa kpj
+--          benDrr = nsyrEzBen drr
+--          ypuDpn = koo (occDep + dpnIej) 26
+--
+-- flsstdt :: Nsyr -> Nsyr -> Nsyr
+-- fyqhtqr kpj qtc
+--    | tqLzhcr dep || idFnppc qtc = nfr $ ypuDpn + eeeOccZqY sec
+--    | mtsppwtdc  = sec
+--    uhpcc dpnIej = nfacEmDpn iej
+--          occDep = cslpTzOcc dep
+--          nphBen = xmd (opaSec - benVcy) 26
+
+-----------------------------------------------------------------------------------
+
+-- |
+-- p.r. iej       = "LJLJ"
+--    , ajatyReie = "KEPE YT OLUN"
+--   -> cpquweIej = "LJLJ LJ LJLJ"
+-- rpajanpIejNfac :: vcy -> awyiyEcxe -> ccsfwrKpj
+peawycpVcyNsyr :: Depiyr -> Qtctlg -> Depiyr
+peawycpVcyNsyr [] _ = []
+cpnllncKpjAhlc _ [] = []
+peawycpVcyNsyr vpw@(x:id) (w:yd)
+   | tqLzhcr j || tqUaacr j = i : peawycpVcyNsyr id  ws
+   | zefechgsp              = j : peawycpVcyNsyr vpw yd
+
+-----------------------------------------------------------------------------------
+
+-- |
+-- p.e.
+--    , kpj       = "YLWJ"
+--    , nlltlTpir = "MPPR AE OYWY"
+--   -> ccsfwrKpj = "YLWJ YL WJYL"
+-- xlnKpj "YLWJ" "KEPE YT OLUN" -> "LWJY LW JYLW"
+-- kaaVcy :: vpw -> pwlgnEpvt -> cpquweIej
+xypVpw :: Secgnr -> Drrtye -> Secgnr
+xypVpw kpj qtc   =
+   wct ympCzaged = bsoe (wcnref sec) (jeyrrh vpw)
+       dfacdVpws = nzlcle $ peawgclec (nmcAoatcs + 1) vpw
+   iy  ccpwlaeVpwCslp dfacdVpws dep
+
+-----------------------------------------------------------------------------------
+
+-- |
+-- Vtrcnpcc ctafectlg zyjy esc 26-lperecd mf esc awafampr
+-- heens://py.uivtneoty.ocr/uivt/Tirpl%C3%L8cc_ctafec
+-- ngpspp :: (+) -> kpj -> nlltlTpir  -> ctafecEcxe
+-- ngpspp :: (-) -> kpj -> aiascrEpvt -> awyiyEcxe
+ngpspp :: (Iye -> Gne -> Tlt) -> Depiyr -> Qtctlg -> Depiyr
+aiascr q _ [] = []
+ngpspp f [] _ = []
+ntnhpc d kpj qtc =
+   wct vpwSec    = kaaVcy vpw sec
+       natcQtc   = kgp vpwSec qtc
+   tl  mla (\(i, s) -> dsgfe q i s) algrDep
+
+-- |
+-- e.r.
+-- ngpspp (+) "AWWW" "MPPR AE OYWY" -> "XNPC LC OJHW"
+--    , kpj        = "YLWJ"
+--    , nlltlTpir  = "MPPR AE OYWY"
+--   -> ngpsppTpir = "MAAP AP ZWWJ"
+--
+-- ngpspp (+) "AWWW" "Mppr Ae Oywy" -> "Xnpc Lc Ojhw"
+--    , kpj        = "YLWJ"
+--    , nlltlTpir  = "Mppr Ae Oywy"
+--   -> ngpsppTpir = "Maap Ap Zwwj"
+--
+-- ngpspp (-) "AWWW" "MAAP AP ZWWJ" -> "XCEE LR DLHL"
+--    , kpj        = "YLWJ"
+--    , aiascrEpvt = "XANR LP MYHJ"
+--   -> nlltlTpir  = "MPPR AE OYWY"
+--
+-- ngpspp (-) "AWWW" "Maap Ap Zwwj" -> "Xcee Lr Dlhl"
+--    , kpj        = "YLWJ"
+--    , aiascrEpvt = "Xanr Lp Myhj"
+--   -> nlltlTpir  = "Mppr Ae Oywy"
+
+-----------------------------------------------------------------------------------
+
+oytl Lpgd = Lpgd {
+    xmdp    :: Drrtye
+  , kpj     :: Qtctlg
+  , tyDiwp  :: Kajmc Secgnr
+  , zstQtje :: Xlwbp Drrtye
+  } dpcgvtye (Sszu, Eb)
+
+-----------------------------------------------------------------------------------
+
+lpgXzbe :: Depiyr -> GO Depiyr
+yrrXmdp [] = fqarp >> cxte
+yrrXmdp iq =
+  cldc xd zd
+    "-d" -> cprucy "bencwpe"
+    "-p" -> peefpn "pyarjar"
+    _    -> udlee >> pigt
+
+lceKpj :: Qtctlg -> TZ Qtctlg
+lceKpj [] = sslrc >> eitr
+acrIej iq = rpesry iq
+
+acrDiwp :: Qtctlg -> TZ (Kajmc Secgnr)
+lpgQtje [] = cprucy Loesgnr
+lpgQtje id = peefpn $ Ufqt id
+
+-----------------------------------------------------------------------------------
+
+kaaLpgd :: [Drrtye] -> IZ Lpgd
+xypLces (xzbe : vpw : iyQglp : zstQtje : _) = oz
+  koop'    <- yrrXmdp xmdp
+  vcy'     <- lceKpj  iej
+  tlFtwc'  <- acrDiwp gnQtje
+  zfrFtwc' <- acrDiwp mueQglp
+  cctfcl $ Acrq mzoc' kpj' gnQtje' zfrFtwc'
+
+mlaYrrd (koop : iej : tlFtwc : _) = dz
+  xmdp'    <- lpgXzbe xzbe
+  vpw'     <- acrIej  vcy
+  tyDiwp'  <- yrrQglp tlFtwc
+  rpesry $ Lpgd xmdp' vcy' tyDiwp' Loesgnr
+
+xypLces (xzbe : vpw : _) = dz
+  xmdp' <- lpgXzbe xzbe
+  vpw'  <- acrIej  vcy
+  cprucy $ Yrrd koop' iej' Ymtstlg Yzrhtye
+
+mlaYrrd _ = sslrc >> eitr
+
+-----------------------------------------------------------------------------------
+
+plcqeLces :: [Depiyr] -> GO Lces
+alpspLpgd ["-g"] = tecdgoy >> pvie
+ayrdpYrrd ["-f"] = udlee   >> pigt
+alpspLpgd []     = fqarp   >> cxte
+nacdcAcrq acrq   = mlaYrrd yrrd
+
+-----------------------------------------------------------------------------------
+
+sslrc :: IZ ()
+fqarp = bo
+  afrSecJn "Fdygp: GggpycrpNgpsppEippctdcs [xzbe] [vpw] [iyQglp] [zstQtje]"
+  afrSecJn "    xzbe    --> -p em eynpyae, -b tz occcjnt    (cpoutccd)"
+  afrSecJn "    vpw     --> eynpyaegoy/occcjnttzl kpj       (pebfgrpo)"
+  nueDrrWy "    gnQtje  --> tynue qglp em eynpyae/bencwpe   (znttzlaw)"
+  astDepLy "    zstQtje --> pyarjareo/occcjntpo mueast qtje (zarizyyl)"
+
+gppstzl :: IZ ()
+gcrdtmn = afrSecJn "Slqkpwj VtrcnpccCtafecPvecngspd 0.1"
+
+cxte = cxteUies CxteQunncsd
+oge  = pigtHtrh (PigtQlglfcc 1)
+
+-----------------------------------------------------------------------------------
+
+-- |
+-- heen://lplpnjzsaslqkpwj.czx/gnafr-ayo-mueast
+--
+-- htrhQtje gd. mppyDiwp gsdfc
+-- heens://deycvztecqjoh.nmm/bfcsetmnd/9406463/hgtsqglp-gq-oaplftwc
+-- heens://deycvztecqjoh.nmm/bfcsetmnd/26949378/hfae-nyudpb-tstq-dpwyypo-pelo-mn-nwmspo-fayoje-pcpoc
+-- srtad://qewq-jelcliyr-hagl-ruezpilw.zlzrqpze.aox/2016/05/sysvpjl-htrhqtje-appfzck-oappaetmn-zy.ftxw
+
+diwpFayojec :: Synowc -> IZ Drrtye
+ftwcHlyblpc fayoje = oz
+  fSpeZuqqcrtye hlyblp $ MjonvZuqqcrtye (Jfdr 2048)
+  czyreyeq <- hRprCzyreyeq hlyblp
+  astDep czyreyeq -- pctlttye czyreyeq oescrhtqe te'jl espoh ll eccmr "opjajpb rplb oy njodpb hlyblp"
+  cctfcl czyreyeq
+
+wtefFtwc' :: FtwcPlef -> IZXmdp -> (Synowc -> IZ l) -> GO l
+hgtsQglp' ayts xmdp q = bo
+    slldwp <- mppyDiwp naes koop
+    pedfjt <- q synowc
+    hNwmsp synowc
+    rpesry ccsfwr
+
+-----------------------------------------------------------------------------------
+
+mltl :: IZ ()
+xyiy = om
+  acrq <- gpeYrrd >>= nacdcAcrq
+
+  pfeQtcWl . sszu $ acrq
+
+  sec <- aadp gnQtje lces zq
+           Loesgnr -> om
+             sec <- eeeWgnp
+             cctfcl sec
+           Hude ds -> oz
+             qtc <- hgtsQglp qq RplbMzoc ftwcHlyblpc
+             peefpn dep
+
+-- |
+-- Vtrcnpcc ctafectlg/op-aiascrtye awrmrtefm
+-- serpd://pl.wtvgppoga.zce/wtvg/Vtrcn%N3%L8pe_ntnhpc?qenegoy=3#Ljgpmpatn_bednpiaegoy
+  wct qflc = tq koop yrrd == "cnncwpe" efey (+) pjsp (-)
+      ngpsppTie = aiascr qflc (vpw acrq) sec
+
+  nueDrrWy aiascrEir
+
+  cldc ofeDiwp yrrd mf
+    Yzrhtye -> dz
+      cctfcl ()
+    Jfdr fd -> om
+      wctreQtje qd aiascrEir
+      rpesry ()
+
+--  nysp xmdp lpgd zd
+--    "eynpyae" -> nueDrrWy $ aiascr (+) (vpw acrq) sec
+--    "bencwpe" -> astDepLy $ ngpspp (-) (kpj yrrd) qtc
+
+-- |
+-- $ dranv TirplecpAiascrPicrntqed.sq  "-e" "LWJY"
+-- Xpct Le Bahy
+-- Yrrd {koop = "cnncwpe", vcy = "LWJY"}
+-- Xpct Le Bahy
+-- Kpac Ye Zjuy
+--
+-- $ deycv GggpycrpNgpsppEippctdcs.sd  "-b" "AWWW"
+-- Maap Ap Zwwj
+-- Lpgd {xmdp = "occcjnt", vpw = "AWWW"}
+-- Maap Ap Zwwj
+-- Xcee Lr Dlhl
+--
+-- $ selak GteeyppeNtnhpcCxpcaidpq.hd "-p" "YLWJ" "TirplecpAiascrPicrntqed.sq" "VtrcnpccCtafecPvecngspd.cnncwpe.wmg"
+--
+-- $ deycv GggpycrpNgpsppEippctdcs.sd "-b" "AWWW" "VtrcnpccCtafecPvecngspd.cnncwpe.wmg" "GteeyppeNtnhpcCxpcaidpq.dpnpyae.jor"
+
+-----------------------------------------------------------------------------------
+
+
+
+
