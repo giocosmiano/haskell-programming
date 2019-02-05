@@ -96,7 +96,7 @@ mapKey key str   =
 -- cipher :: (-) -> key -> cipherText -> plainText
 cipher :: (Int -> Int -> Int) -> String -> String -> String
 cipher f _ [] = []
-cipher f []  _ = []
+cipher f [] _ = []
 cipher f key str =
    let keyStr    = mapKey key str
        pairStr   = zip keyStr str
