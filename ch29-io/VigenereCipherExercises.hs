@@ -129,16 +129,39 @@ cipher f key str =
 data Args = Args {
     mode :: String
   , key  :: String
+  , file :: Maybe String
   } deriving (Show, Eq)
 
 tac  = unlines . reverse . lines
 
-mapArgs :: [String] -> IO Args
-mapArgs (mode: key: _) =
-  case mode of
-    "-d" -> return $ Args "decrypt" key
-    "-e" -> return $ Args "encrypt" key
+-----------------------------------------------------------------------------------
+
+argMode :: String -> IO String
+argMode [] = usage >> exit
+argMode xs =
+  case xs of
+    "-d" -> return "decrypt"
+    "-e" -> return "encrypt"
     _    -> usage >> exit
+
+argKey :: String -> IO String
+argKey [] = usage >> exit
+argKey xs = return xs
+
+argFile :: String -> IO (Maybe String)
+argFile [] = return Nothing
+argFile xs = return $ Just xs
+
+mapArgs :: [String] -> IO Args
+mapArgs (mode : key : file : _) = do
+  mode' <- argMode mode
+  key'  <- argKey  key
+  file' <- argFile file
+  return $ Args mode' key' file'
+mapArgs (mode : key : _) = do
+  mode' <- argMode mode
+  key'  <- argKey  key
+  return $ Args mode' key' Nothing
 mapArgs _ = usage >> exit
 
 -----------------------------------------------------------------------------------
@@ -155,9 +178,10 @@ parse args   = mapArgs args
 
 usage :: IO ()
 usage = do
-  putStrLn "Usage: VigenereCipherExercises [mode] [key]"
-  putStrLn "    mode --> -d to decrypt, -e to encrypt"
-  putStrLn "    key  --> key string to encrypt/decrypt"
+  putStrLn "Usage: VigenereCipherExercises [mode] [key] [file]"
+  putStrLn "    mode --> -e to encrypt, -d to decrypt (required)"
+  putStrLn "    key  --> encryption/decryption key    (required)"
+  putStrLn "    file --> file to encrypt/decrypt      (optional)"
 
 version :: IO ()
 version = putStrLn "Haskell VigenereCipherExercises 0.1"
