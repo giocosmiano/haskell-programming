@@ -191,6 +191,11 @@ usage = do
   putStrLn "    key     --> encryption/decryption key       (required)"
   putStrLn "    inFile  --> input file to encrypt/decrypt   (optional)"
   putStrLn "    outFile --> encrypted/decrypted output file (optional)"
+  putStrLn "examples..."
+  putStrLn "    $ stack VigenereCipherExercises.hs -e ALLY"
+  putStrLn "    $ stack VigenereCipherExercises.hs -d ALLY"
+  putStrLn "    $ stack VigenereCipherExercises.hs -e VigenereCipherExercises.hs          VigenereCipherExercises.encrypt.log"
+  putStrLn "    $ stack VigenereCipherExercises.hs -d VigenereCipherExercises.encrypt.log VigenereCipherExercises.decrypt.log"
 
 version :: IO ()
 version = putStrLn "Haskell VigenereCipherExercises 0.1"
@@ -252,10 +257,6 @@ main = do
     Just fs -> do
       writeFile fs cipherTxt
       return ()
-
---  case mode args of
---    "encrypt" -> putStrLn $ cipher (+) (key args) str
---    "decrypt" -> putStrLn $ cipher (-) (key args) str
 
 -- |
 -- $ stack VigenereCipherExercises.hs  "-e" "ALLY"
