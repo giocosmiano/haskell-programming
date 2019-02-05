@@ -130,6 +130,10 @@ main = do
 -- *** NOTE ***
 -- The underlying “key” used in the counter when we GET /woot is "lolwoot"
 -- because we passed ”lol” to main.
-
+--
+-- For further reading
+-- http://devanla.com/read-you-a-scotty.html
+-- https://taylor.fausak.me/2014/10/21/building-a-json-rest-api-in-haskell/
+--
 -----------------------------------------------------------------------------------
 
