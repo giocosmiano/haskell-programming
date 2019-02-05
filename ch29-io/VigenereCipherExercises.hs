@@ -194,8 +194,8 @@ usage = do
   putStrLn "examples..."
   putStrLn "    $ stack VigenereCipherExercises.hs -e ALLY"
   putStrLn "    $ stack VigenereCipherExercises.hs -d ALLY"
-  putStrLn "    $ stack VigenereCipherExercises.hs -e VigenereCipherExercises.hs          VigenereCipherExercises.encrypt.log"
-  putStrLn "    $ stack VigenereCipherExercises.hs -d VigenereCipherExercises.encrypt.log VigenereCipherExercises.decrypt.log"
+  putStrLn "    $ stack VigenereCipherExercises.hs -e ALLY VigenereCipherExercises.hs          VigenereCipherExercises.encrypt.log"
+  putStrLn "    $ stack VigenereCipherExercises.hs -d ALLY VigenereCipherExercises.encrypt.log VigenereCipherExercises.decrypt.log"
 
 version :: IO ()
 version = putStrLn "Haskell VigenereCipherExercises 0.1"
@@ -271,9 +271,9 @@ main = do
 -- Mppr Ae Oywy
 -- Meet At Dawn
 --
--- $ stack VigenereCipherExercises.hs "-e" "ALLY" "VigenereCipherExercises.hs" "VigenereCipherExercises.encrypt.log"
+-- $ stack VigenereCipherExercises.hs -e ALLY VigenereCipherExercises.hs           VigenereCipherExercises.encrypt.log
 --
--- $ stack VigenereCipherExercises.hs "-d" "ALLY" "VigenereCipherExercises.encrypt.log" "VigenereCipherExercises.decrypt.log"
+-- $ stack VigenereCipherExercises.hs -d ALLY VigenereCipherExercises.encrypt.log  VigenereCipherExercises.decrypt.log
 
 -----------------------------------------------------------------------------------
 
