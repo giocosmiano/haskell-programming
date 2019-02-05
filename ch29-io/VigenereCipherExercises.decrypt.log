@@ -271,9 +271,9 @@ main = do
 -- Mppr Ae Oywy
 -- Meet At Dawn
 --
--- $ stack VigenereCipherExercises.hs "-e" "ALLY" "VigenereCipherExercises.hs" "VigenereCipherExercises.encrypt.log"
+-- $ stack VigenereCipherExercises.hs -e ALLY VigenereCipherExercises.hs           VigenereCipherExercises.encrypt.log
 --
--- $ stack VigenereCipherExercises.hs "-d" "ALLY" "VigenereCipherExercises.encrypt.log" "VigenereCipherExercises.decrypt.log"
+-- $ stack VigenereCipherExercises.hs -d ALLY VigenereCipherExercises.encrypt.log  VigenereCipherExercises.decrypt.log
 
 -----------------------------------------------------------------------------------
 
