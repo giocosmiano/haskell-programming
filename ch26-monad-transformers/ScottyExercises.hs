@@ -68,15 +68,27 @@ bumpBoomp k m = do
 -- |
 -- Data.IORef samples
 -- https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/Simple%20examples#data-ioref
+--
+-- Prelude> :t newIORef
+-- newIORef :: a -> IO (IORef a)
+--
+-- Prelude> :t readIORef
+-- readIORef :: IORef a -> IO a
+--
+-- Prelude> :t writeIORef
+-- writeIORef :: IORef a -> a -> IO ()
+--
+-- Prelude> :t modifyIORef
+-- modifyIORef :: IORef a -> (a -> a) -> IO ()
 
 app :: Scotty ()
 app =
   get "/:key" $ do
     unPrefixed <- param "key"
-    config <- lift ask -- retrieves the monad value from the environment
+    config <- lift ask -- retrieves the monad environment
     let key' = mappend (prefix config) unPrefixed
         map' = readIORef . counts $ config
-    (newMap, newInteger) <- liftIO (bumpBoomp key' <$> map')
+    (newMap, newInteger) <- liftIO $ bumpBoomp key' <$> map'
     liftIO $ writeIORef (counts config) newMap
     html $ mconcat
       [ "<h1>Success! Count was: "
