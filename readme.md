@@ -38,7 +38,7 @@
        - i.e. `SomeType`, `outerInner` and [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
 
 ```haskell
-newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq, Show)
+newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deriving (Eq, Show)
 
 outerInner :: MaybeT (ExceptT String (ReaderT String (StateT String IO))) Int
 
@@ -57,10 +57,21 @@ newtype ActionT e m a =
    - Lifting the `function` to the base/outermost `IO` monad via [liftIO](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadio)
      **or** [lift, lift, lift](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadtrans)
 
-   - To get more details, use **_`:t`_**, **_`:k`_** or **_`:i`_**   
+```haskell
+Haskell λ > :t liftIO
+liftIO :: MonadIO m => IO a -> m a
 
-   - When in doubt, use language pragma [`{-# LANGUAGE InstanceSigs #-}`](https://downloads.haskell.org/~ghc/8.0.2/docs/html/users_guide/glasgow_exts.html#ghc-flag--XInstanceSigs)
-     to have a clear vision of type signatures. i.e.
+Haskell λ > :t lift
+lift :: (Monad m, MonadTrans t) => m a -> t m a
+```
+   - For details, use **_`:t`_**, **_`:k`_**, **_`:i`_**
+
+   - Use these resources
+     - [Haskell Documentation](https://www.haskell.org/documentation)   
+     - [Hoogle](https://www.haskell.org/hoogle/)
+     - [GHC User Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/)
+     - Language pragma [`{-# LANGUAGE InstanceSigs #-}`](https://downloads.haskell.org/~ghc/8.0.2/docs/html/users_guide/glasgow_exts.html#ghc-flag--XInstanceSigs)
+       to have a clear vision of type signatures. i.e.
 
 ```haskell
 newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
@@ -427,7 +438,7 @@ Haskell λ > (runState $ get >> put 5 >> return 9 >> modify (+3) >> return 12 >>
      of `monads`, however; when we compose two `monads`, the result is **`NOT`** necessarily another `monad`.
 
 ```haskell
-newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq, Show)
+newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deriving (Eq, Show)
 ```
 
  - Monad Transformers
@@ -500,13 +511,15 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
  - [parsers - Parsing combinators](https://hackage.haskell.org/package/parsers)
  - [trifecta - modern parser combinator library with convenient diagnostics](https://hackage.haskell.org/package/trifecta-1.5.2)
  - [raw-strings-qq - Raw string literals for Haskell](https://hackage.haskell.org/package/raw-strings-qq)
- - [hindent - Extensible Haskell pretty printer](https://hackage.haskell.org/package/hindent)
  - [criterion - Robust, reliable performance measurement and analysis](https://hackage.haskell.org/package/criterion)
  - [containers - Assorted concrete container types](https://hackage.haskell.org/package/containers)
  - [vector - Efficient Arrays](https://hackage.haskell.org/package/vector)
  - [array - Mutable and immutable arrays](http://hackage.haskell.org/package/array)
  - [text - An efficient packed Unicode text type](http://hackage.haskell.org/package/text)
  - [dlist - Difference lists](http://hackage.haskell.org/package/dlist)
+ - [stylish-haskell - Haskell code prettifier](http://hackage.haskell.org/package/stylish-haskell)
+ - [hindent - Extensible Haskell pretty printer](https://hackage.haskell.org/package/hindent)
+ - [hlint - Source code suggestions](https://hackage.haskell.org/package/hlint)
 
 ### For further reading
  - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
@@ -528,6 +541,14 @@ newtype SomeType f g h a = SomeType { getSomeType :: f (g (h a)) } deriving (Eq,
    - [CIS 194 Introduction to Haskell Fall 2016](http://www.cis.upenn.edu/~cis194/fall16/)   
    - [CIS 194 Introduction to Haskell Spring 2013](http://www.cis.upenn.edu/~cis194/spring13/lectures.html)   
 
+### IDE/IntelliJ Plugins
+ - [HaskForce](http://haskforce.com/)
+ - [Atom Haskell ghc-mod](https://atom-haskell.github.io/core-packages/haskell-ghc-mod/)
+ - [Stack Install ghc-mod](https://github.com/DanielG/ghc-mod/wiki/Installing)
+ - [Stack install ghc-mod failure fix](https://stackoverflow.com/questions/50948485/stack-install-ghc-mod-fails-with-dependencies-conflicts-on-osx-10-13-4)
+ - [stylish-haskell - Haskell code prettifier](http://hackage.haskell.org/package/stylish-haskell)
+ - [hindent - Extensible Haskell pretty printer](https://hackage.haskell.org/package/hindent)
+ - [hlint - Source code suggestions](https://hackage.haskell.org/package/hlint)
 
 
 
