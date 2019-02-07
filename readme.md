@@ -35,7 +35,7 @@
 
      - or how many times to `lift` the function over multi-layered structure in stack of `monads`.
 
-       - i.e. `SomeType`, `outerInner` and [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
+       - i.e. `ComposeType`, `outerInner` and [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
 
 ```haskell
 newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deriving (Eq, Show)
