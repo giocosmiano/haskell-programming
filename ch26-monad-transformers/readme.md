@@ -162,6 +162,11 @@ liftM :: Monad m       => (a -> r) -> m a -> m r
   - `MonadTrans` is about lifting actions in some `Monad` over a transformer type which wraps itself in the original `Monad`.
 
 ```haskell
+Haskell λ > :t lift
+lift :: (Monad m, MonadTrans t) => m a -> t m a
+```
+
+```haskell
 class MonadTrans t where
   lift :: (Monad m) => m a -> t m a
 ```
@@ -182,6 +187,11 @@ instance MonadTrans MaybeT where
     to keep lifting your `IO action` until it is lifted over all structure embedded in the **outermost** `IO type`.
     
   - We don’t have to `lift` multiple times trying to reach a **base (outermost)** `Monad` that happens to be `IO`, because we have `liftIO`.
+
+```haskell
+Haskell λ > :t liftIO
+liftIO :: MonadIO m => IO a -> m a
+```
 
 ```haskell
 class (Monad m) => MonadIO m where
@@ -211,4 +221,6 @@ liftIO :: IO a -> ExceptT e (StateT s (ReaderT r IO)) a
  - Further reading on Scotty
    - [Building a JSON REST API in Haskell](https://taylor.fausak.me/2014/10/21/building-a-json-rest-api-in-haskell/)
    - [Read you a Scotty](http://devanla.com/read-you-a-scotty.html)
+   - [Using Monads](http://seanhess.github.io/2015/08/18/practical-haskell-using-monads.html)
+   - [Build a JSON API](http://seanhess.github.io/2015/08/19/practical-haskell-json-api.html)
 
