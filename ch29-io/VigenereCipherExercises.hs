@@ -1,7 +1,8 @@
 module VigenereCipherExercises where
 
+import Control.DeepSeq
 import Data.Maybe
-import Data.Char (chr, ord, isUpper, isLower)
+import Data.Char (chr, ord, isUpper, isLower, isAlpha)
 import System.Environment
 import System.Exit
 import System.IO
@@ -35,7 +36,7 @@ charToDec x = ord x - getDecOfA x
 -- https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher?section=3#Algebraic_description
 shift :: (Int -> Int -> Int) -> Char -> Char -> Char
 shift f key str
-   | isLower str || isUpper str = chr $ newDec + getDecOfA str
+   | isAlpha str = chr $ newDec + getDecOfA str
    | otherwise  = str
    where decKey = charToDec key
          decStr = charToDec str
@@ -44,7 +45,7 @@ shift f key str
 -- |
 -- shift :: Char -> Char -> Char
 -- shift key str
---    | isLower str || isUpper str = chr $ newDec + getDecOfA str
+--    | isAlpha str = chr $ newDec + getDecOfA str
 --    | otherwise  = str
 --    where decKey = charToDec key
 --          decStr = charToDec str
@@ -52,7 +53,7 @@ shift f key str
 --
 -- unshift :: Char -> Char -> Char
 -- unshift key str
---    | isLower str || isUpper str = chr $ newDec + getDecOfA str
+--    | isAlpha str = chr $ newDec + getDecOfA str
 --    | otherwise  = str
 --    where decKey = charToDec key
 --          decStr = charToDec str
@@ -69,8 +70,8 @@ replaceKeyChar :: String -> String -> String
 replaceKeyChar [] _ = []
 replaceKeyChar _ [] = []
 replaceKeyChar key@(x:xs) (y:ys)
-   | isLower y || isUpper y = x : replaceKeyChar xs  ys
-   | otherwise              = y : replaceKeyChar key ys
+   | isAlpha y = x : replaceKeyChar xs  ys
+   | otherwise = y : replaceKeyChar key ys
 
 -----------------------------------------------------------------------------------
 
@@ -212,13 +213,16 @@ die  = exitWith (ExitFailure 1)
 -- https://stackoverflow.com/questions/9406463/withfile-vs-openfile
 -- https://stackoverflow.com/questions/26949378/what-caused-this-delayed-read-on-closed-handle-error
 -- https://self-learning-java-tutorial.blogspot.com/2016/05/haskell-withfile-perform-operation-on.html
+--
+-- Prelude> :t ($!!)
+-- ($!!) :: NFData a => (a -> b) -> a -> b
 
 fileHandler :: Handle -> IO String
 fileHandler handle = do
   hSetBuffering handle $ BlockBuffering (Just 2048)
   contents <- hGetContents handle
-  putStr contents -- printing contents otherwise it'll throw an error "delayed read on closed handle"
-  return contents
+--   putStr contents -- no need to print `contents` to resolve error "delayed read on closed handle"
+  return $!! contents -- forcing the string to "normal form" using ($!!) from Control.DeepSeq
 
 withFile' :: FilePath -> IOMode -> (Handle -> IO a) -> IO a
 withFile' path mode f = do
@@ -235,13 +239,16 @@ main = do
 
   putStrLn . show $ args
 
-  str <- case inFile args of
-           Nothing -> do
-             str <- getLine
-             return str
-           Just fs -> do
-             str <- withFile fs ReadMode fileHandler
-             return str
+  str <-
+    case inFile args of
+      Nothing -> getLine
+      Just fs -> withFile fs ReadMode fileHandler
+--       Nothing -> do
+--         str <- getLine
+--         return str
+--       Just fs -> do
+--         str <- withFile fs ReadMode fileHandler
+--         return str
 
 -- |
 -- Vigenere ciphering/de-ciphering algorithm
