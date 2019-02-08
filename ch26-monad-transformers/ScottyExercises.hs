@@ -57,9 +57,12 @@ type Handler = ActionT Text (ReaderT Config IO)
 bumpBoomp :: Text -> M.Map Text Integer -> (M.Map Text Integer, Integer)
 bumpBoomp k m = do
   m' <-
-    case M.member k m of
-      True  -> return $ M.adjust (+1) k m
-      False -> return $ M.insert k 1 m
+    if M.member k m
+      then return $ M.adjust (+1) k m
+      else return $ M.insert k 1 m
+--     case M.member k m of
+--       True  -> return $ M.adjust (+1) k m
+--       False -> return $ M.insert k 1 m
   let count = M.findWithDefault 0 k m'
   (m', count)
 
