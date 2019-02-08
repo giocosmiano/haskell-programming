@@ -517,9 +517,6 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
  - [array - Mutable and immutable arrays](http://hackage.haskell.org/package/array)
  - [text - An efficient packed Unicode text type](http://hackage.haskell.org/package/text)
  - [dlist - Difference lists](http://hackage.haskell.org/package/dlist)
- - [stylish-haskell - Haskell code prettifier](http://hackage.haskell.org/package/stylish-haskell)
- - [hindent - Extensible Haskell pretty printer](https://hackage.haskell.org/package/hindent)
- - [hlint - Source code suggestions](https://hackage.haskell.org/package/hlint)
 
 ### For further reading
  - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
@@ -549,6 +546,7 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
  - [stylish-haskell - Haskell code prettifier](http://hackage.haskell.org/package/stylish-haskell)
  - [hindent - Extensible Haskell pretty printer](https://hackage.haskell.org/package/hindent)
  - [hlint - Source code suggestions](https://hackage.haskell.org/package/hlint)
+ - [haskell-docs - Program to find and display the docs and type of a name](https://hackage.haskell.org/package/haskell-docs)
 
 
 
