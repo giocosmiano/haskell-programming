@@ -29,6 +29,18 @@ multiError n =
 -----------------------------------------------------------------------------------
 
 -- |
+--
+-- class (Typeable e, Show e) => Exception e where
+--   toException :: e -> SomeException
+--   fromException :: SomeException -> Maybe e
+--   displayException :: e -> String
+--
+-- data SomeException =
+--   forall e . Exception e => SomeException e
+--
+-- data SomeException where
+--   SomeException :: Exception e => e -> SomeException
+--
 -- Prelude> :t cast
 -- cast :: (Typeable b, Typeable a) => a -> Maybe b
 
@@ -49,6 +61,7 @@ discriminateError (MyException e) =
 
 -----------------------------------------------------------------------------------
 
+runDisc :: Int -> SomeError
 runDisc n =
   either discriminateError
   (const SomethingElse) (multiError n)
