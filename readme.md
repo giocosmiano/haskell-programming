@@ -498,7 +498,7 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
 
 #### [Chapter 30 - When Things Go Wrong](https://github.com/giocosmiano/haskell-programming/tree/master/ch30-when-things-go-wrong)
 
- - Exceptions
+ - Exceptions, try/catch, throw/throwIO, custom exception, async exception
 
 ### Referenced frameworks/libraries
  - [wreq - An easy-to-use HTTP client library](https://hackage.haskell.org/package/wreq)
@@ -517,6 +517,8 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
  - [array - Mutable and immutable arrays](http://hackage.haskell.org/package/array)
  - [text - An efficient packed Unicode text type](http://hackage.haskell.org/package/text)
  - [dlist - Difference lists](http://hackage.haskell.org/package/dlist)
+ - [twitter-conduit - Twitter API package with conduit interface and Streaming API support](http://hackage.haskell.org/package/twitter-conduit)
+ - [http-client - An HTTP client engine](http://hackage.haskell.org/package/http-client)
 
 ### For further reading
  - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
