@@ -27,6 +27,8 @@ class (Typeable e, Show e) => Exception e where
   displayException :: e -> String
 ```
 
+ - i.e. ArithException
+
 ```haskell
 data ArithException
   = Overflow
@@ -72,6 +74,7 @@ throwIO :: Exception e => e -> IO a
 
 ### Referenced frameworks/libraries
  - [twitter-conduit - Twitter API package with conduit interface and Streaming API support](http://hackage.haskell.org/package/twitter-conduit)
+ - [http-client - An HTTP client engine](http://hackage.haskell.org/package/http-client)
 
 ### For further reading
  - [A Beginner's Guide to Exceptions in Haskell - By Erin Swenson-Healey](https://www.youtube.com/watch?v=PWS0Whf6-wc)   
