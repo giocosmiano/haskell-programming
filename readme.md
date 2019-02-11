@@ -66,6 +66,12 @@ lift :: (Monad m, MonadTrans t) => m a -> t m a
 ```
    - For details, use **_`:t`_**, **_`:k`_**, **_`:i`_**
 
+   - Tools for Building Haskell Projects/Packages
+     - [Hackage - Haskell community's central package archive of open source software](http://hackage.haskell.org/)
+     - [Stackage - Stable source of Haskell packages](https://www.stackage.org/)
+     - [Stack - Cross-platform program for developing Haskell projects](https://www.haskellstack.org/)
+     - [Cabal - System for building and packaging Haskell libraries and programs](https://www.haskell.org/cabal/)
+
    - Use these resources
      - [Haskell Documentation](https://www.haskell.org/documentation)   
      - [Hoogle](https://www.haskell.org/hoogle/)
