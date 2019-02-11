@@ -27,7 +27,7 @@ main = withSocketsDo $ do
   let serverAddr = head addrinfos
   sock <- socket (addrFamily serverAddr)
             Stream defaultProtocol
-  bindSocket sock (addrAddress serveraddr)
+  bindSocket sock (addrAddress serverAddr)
   listen sock 1
   logAndEcho sock
   sClose sock
