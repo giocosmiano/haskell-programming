@@ -615,9 +615,19 @@ $ stack ghc -- VigenereCipherExercises.hs -o VigenereCipherExercises.exe
 because there is no Main module.
 ```
 
-  - REPL
+  - [path](https://docs.haskellstack.org/en/stable/GUIDE/#path)
+  - [env](https://docs.haskellstack.org/en/stable/GUIDE/#exec)
+  - [repl](https://docs.haskellstack.org/en/stable/GUIDE/#ghci-the-repl)
+  - [ghc/runghc](https://docs.haskellstack.org/en/stable/GUIDE/#ghcrunghc)
+  - [script interpreter](https://docs.haskellstack.org/en/stable/GUIDE/#script-interpreter)
+  - [useful features](https://docs.haskellstack.org/en/stable/GUIDE/#fun-features)
+  - [power user commands](https://docs.haskellstack.org/en/stable/GUIDE/#power-user-commands)
      
 ```bash
+$ stack path
+
+$ stack exec env
+
 $ stack ghci
 ```
 
