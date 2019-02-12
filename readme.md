@@ -73,7 +73,8 @@ lift :: (Monad m, MonadTrans t) => m a -> t m a
      - [Cabal - System for building and packaging Haskell libraries and programs](https://www.haskell.org/cabal/)
 
    - Use these resources
-     - [Haskell Documentation](https://www.haskell.org/documentation)   
+     - [Haskell Language Documentation](https://haskell-lang.org/documentation)   
+     - [Haskell Documentation](https://www.haskell.org/documentation)
      - [Hoogle](https://www.haskell.org/hoogle/)
      - [GHC User Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/)
      - Language pragma [`{-# LANGUAGE InstanceSigs #-}`](https://downloads.haskell.org/~ghc/8.0.2/docs/html/users_guide/glasgow_exts.html#ghc-flag--XInstanceSigs)
@@ -555,6 +556,66 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
  - [hindent - Extensible Haskell pretty printer](https://hackage.haskell.org/package/hindent)
  - [hlint - Source code suggestions](https://hackage.haskell.org/package/hlint)
  - [haskell-docs - Program to find and display the docs and type of a name](https://hackage.haskell.org/package/haskell-docs)
+
+### [Stack - Cross-platform program for developing Haskell projects](https://www.haskellstack.org/)
+
+ - [User Guide](https://docs.haskellstack.org/en/stable/GUIDE)
+ - [Build command](https://docs.haskellstack.org/en/stable/build_command)
+ - [Versions and installations](https://docs.haskellstack.org/en/stable/faq)
+ - [How to Script with Stack](https://haskell-lang.org/tutorial/stack-script)
+ - [How to Play with Stack](https://haskell-lang.org/tutorial/stack-play)
+ - [How to Build with Stack](https://haskell-lang.org/tutorial/stack-build)
+
+```bash
+$ stack exec -- ghc --version
+The Glorious Glasgow Haskell Compilation System, version 8.4.4
+
+$ stack exec -- ghc-mod --version
+ghc-mod version 5.8.0.0 compiled by GHC 8.0.2
+
+$ stack install scotty
+
+$ stack install pandoc
+
+$ stack exec -- pandoc --version
+pandoc.EXE 2.2.1
+Compiled with pandoc-types 1.17.5.4, texmath 0.11.1.2, skylighting 0.7.5
+Default user data directory: C:\Users\Gio\AppData\Roaming\pandoc
+```
+
+  - Creating executable file (make sure there's a `Main` module)
+     
+```bash
+$ cd "C:\Users\Gio\Documents\_haskell\haskell-programming\ch30-when-things-go-wrong"
+
+$ stack ghc -- WritingWithException.hs -o WritingWithException.exe
+[1 of 1] Compiling Main             ( WritingWithException.hs, WritingWithException.o )
+Linking WritingWithException.exe ...
+
+$ ./WritingWithException.exe
+wrote to file
+```
+
+  - Running the script without creating an executable file. Can't create an executable without `Main` module.
+     
+```bash
+$ cd "C:\Users\Gio\Documents\_haskell\haskell-programming\ch29-io"
+
+$ stack VigenereCipherExercises.hs -e ALLY VigenereCipherExercises.hs           VigenereCipherExercises.encrypt.log
+
+$ stack VigenereCipherExercises.hs -d ALLY VigenereCipherExercises.encrypt.log  VigenereCipherExercises.decrypt.log
+
+$ stack ghc -- VigenereCipherExercises.hs -o VigenereCipherExercises.exe
+<no location info>: error:
+    output was redirected with -o, but no output will be generated
+because there is no Main module.
+```
+
+  - REPL
+     
+```bash
+$ stack ghci
+```
 
 
 
