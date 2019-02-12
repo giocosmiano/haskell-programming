@@ -507,6 +507,10 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
 
  - Exceptions, try/catch, throw/throwIO, custom exception, async exception
 
+#### [Chapter 31 - Final Project](https://github.com/giocosmiano/haskell-programming/tree/master/ch31-final-project)
+
+ - [finger deamon](http://www.rajivshah.com/Case_Studies/Finger/Finger.htm)
+
 ### Referenced frameworks/libraries
  - [wreq - An easy-to-use HTTP client library](https://hackage.haskell.org/package/wreq)
  - [scotty - Haskell web framework inspired by Ruby's Sinatra, using WAI and Warp](https://hackage.haskell.org/package/scotty)
