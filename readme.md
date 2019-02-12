@@ -530,6 +530,8 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
  - [dlist - Difference lists](http://hackage.haskell.org/package/dlist)
  - [twitter-conduit - Twitter API package with conduit interface and Streaming API support](http://hackage.haskell.org/package/twitter-conduit)
  - [http-client - An HTTP client engine](http://hackage.haskell.org/package/http-client)
+ - [network - Low-level networking interface](https://hackage.haskell.org/package/network)
+ - [sqlite-simple - Mid-Level SQLite client library](https://hackage.haskell.org/package/sqlite-simple)
 
 ### For further reading
  - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
