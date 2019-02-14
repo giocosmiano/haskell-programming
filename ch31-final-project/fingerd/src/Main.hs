@@ -175,10 +175,10 @@ main = withSocketsDo $ do
                  (Just (defaultHints
                    {addrFlags = [AI_PASSIVE]}))
                  Nothing (Just "79")
-  let serveraddr = head addrinfos
-  sock <- socket (addrFamily serveraddr)
+  let serverAddr = head addrinfos
+  sock <- socket (addrFamily serverAddr)
           Stream defaultProtocol
-  bindSocket sock (addrAddress serveraddr)
+  bindSocket sock (addrAddress serverAddr)
   listen sock 1
   -- only one connection open at a time
   conn <- open "finger.db"
