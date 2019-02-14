@@ -67,6 +67,8 @@ lift :: (Monad m, MonadTrans t) => m a -> t m a
    - For details, use **_`:t`_**, **_`:k`_**, **_`:i`_**
 
    - Tools for Building Haskell Projects/Packages
+     - [GHC - Glasgow Haskell Compiler](https://www.haskell.org/ghc/)
+       - [Use version 8.0.2](https://www.haskell.org/ghc/download_ghc_8_0_2.html)
      - [Hackage - Haskell community's central package archive of open source software](http://hackage.haskell.org/)
      - [Stackage - Stable source of Haskell packages](https://www.stackage.org/)
      - [Stack - Cross-platform program for developing Haskell projects](https://www.haskellstack.org/)
@@ -563,6 +565,11 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
  - [hlint - Source code suggestions](https://hackage.haskell.org/package/hlint)
  - [haskell-docs - Program to find and display the docs and type of a name](https://hackage.haskell.org/package/haskell-docs)
 
+### [GHC - Glasgow Haskell Compiler](https://www.haskell.org/ghc/)
+
+ - [Version 8.0.2](https://www.haskell.org/ghc/download_ghc_8_0_2.html)
+   - Use this version, with `ghc-mod v5.8.0.0`, so that [HaskForce](http://haskforce.com/) works as a plugin in IntelliJ
+
 ### [Stack - Cross-platform program for developing Haskell projects](https://www.haskellstack.org/)
 
  - [User Guide](https://docs.haskellstack.org/en/stable/GUIDE)
@@ -574,7 +581,7 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
 
 ```bash
 $ stack exec -- ghc --version
-The Glorious Glasgow Haskell Compilation System, version 8.4.4
+The Glorious Glasgow Haskell Compilation System, version 8.0.2
 
 $ stack exec -- ghc-mod --version
 ghc-mod version 5.8.0.0 compiled by GHC 8.0.2
@@ -624,6 +631,7 @@ because there is no Main module.
   - [script interpreter](https://docs.haskellstack.org/en/stable/GUIDE/#script-interpreter)
   - [useful features](https://docs.haskellstack.org/en/stable/GUIDE/#fun-features)
   - [power user commands](https://docs.haskellstack.org/en/stable/GUIDE/#power-user-commands)
+  - [unpack - to download package source](https://docs.haskellstack.org/en/stable/GUIDE/#existing-projects)
      
 ```bash
 $ stack path
@@ -631,6 +639,8 @@ $ stack path
 $ stack exec env
 
 $ stack ghci
+
+$ stack unpack scotty
 ```
 
 

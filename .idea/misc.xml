@@ -7,5 +7,5 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="Haskell Tool Stack" project-jdk-type="Haskell Tool Stack SDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="Haskell" project-jdk-type="Haskell SDK" />
 </project>
