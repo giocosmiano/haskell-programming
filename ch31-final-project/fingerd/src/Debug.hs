@@ -33,3 +33,19 @@ main = withSocketsDo $ do
   sClose sock
 
 -----------------------------------------------------------------------------------
+
+-- |
+--
+-- $ cd fingerd
+--
+-- $ sudo `stack exec which debug`
+--
+-- $ telnet localhost 79
+-- Hello World
+-- Hello World
+--
+-- $ telnet localhost 79
+-- Haskell is a very cool FP language
+-- Haskell is a very cool FP language
+
+-----------------------------------------------------------------------------------
