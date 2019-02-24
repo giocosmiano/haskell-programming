@@ -9,7 +9,7 @@
 
    Since then my `Haskell` journey has been on-and-off, until the fall season of 2018 that I picked up this book to learn. I can say that
    the authors did an excellent job writing this, shout-out to them. I'm now able to demystify `Haskell`, bit by bit, while having fun
-   working on chapter exercises as the authors made me think, connect the dots and perform [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram)         
+   working on chapter exercises as the authors made me think, connect the dots and perform [diagram chasing](https://en.wikipedia.org/wiki/Commutative_diagram).
 
 ### Notes about my journey in working through chapter exercises
 
@@ -28,6 +28,15 @@
    and reduced into a value.  
 
  - **Couple of reminders to myself**
+
+   - When transforming a structure, **NOT the value inside it**, such as List-to-Maybe,
+     use [Natural Transformation](https://wiki.haskell.org/Category_theory/Natural_transformation) i.e.
+
+```haskell
+{-# LANGUAGE RankNTypes #-}
+
+type Nat f g = forall a . f a -> g a
+```
 
    - Always come back to this simple pattern `f x = y` when you're lost
 
@@ -101,6 +110,13 @@ instance (Foldable m) => Foldable (MaybeT m) where
 instance (Traversable m) => Traversable (MaybeT m) where
   traverse :: Applicative fa => (a -> fa b) -> MaybeT m a -> fa (MaybeT m b)
 ```
+
+### Conclusion to my `Haskell` journey
+
+ - Finally, after months of reading, more-and-more readings, lots of trial-and-error in `GHCi`, and working through chapter exercises, I can now
+   celebrate completing this massive technical book. I don't consider myself reaching the [ivory tower](https://www.youtube.com/watch?v=TkBOozeNtiM)
+   nor [achieved some programming enlightenment](http://www.haskellforall.com/2017/10/advice-for-haskell-beginners.html) but rather this gave me
+   the substantial knowledge to start the next chapter of my `Haskell` journey by working in real-world applications confidently. 
 
 #### Chapter 1 - All You Need is Lambda
  - My background is primarily OOP, and have a very good understanding of FP working in [Scala](https://www.scala-lang.org/) and
