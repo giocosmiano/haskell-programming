@@ -27,24 +27,29 @@
  - Functions are data because [when needed](https://en.wikibooks.org/wiki/Haskell/Laziness) they will eventually get evaluated
    and reduced into a value.  
 
- - **Couple of reminders to myself**
+ - Tools for Building Haskell Projects/Packages
+   - [GHC - Glasgow Haskell Compiler](https://www.haskell.org/ghc/)
+     - [Use version 8.0.2](https://www.haskell.org/ghc/download_ghc_8_0_2.html)
+   - [Hackage - Haskell community's central package archive of open source software](http://hackage.haskell.org/)
+   - [Stackage - Stable source of Haskell packages](https://www.stackage.org/)
+   - [Stack - Cross-platform program for developing Haskell projects](https://www.haskellstack.org/)
+   - [Cabal - System for building and packaging Haskell libraries and programs](https://www.haskell.org/cabal/)
 
-   - When transforming a structure, **NOT the value inside it**, such as List-to-Maybe,
-     use [Natural Transformation](https://wiki.haskell.org/Category_theory/Natural_transformation) i.e.
+ - Use these resources
+   - [Haskell Language Documentation](https://haskell-lang.org/documentation)   
+   - [Haskell Documentation](https://www.haskell.org/documentation)
+   - [Hoogle](https://www.haskell.org/hoogle/)
+   - [GHC User Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/)
 
-```haskell
-{-# LANGUAGE RankNTypes #-}
+###List of reminders to myself
 
-type Nat f g = forall a . f a -> g a
-```
+ - Always come back to this pattern `f x = y` when you're lost
 
-   - Always come back to this simple pattern `f x = y` when you're lost
+   - on where to apply the function to a value
 
-     - on where to apply the function to a value
+   - or how many times to `lift` the function over multi-layered stack of `monads`.
 
-     - or how many times to `lift` the function over multi-layered structure in stack of `monads`.
-
-       - i.e. `ComposeType`, `outerInner` and [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
+     - i.e. `ComposeType`, `outerInner` and [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
 
 ```haskell
 newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deriving (Eq, Show)
@@ -63,8 +68,17 @@ newtype ActionT e m a =
   deriving ( Functor, Applicative, MonadIO )
 ```
 
-   - Lifting the `function` to the base/outermost `IO` monad via [liftIO](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadio)
-     **or** [lift, lift, lift](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadtrans)
+ - When transforming a structure, **NOT the value inside it**, such as List-to-Maybe, use
+   [Natural Transformation](https://wiki.haskell.org/Category_theory/Natural_transformation) i.e.
+
+```haskell
+{-# LANGUAGE RankNTypes #-}
+
+type Nat f g = forall a . f a -> g a
+```
+ 
+ - Lifting the `function` to the base/outermost `IO` monad via [liftIO](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadio)
+   **or** [lift, lift, lift](https://github.com/giocosmiano/haskell-programming/tree/master/ch26-monad-transformers#monadtrans)
 
 ```haskell
 Haskell λ > :t liftIO
@@ -73,23 +87,10 @@ liftIO :: MonadIO m => IO a -> m a
 Haskell λ > :t lift
 lift :: (Monad m, MonadTrans t) => m a -> t m a
 ```
-   - For details, use **_`:t`_**, **_`:k`_**, **_`:i`_**
+ - Use **_`:t`_**, **_`:k`_**, **_`:i`_** for details
 
-   - Tools for Building Haskell Projects/Packages
-     - [GHC - Glasgow Haskell Compiler](https://www.haskell.org/ghc/)
-       - [Use version 8.0.2](https://www.haskell.org/ghc/download_ghc_8_0_2.html)
-     - [Hackage - Haskell community's central package archive of open source software](http://hackage.haskell.org/)
-     - [Stackage - Stable source of Haskell packages](https://www.stackage.org/)
-     - [Stack - Cross-platform program for developing Haskell projects](https://www.haskellstack.org/)
-     - [Cabal - System for building and packaging Haskell libraries and programs](https://www.haskell.org/cabal/)
-
-   - Use these resources
-     - [Haskell Language Documentation](https://haskell-lang.org/documentation)   
-     - [Haskell Documentation](https://www.haskell.org/documentation)
-     - [Hoogle](https://www.haskell.org/hoogle/)
-     - [GHC User Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/)
-     - Language pragma [`{-# LANGUAGE InstanceSigs #-}`](https://downloads.haskell.org/~ghc/8.0.2/docs/html/users_guide/glasgow_exts.html#ghc-flag--XInstanceSigs)
-       to have a clear vision of type signatures. i.e.
+ - Use language pragma [`{-# LANGUAGE InstanceSigs #-}`](https://downloads.haskell.org/~ghc/8.0.2/docs/html/users_guide/glasgow_exts.html#ghc-flag--XInstanceSigs)
+   to have a clear vision of type signatures. i.e.
 
 ```haskell
 newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
@@ -113,10 +114,10 @@ instance (Traversable m) => Traversable (MaybeT m) where
 
 ### Conclusion to my `Haskell` journey
 
- - Finally, after months of reading, more-and-more readings, lots of trial-and-error in `GHCi`, and working through chapter exercises, I can now
-   celebrate completing this massive technical book. I don't consider myself reaching the [ivory tower](https://www.youtube.com/watch?v=TkBOozeNtiM)
-   nor [achieved some programming enlightenment](http://www.haskellforall.com/2017/10/advice-for-haskell-beginners.html) but rather this gave me
-   the substantial knowledge to start the next chapter of my `Haskell` journey by working in real-world applications confidently. 
+ - Finally, after months of reading, more-and-more readings, lots of trial-and-error in `GHCi`, and countless nights/weekends working through
+   chapter exercises, I can now celebrate completing this massive technical book. I don't consider myself reaching the
+   [ivory tower](https://www.youtube.com/watch?v=TkBOozeNtiM) nor [achieved some programming enlightenment](http://www.haskellforall.com/2017/10/advice-for-haskell-beginners.html)
+   but rather this gave me the substantial knowledge to start the next chapter of my `Haskell` journey by working in real-world applications confidently. 
 
 #### Chapter 1 - All You Need is Lambda
  - My background is primarily OOP, and have a very good understanding of FP working in [Scala](https://www.scala-lang.org/) and
