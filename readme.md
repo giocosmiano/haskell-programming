@@ -41,7 +41,7 @@
    - [Hoogle](https://www.haskell.org/hoogle/)
    - [GHC User Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/)
 
-###List of reminders to myself
+### List of reminders to myself
 
  - Always come back to this pattern `f x = y` when you're lost
 
