@@ -63,6 +63,7 @@ Haskell λ > join $ embedInIO (print str)
 ```
 
 ### Referenced frameworks/libraries
+ - [optparse-applicative - Utilities and combinators for parsing command line options](https://hackage.haskell.org/package/optparse-applicative)
  - [docopt - A command-line interface parser that will make you smile](https://hackage.haskell.org/package/docopt)
  - [cmdargs - Command line argument processing](http://hackage.haskell.org/package/cmdargs)
  - [parseargs - Full-featured command-line argument parsing library](https://hackage.haskell.org/package/parseargs)
