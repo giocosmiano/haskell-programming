@@ -45,7 +45,7 @@
 
  - Always come back to this pattern `f x = y` when you're lost
 
-   - on where to apply the function to a value
+   - on where to apply the function to a value (or partially-applied function wherein `x` is also a function in `f x = y`)
 
    - or how many times to `lift` the function over multi-layered stack of `monads`.
 
@@ -117,7 +117,7 @@ instance (Traversable m) => Traversable (MaybeT m) where
  - Finally, after months of reading, more-and-more readings, lots of trial-and-error in `GHCi`, and countless nights/weekends working through
    chapter exercises, I can now celebrate completing this massive technical book. I don't consider myself reaching the
    [ivory tower](https://www.youtube.com/watch?v=TkBOozeNtiM) nor [achieved some programming enlightenment](http://www.haskellforall.com/2017/10/advice-for-haskell-beginners.html)
-   but rather this gave me the substantial knowledge to start the next chapter of my `Haskell` journey by working in real-world applications confidently. 
+   but rather this experience gave me substantial knowledge to start the next chapter of my journey towards working in real-world `Haskell` applications. 
 
 #### Chapter 1 - All You Need is Lambda
  - My background is primarily OOP, and have a very good understanding of FP working in [Scala](https://www.scala-lang.org/) and
@@ -551,6 +551,7 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
  - [http-client - An HTTP client engine](http://hackage.haskell.org/package/http-client)
  - [network - Low-level networking interface](https://hackage.haskell.org/package/network)
  - [sqlite-simple - Mid-Level SQLite client library](https://hackage.haskell.org/package/sqlite-simple)
+ - [optparse-applicative - Utilities and combinators for parsing command line options](https://hackage.haskell.org/package/optparse-applicative)
 
 ### For further reading
  - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
