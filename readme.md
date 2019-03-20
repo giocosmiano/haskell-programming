@@ -45,7 +45,7 @@
 
  - Always come back to this pattern `f x = y` when you're lost
 
-   - on where to apply the function to a value (or partially-applied function wherein `x` is also a function in `f x = y`)
+   - on where to apply the function to a value
 
    - or how many times to `lift` the function over multi-layered stack of `monads`.
 
