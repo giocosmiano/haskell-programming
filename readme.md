@@ -250,6 +250,17 @@ Haskell λ > MyName <$> Just "gio"
 Just (MyName {getMyName = "gio"})
 ```
 
+```haskell
+Haskell λ > fmap (const 3)  [Just "hello world"]
+[3]
+
+Haskell λ > (fmap . fmap) (const 3)  [Just "hello world"]
+[Just 3]
+
+Haskell λ > (fmap . fmap . fmap) (const 3)  [Just "hello world"]
+[Just [3,3,3,3,3,3,3,3,3,3,3]]
+```
+
 #### [Chapter 17 - Applicative](https://github.com/giocosmiano/haskell-programming/tree/master/ch17-applicative)
  - Laws
 
