@@ -13,7 +13,10 @@
 
 ### Notes about my journey in working through chapter exercises
 
- - Functional programming is a function of data transformation and composition.
+ - Functional programming is a function
+   - of data transformation, in a [pure manner](https://wiki.haskell.org/Pure)
+   - [composition](https://wiki.haskell.org/Function_composition)
+   - that is [lazy](https://wiki.haskell.org/Lazy_evaluation)
 
  - Function, by default, is curried meaning it only accepts 1-argument and returns either
 
@@ -565,6 +568,7 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
  - [optparse-applicative - Utilities and combinators for parsing command line options](https://hackage.haskell.org/package/optparse-applicative)
 
 ### For further reading
+ - [Why Functional Programming Matters - by John Hughes](https://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf)
  - [What I Wish I Knew When Learning Haskell - by Stephen Diehl](http://dev.stephendiehl.com/hask/#monads)
  - [Haskell for all - by Gabriel Gonzalez](http://www.haskellforall.com/)
  - [How to desugar Haskell code - by Gabriel Gonzalez](http://www.haskellforall.com/2014/10/how-to-desugar-haskell-code.html)
