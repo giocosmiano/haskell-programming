@@ -35,6 +35,7 @@ instance (Applicative f) => Applicative (One f) where
 
 -- |
 -- e.g.
+-- import Data.Monoid
 -- getSum $ sum $ One ([3,7,10,2]::[Sum Integer])          -> 22
 -- getSum $ foldMap (+5) $ One ([3,7,10,2]::[Sum Integer]) -> 42
 instance (Foldable f) => Foldable (One f) where
@@ -94,6 +95,7 @@ instance (Applicative f, Applicative g, Applicative h) => Applicative (Three f g
 
 -- |
 -- e.g.
+-- import Data.Monoid
 -- getProduct $ product $ Three (Just (Just ([3,5,7]::[Product Integer])))      -> 105
 -- getProduct $ foldMap (+3) $ Three (Just (Just ([3,5,7]::[Product Integer]))) -> 480
 instance (Foldable f, Foldable g, Foldable h) => Foldable (Three f g h) where
@@ -126,6 +128,58 @@ instance (Arbitrary (f (g (h a))), CoArbitrary (f (g (h a)))) => Arbitrary (Thre
   arbitrary = do
     f <- arbitrary
     return $ Three f
+
+-----------------------------------------------------------------------------------
+-- | Data structure with 4-layers of structure in it
+-- The applicative implementation looks a little bit overwhelming but
+-- essentially we're lifting a composed applicative functions ((<*>) . fmap (<*>)),
+-- via fmap, so we can apply the function `f` to the value inside a 4-layers of structure
+-----------------------------------------------------------------------------------
+
+newtype Four f g h i a = Four (f (g (h (i a))))
+                      deriving (Eq, Show)
+
+-- |
+-- e.g.
+-- fmap (*5) $ Four [(Just [Just 7])] -> Four [Just [Just 35]]
+instance (Functor f, Functor g, Functor h, Functor i) => Functor (Four f g h i) where
+  fmap :: (a -> b) -> Four f g h i a -> Four f g h i b
+  fmap f (Four fghia) = Four $ (fmap . fmap . fmap . fmap) f fghia
+
+-- |
+-- e.g.
+-- Four [(Just ([Just (*5)]))] <*> Four [(Just [Just 7])]    -> Four [Just [Just 35]]
+-- (+) <$> Four [(Just [Just 7])] <*> Four [(Just [Just 9])] -> Four [Just [Just 16]]
+instance (Applicative f, Applicative g, Applicative h, Applicative i) => Applicative (Four f g h i) where
+  pure :: a -> Four f g h i a
+  pure a = Four $ (pure . pure . pure . pure) a -- or Four $ pure $ pure $ pure $ pure a
+
+  (<*>) :: Four f g h i (a -> b) -> Four f g h i a -> Four f g h i b
+  (Four f) <*> (Four a) = Four $ (fmap ((<*>) . fmap ((<*>) . fmap (<*>))) f) <*> a
+
+-- |
+-- e.g.
+-- import Data.Monoid
+-- getProduct $ product $ Four (Just (Just (Just ([3,5,7]::[Product Integer]))))      -> 105
+-- getProduct $ foldMap (+3) $ Four (Just (Just (Just ([3,5,7]::[Product Integer])))) -> 480
+instance (Foldable f, Foldable g, Foldable h, Foldable i) => Foldable (Four f g h i) where
+  foldMap :: (Monoid m, Foldable h) => (a -> m) -> Four f g h i a -> m
+  foldMap f (Four fghia) = (foldMap . foldMap . foldMap . foldMap) f fghia
+
+-- |
+-- e.g.
+-- import Data.Functor.Identity
+-- traverse (Identity . (*5)) $ Four (Just (Just (Just [3,5,7]))) -> Identity (Four (Just (Just (Just [15,25,35]))))
+instance (Traversable f, Traversable g, Traversable h, Traversable i) => Traversable (Four f g h i) where
+  traverse :: Applicative fa => (a -> fa b) -> Four f g h i a -> fa (Four f g h i b)
+  traverse f (Four fghia) = Four <$> (traverse . traverse . traverse . traverse) f fghia
+
+instance (Eq (f (g (h (i a))))) => EqProp (Four f g h i a) where (=-=) = eq
+
+instance (Arbitrary (f (g (h (i a)))), CoArbitrary (f (g (h (i a))))) => Arbitrary (Four f g h i a) where
+  arbitrary = do
+    f <- arbitrary
+    return $ Four f
 
 -----------------------------------------------------------------------------------
 -- | Data structure with 2-layers of structure in it
@@ -164,6 +218,7 @@ instance (Applicative f, Applicative g) => Applicative (Compose f g) where
 
 -- |
 -- e.g.
+-- import Data.Monoid
 -- getProduct $ product $ Compose (Just ([5,7,9]::[Product Integer]))      -> 315
 -- getProduct $ foldMap (+3) $ Compose (Just ([5,7,9]::[Product Integer])) -> 960
 instance (Foldable f, Foldable g) => Foldable (Compose f g) where
@@ -204,6 +259,11 @@ main = do
   quickBatch $ functor (undefined :: Three Maybe Maybe [] (Int, Double, Char))
   quickBatch $ applicative (undefined :: Three Maybe Maybe [] (Int, Double, Char))
   quickBatch $ traversable (undefined :: Three Maybe Maybe [] (Int, Double, [Int]))
+
+  putStrLn "\nTesting Applicative, Traversable : Four"
+  quickBatch $ functor (undefined :: Four Maybe Maybe Maybe [] (Int, Double, Char))
+  quickBatch $ applicative (undefined :: Four Maybe Maybe Maybe [] (Int, Double, Char))
+  quickBatch $ traversable (undefined :: Four Maybe Maybe Maybe [] (Int, Double, [Int]))
 
   putStrLn "\nTesting Applicative, Traversable : Compose"
   quickBatch $ functor (undefined :: Compose Maybe [] (Int, Double, Char))
