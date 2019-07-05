@@ -58,6 +58,13 @@ instance Monad (Reader r) where
 --         f' = rf x'
 --     in  runReader f' x
 
+-- |
+-- OR
+--   (Reader ra) >>= rf = Reader $ \x ->
+--     let x' = ra x -- apply first/previous computation/function `ra` to `x` creating `x'`
+--         Reader f' = rf x' -- apply function `rf` to output value `x'` creating new Reader computation/function `f'`
+--     in  f' x -- apply the new Reader computation/function `f'` to `x`
+
 -- TODO: how-to implement quickBatch for Reader???
 {-
 instance (Arbitrary r, CoArbitrary r,
