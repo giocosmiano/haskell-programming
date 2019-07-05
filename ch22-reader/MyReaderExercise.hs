@@ -24,19 +24,39 @@ asks f = Reader f
 instance Functor (Reader r) where
   fmap f (Reader ra) = Reader $ \x -> f (ra x)
 
+-- |
+-- OR
+--   fmap f (Reader ra) = Reader $ \x ->
+--     let x' = ra x
+--     in  f x'
+
 -- e.g.
 -- (+) <$> (+3) <*> (*5) $ 7                                           -> 45
 -- (+) <$> (runReader $ Reader (+3)) <*> (runReader $ Reader (*5)) $ 7 -> 45
 instance Applicative (Reader r) where
   pure a = Reader $ \_ -> a
-  (Reader rab) <*> (Reader ra) = Reader $ \x -> rab x (ra x)
+  (Reader rf) <*> (Reader ra) = Reader $ \x -> rf x (ra x)
+
+-- |
+-- OR
+--   (Reader rf) <*> (Reader ra) = Reader $ \x ->
+--     let x' = ra x
+--         f' = rf x
+--     in  f' x'
 
 -- e.g.
 -- (+3) >>= return . (*5) $ 7                                           -> 50
 -- (runReader $ Reader (+3)) >>= return . (runReader $ Reader (*5)) $ 7 -> 50
 instance Monad (Reader r) where
   return = pure
-  (Reader ra) >>= aRb = Reader $ \x -> runReader (aRb (ra x)) x
+  (Reader ra) >>= rf = Reader $ \x -> runReader (rf (ra x)) x
+
+-- |
+-- OR
+--   (Reader ra) >>= rf = Reader $ \x ->
+--     let x' = ra x
+--         f' = rf x'
+--     in  runReader f' x
 
 -- TODO: how-to implement quickBatch for Reader???
 {-
