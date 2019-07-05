@@ -29,6 +29,7 @@ newtype Moi s a = Moi { runMoi :: s -> (a, s) }
 -- |
 -- e.g.
 -- import Data.Monoid
+-- import Data.Functor.Identity
 -- runMoi ((+3) <$> (Moi $ \s -> (5, s))) 7            -> (8,7)
 -- runMoi ((*3) <$> (Moi $ \s -> (5, s))) 7            -> (15,7)
 -- runMoi ((+3) <$> (Moi $ \s -> (5, s))) $ Nothing    -> (8,Nothing)
@@ -53,6 +54,7 @@ instance Functor (Moi s) where
 -- |
 -- e.g.
 -- import Data.Monoid
+-- import Data.Functor.Identity
 -- runMoi ((Moi $ \s -> ((+3), s)) <*> (Moi $ \s -> (5, s))) 7            -> (8,7)
 -- runMoi ((*) <$> (Moi $ \s -> (3, s)) <*> (Moi $ \s -> (5, s))) 7       -> (15,7)
 -- runMoi ((Moi $ \s -> ((+3), s)) <*> (Moi $ \s -> (5, s))) $ Nothing    -> (8,Nothing)
@@ -80,6 +82,7 @@ instance Applicative (Moi s) where
 
 -- |
 -- e.g.
+-- import Data.Functor.Identity
 -- runMoi ((Moi $ \s -> (5, s)) >>= return . (+3)) 7            -> (8,7)
 -- runMoi ((Moi $ \s -> (5, s)) >>= return . (*3)) 7            -> (15,7)
 -- runMoi ((Moi $ \s -> (5, s)) >>= return . (+3)) $ Nothing    -> (8,Nothing)
@@ -92,7 +95,14 @@ instance Monad (Moi s) where
   (>>=) :: Moi s a -> (a -> Moi s b) -> Moi s b
   (Moi f) >>= g = Moi $ \s ->
     let (a, newState) = f s
-    in  (runMoi (g a)) newState
+    in  runMoi (g a) newState
+
+-- |
+-- OR
+--   (Moi f) >>= g = Moi $ \s ->
+--     let (a, newState) = f s
+--         f' = g a
+--     in  runMoi f' newState
 
 -- |
 -- OR
