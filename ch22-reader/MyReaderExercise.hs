@@ -36,7 +36,7 @@ instance Functor (Reader r) where
 -- (+) <$> (+3) <*> (runReader $ Reader (*5)) $ 7                      -> 45
 -- (+) <$> (runReader $ Reader (+3)) <*> (runReader $ Reader (*5)) $ 7 -> 45
 instance Applicative (Reader r) where
-  pure a = Reader $ \_ -> a
+  pure a = Reader $ const a -- OR Reader $ \_ -> a
   (Reader rf) <*> (Reader ra) = Reader $ \x -> rf x (ra x)
 
 -- |
