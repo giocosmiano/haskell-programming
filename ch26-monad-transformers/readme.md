@@ -212,6 +212,12 @@ liftIO :: IO a -> ExceptT e (StateT s (ReaderT r IO)) a
  - [conduit - Streaming data processing library](https://hackage.haskell.org/package/conduit)
 
 ### For further reading
+ - [Using Control.Arrow](http://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Arrow.html)
+   - [Practical Arrow Usage](http://tuttlem.github.io/2014/07/26/practical-arrow-usage.html)
+   - [Understanding Arrows](https://en.wikibooks.org/wiki/Haskell/Understanding_arrows)
+   - [Arrow Tutorial - Haskell Wiki Books](https://en.wikibooks.org/wiki/Haskell/Arrow_tutorial)
+   - [Arrow Tutorial - Haskell](https://wiki.haskell.org/Arrow_tutorial)
+   - [Arrow Tutorial - School of Haskell](https://www.schoolofhaskell.com/user/peter/arrow-tutorial)
  - [Streaming logging - by Gabriel Gonzalez](http://www.haskellforall.com/2014/02/streaming-logging.html)
  - [Amb](https://wiki.haskell.org/Amb)
    - [McCarthy's Ambiguous Operator](http://www.randomhacks.net.s3-website-us-east-1.amazonaws.com/2005/10/11/amb-operator/)
