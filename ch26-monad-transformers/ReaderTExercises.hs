@@ -23,6 +23,8 @@ newtype ReaderT r m a = ReaderT { runReaderT :: r -> m a }
 -- e.g.
 -- import Data.Monoid
 -- import Data.Functor.Identity
+-- fmap (+3) (runReaderT $ ReaderT (*5)) (7 :: Product Integer)                        -> Product {getProduct = 38}
+-- fmap (+3) (runReaderT $ ReaderT (*5)) (Identity 7)                                  -> Identity 38
 -- fmap (runReaderT $ ReaderT (+3)) (runReaderT $ ReaderT (*5)) (7 :: Product Integer) -> Product {getProduct = 38}
 -- fmap (runReaderT $ ReaderT (+3)) (runReaderT $ ReaderT (*5)) (Identity 7)           -> Identity 38
 instance (Functor m) => Functor (ReaderT r m) where
@@ -36,6 +38,8 @@ instance (Functor m) => Functor (ReaderT r m) where
 -- e.g.
 -- import Data.Monoid
 -- import Data.Functor.Identity
+-- (+) <$> (*3) <*> (runReaderT $ ReaderT (+5)) $ (7 :: Product Integer)                        -> Product {getProduct = 33}
+-- (*) <$> (+3) <*> (runReaderT $ ReaderT (*5)) $ (Identity 7)                                  -> Identity 350
 -- (+) <$> (runReaderT $ ReaderT (*3)) <*> (runReaderT $ ReaderT (+5)) $ (7 :: Product Integer) -> Product {getProduct = 33}
 -- (*) <$> (runReaderT $ ReaderT (+3)) <*> (runReaderT $ ReaderT (*5)) $ (Identity 7)           -> Identity 350
 instance (Applicative m) => Applicative (ReaderT r m) where
@@ -44,7 +48,11 @@ instance (Applicative m) => Applicative (ReaderT r m) where
   pure ma = ReaderT $ (pure . pure) ma
 
   (<*>) :: ReaderT r m (a -> b) -> ReaderT r m a -> ReaderT r m b
-  (ReaderT maf) <*> (ReaderT ma) = ReaderT $ (fmap (<*>) maf) <*> ma
+  (ReaderT maf) <*> (ReaderT ma) = ReaderT $ fmap (<*>) maf <*> ma
+
+-- |
+-- OR
+--   (ReaderT maf) <*> (ReaderT ma) = ReaderT $ (fmap (<*>) maf) <*> ma
 
 -----------------------------------------------------------------------------------
 
@@ -59,6 +67,8 @@ instance (Applicative m) => Applicative (ReaderT r m) where
 -- e.g.
 -- import Data.Monoid
 -- import Data.Functor.Identity
+-- (+3) >>= return . (runReaderT $ ReaderT (*5)) $ (7 :: Sum Integer)                        -> Sum {getSum = 50}
+-- (*3) >>= return . (runReaderT $ ReaderT (+5)) $ (Identity 7)                              -> Identity 26
 -- (runReaderT $ ReaderT (+3)) >>= return . (runReaderT $ ReaderT (*5)) $ (7 :: Sum Integer) -> Sum {getSum = 50}
 -- (runReaderT $ ReaderT (*3)) >>= return . (runReaderT $ ReaderT (+5)) $ (Identity 7)       -> Identity 26
 instance (Monad m) => Monad (ReaderT r m) where
