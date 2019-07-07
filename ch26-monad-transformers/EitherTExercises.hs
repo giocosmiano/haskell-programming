@@ -1,4 +1,5 @@
 {-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE LambdaCase   #-}
 
 module EitherTExercises where
 
@@ -39,7 +40,11 @@ instance (Applicative m) => Applicative (EitherT e m) where
   pure ma = EitherT $ (pure . pure) ma
 
   (<*>) :: EitherT e m (a -> b) -> EitherT e m a -> EitherT e m b
-  (EitherT maf) <*> (EitherT ma) = EitherT $ (fmap (<*>) maf) <*> ma
+  (EitherT maf) <*> (EitherT ma) = EitherT $ fmap (<*>) maf <*> ma
+
+-- |
+-- OR
+--   (EitherT maf) <*> (EitherT ma) = EitherT $ (fmap (<*>) maf) <*> ma
 
 -----------------------------------------------------------------------------------
 
@@ -84,13 +89,24 @@ swapEither (Right a) = Left  a
 -- |
 -- transformer version of swapEither.
 swapEitherT :: (Functor m) => EitherT e m a -> EitherT a m e
-swapEitherT (EitherT ma) = EitherT $ fmap swapEither $ runEitherT (EitherT ma)
+swapEitherT (EitherT ma) = EitherT $ swapEither <$> runEitherT (EitherT ma)
+
+-- |
+-- OR
+-- swapEitherT (EitherT ma) = EitherT $ fmap swapEither $ runEitherT (EitherT ma)
 
 eitherT :: Monad m => (a -> m c) -> (b -> m c) -> EitherT a m b -> m c
 eitherT f g (EitherT ma) =
-  ma >>= \x ->
-    case x of
+  ma >>= \case
       Left  e -> f e
       Right x -> g x
+
+-- |
+-- OR
+-- eitherT f g (EitherT ma) =
+--   ma >>= \v ->
+--     case v of
+--       Left  e -> f e
+--       Right x -> g x
 
 -----------------------------------------------------------------------------------
