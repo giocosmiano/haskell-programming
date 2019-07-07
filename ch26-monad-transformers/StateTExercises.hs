@@ -2,6 +2,8 @@
 
 module StateTExercises where
 
+import Control.Arrow (first)
+
 -----------------------------------------------------------------------------------
 
 -- |
@@ -34,9 +36,25 @@ newtype StateT s m a = StateT { runStateT :: s -> m (a, s) }
 -- runStateT ((*3) <$> (StateT $ \s -> Identity (5, s))) 7 -> Identity (15,7)
 instance (Functor m) => Functor (StateT s m) where
 
+-- | Using Control.Arrow (first)
+-- http://tuttlem.github.io/2014/07/26/practical-arrow-usage.html
+-- https://en.wikibooks.org/wiki/Haskell/Understanding_arrows
+-- https://wiki.haskell.org/Arrow_tutorial
+-- https://www.schoolofhaskell.com/user/peter/arrow-tutorial
+
   fmap :: (a -> b) -> StateT s m a -> StateT s m b
   fmap f (StateT ma) =
-    StateT $ \s -> fmap (\(a, s') -> (f a, s')) $ (runStateT (StateT ma)) s
+    StateT $ fmap (first f) . runStateT (StateT ma)
+
+-- |
+-- OR
+--   fmap f (StateT ma) =
+--     StateT $ \s -> (\(a, s') -> (f a, s')) <$> runStateT (StateT ma) s
+
+-- |
+-- OR
+--   fmap f (StateT ma) =
+--     StateT $ \s -> fmap (\(a, s') -> (f a, s')) $ (runStateT (StateT ma)) s
 
 -----------------------------------------------------------------------------------
 
@@ -89,8 +107,15 @@ instance (Monad m) => Monad (StateT s m) where
   (>>=) :: StateT s m a -> (a -> StateT s m b) -> StateT s m b
   (StateT ma) >>= f =
     StateT $ \s -> do
-      (a, s') <- (runStateT (StateT ma)) s
-      (runStateT (f a)) s'
+      (a, s') <- runStateT (StateT ma) s
+      runStateT (f a) s'
+
+-- |
+-- OR
+--   (StateT ma) >>= f =
+--     StateT $ \s -> do
+--       (a, s') <- (runStateT (StateT ma)) s
+--       (runStateT (f a)) s'
 
 -----------------------------------------------------------------------------------
 
