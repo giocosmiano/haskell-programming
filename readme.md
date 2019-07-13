@@ -587,6 +587,28 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
    - [Introduction to Haskell](https://www.schoolofhaskell.com/school/starting-with-haskell/introduction-to-haskell)   
    - [CIS 194 Introduction to Haskell Fall 2016](http://www.cis.upenn.edu/~cis194/fall16/)   
    - [CIS 194 Introduction to Haskell Spring 2013](http://www.cis.upenn.edu/~cis194/spring13/lectures.html)   
+ - [Monday Morning Haskell](https://mmhaskell.com/)
+   - [Haskell Data Types](https://mmhaskell.com/haskell-data)
+   - [Functional Structures](https://mmhaskell.com/monads)
+   - [Testing](https://mmhaskell.com/testing)
+   - [Making Sense of Multiple Monads](https://mmhaskell.com/blog/2017/3/6/making-sense-of-multiple-monads)
+   - [Haskell Web Skills](https://mmhaskell.com/haskell-web)
+ - Monad Transformers
+   - [Haskell Wiki Monad Transformers](https://en.wikibooks.org/wiki/Haskell/Monad_transformers)
+   - [Monad Transformer School of Haskell](https://www.schoolofhaskell.com/user/commercial/content/monad-transformers)
+   - [Intro to Monad Transformers](https://github.com/kqr/gists/blob/master/articles/gentle-introduction-monad-transformers.md)
+   - [Gentle Introduction to Monad Transformers](https://two-wrongs.com/a-gentle-introduction-to-monad-transformers)
+   - [Building Monad Transformers](https://blog.jakuba.net/2014/07/22/Building-Monad-Transformers-Part-1/)
+   - [Making Sense of Multiple Monads](https://mmhaskell.com/blog/2017/3/6/making-sense-of-multiple-monads)
+ - Lenses
+   - [Haskell Wiki Lenses](https://en.wikibooks.org/wiki/Haskell/Lenses_and_functional_references)
+   - [Lenses School of Haskell](https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/a-little-lens-starter-tutorial)
+   - [Lenses embody Products, Prisms embody Sums](https://blog.jle.im/entry/lenses-products-prisms-sums.html)
+   - [Taking a Close look at Lenses](https://mmhaskell.com/blog/2017/6/12/taking-a-close-look-at-lenses)
+   - [Lens Tutorials](https://blog.jakuba.net/tags/lens/)
+   - [Simple Lens Tutorial](http://www.mchaver.com/posts/2017-07-12-lens-tutorial-1.html)
+   - [Another Lens Tutorial](https://jsdw.me/posts/haskell-another-lens-tutorial/)
+   - [Lens Over Tea](https://artyom.me/lens-over-tea-1)
 
 ### IDE/IntelliJ Plugins
  - [HaskForce](http://haskforce.com/)
