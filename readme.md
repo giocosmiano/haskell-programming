@@ -609,6 +609,14 @@ newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deri
    - [Simple Lens Tutorial](http://www.mchaver.com/posts/2017-07-12-lens-tutorial-1.html)
    - [Another Lens Tutorial](https://jsdw.me/posts/haskell-another-lens-tutorial/)
    - [Lens Over Tea](https://artyom.me/lens-over-tea-1)
+ - Free Monads
+   - [Monad Transformers, Free Monads, MTL, Laws and New Approach](https://ocharles.org.uk/posts/2016-01-26-transformers-free-monads-mtl-laws.html)
+   - [Why Free Monads Matter](http://www.haskellforall.com/2012/06/you-could-have-invented-free-monads.html)
+   - [What Does Free Monads Buy Us](https://www.parsonsmatt.org/2017/09/22/what_does_free_buy_us.html)
+   - [Free Monads Considered Harmful](https://markkarpov.com/post/free-monad-considered-harmful.html)
+   - [Many Roads to Free Monads](https://www.schoolofhaskell.com/user/dolio/many-roads-to-free-monads)
+   - [Free Monads: From Basics to Implementation of Composable and Effectful Stream Processing](https://deque.blog/2017/11/13/free-monads-from-basics-up-to-implementing-composable-and-effectful-stream-processing/)
+   - [Free Monads for Cheap Interpreters](https://www.tweag.io/posts/2018-02-05-free-monads.html)
 
 ### IDE/IntelliJ Plugins
  - [HaskForce](http://haskforce.com/)
