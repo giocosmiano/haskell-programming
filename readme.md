@@ -54,7 +54,7 @@
 
      - i.e. `ComposeType`, `outerInner` and [Scotty's Web - ActionT](http://hackage.haskell.org/package/scotty-0.11.3/docs/Web-Scotty-Internal-Types.html#t:ActionT)
 
-   - more importantly, Haskell is based on [Combinatory Logic](https://en.wikipedia.org/wiki/Combinatory_logic) and
+   - ***more importantly***, Haskell is based on principles from [Combinatory Logic](https://en.wikipedia.org/wiki/Combinatory_logic) and
      [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus)
      wherein the idea of a function when combined with another function can represent
      [Data Types](https://en.wikipedia.org/wiki/Lambda_calculus#Encoding_datatypes) such as
@@ -63,8 +63,8 @@
      [Arithmetic](https://en.wikipedia.org/wiki/Church_encoding#Table_of_functions_on_Church_numerals),
      [Logic](https://en.wikipedia.org/wiki/Lambda_calculus#Logic_and_predicates),
      Data Structures such as [Pair](https://en.wikipedia.org/wiki/Church_encoding#Church_pairs) and
-     [List](https://en.wikipedia.org/wiki/Church_encoding#List_encodings),
-     [Y-Combinator aka Recursions](https://en.wikipedia.org/wiki/Fixed-point_combinator#Y_combinator))  
+     [List](https://en.wikipedia.org/wiki/Church_encoding#List_encodings), and
+     [Recursion aka Y-Combinator](https://en.wikipedia.org/wiki/Fixed-point_combinator#Y_combinator))  
 
 ```haskell
 newtype ComposeType f g h a = ComposeType { getComposeType :: f (g (h a)) } deriving (Eq, Show)
